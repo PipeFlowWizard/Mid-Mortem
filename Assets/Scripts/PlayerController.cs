@@ -117,6 +117,22 @@ public class PlayerController : MonoBehaviour
         if (Time.time > lastDashTime + dashCD) StartCoroutine(Dash());
     }
 
+    public void OnMeleeInput()
+    {
+    }
+
+    public void OnMeleeHoldInput()
+    {
+    }
+
+    public void OnRangedInput()
+    {
+    }
+    
+    public void OnRangedHoldInput()
+    {
+    }
+
     private IEnumerator Dash()
     {
         float startTime = Time.time;

@@ -11,7 +11,8 @@
                     "id": "93a5bd92-5053-4b05-98d7-06ef272c81e6",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Look",
@@ -19,15 +20,8 @@
                     "id": "a0e80b0c-190b-49e0-830a-499971d21c81",
                     "expectedControlType": "Vector2",
                     "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Attack",
-                    "type": "Button",
-                    "id": "a175cc17-bdf8-4166-b100-a37266ef3b8b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": true
                 },
                 {
                     "name": "Dash",
@@ -35,7 +29,8 @@
                     "id": "9b20ca09-af55-4993-bd72-0824eeca4173",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": ""
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -173,28 +168,6 @@
                 },
                 {
                     "name": "",
-                    "id": "3bba598d-0b3e-4044-81b9-8aa4455e9bfb",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard and mouse",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "37ed3013-0e2a-4902-b619-46ed96ae054b",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Attack",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "782605c4-76c7-41fa-84c6-bc629b6353de",
                     "path": "<Gamepad>/buttonSouth",
                     "interactions": "",
@@ -212,6 +185,76 @@
                     "processors": "",
                     "groups": "Keyboard and mouse",
                     "action": "Dash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Action",
+            "id": "49047346-db6c-4e6a-ab0f-a14db6eb75fa",
+            "actions": [
+                {
+                    "name": "MeleeAttack",
+                    "type": "Button",
+                    "id": "dee5f377-a3c9-49e9-bde3-f4ea3b8982c2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "RangedAttack",
+                    "type": "Button",
+                    "id": "5dd2a1ca-cd72-4375-9af4-3fb5429b6ed8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "26157088-1387-456c-a76b-99e247eda764",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "Tap,SlowTap",
+                    "processors": "",
+                    "groups": "Keyboard and mouse",
+                    "action": "MeleeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "70037e47-83b5-4aab-8dd2-c79ecf40f69a",
+                    "path": "<Gamepad>/buttonWest",
+                    "interactions": "Tap,SlowTap",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "MeleeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "95183303-a0ef-4728-8bfb-9620e12089ee",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "Tap,SlowTap",
+                    "processors": "",
+                    "groups": "Keyboard and mouse",
+                    "action": "RangedAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "12a48caa-9e10-4bf5-9d8c-abad9a9087f9",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "Tap,SlowTap",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "RangedAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
