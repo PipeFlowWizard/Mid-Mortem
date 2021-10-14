@@ -12,32 +12,37 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashSpeed = 100.0f;
     [SerializeField] private float dashTime = .1f;
     [SerializeField] private float dashCD = .5f;
-    private Camera cam;
+    
+    private Camera _cam;
+    private Animator _anim;
 
-    [SerializeField] private GameObject player;
+    [SerializeField] private GameObject mesh;
 
     public bool mouseEnabled = true;
 
-    private float moveHorizontal;
-    private float moveVertical;
-    private float lookHorizontal;
-    private float lookVertical;
-    private float lastDashTime;
+    private float _moveHorizontal;
+    private float _moveVertical;
+    private float _lookHorizontal;
+    private float _lookVertical;
+    private float _lastDashTime;
 
-    private Vector3 moveDirection;
+    private Vector3 _moveDirection;
 
     private Rigidbody _rigidbody;
+    private WeaponController _weaponController;
 
     private void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
-        cam = Camera.main;
-        lastDashTime = Time.time;
+        _weaponController = GetComponent<WeaponController>();
+        _cam = Camera.main;
+        _lastDashTime = Time.time;
+        _anim = mesh.GetComponent<Animator>();
     }
 
     private void Update()
     {
-        moveDirection = Vector3.forward * moveVertical + Vector3.right * moveHorizontal;
+        _moveDirection = Vector3.forward * _moveVertical + Vector3.right * _moveHorizontal;
 
 
         CheckForMouse();
@@ -50,7 +55,7 @@ public class PlayerController : MonoBehaviour
             RotateTowardLookVector();
         }
 
-        Move(moveDirection * moveSpeed);
+        Move(_moveDirection * moveSpeed);
     }
 
 
@@ -71,25 +76,25 @@ public class PlayerController : MonoBehaviour
 
     private void RotateTowardMouseVector()
     {
-        Ray ray = cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+        Ray ray = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
 
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo, maxDistance: 300f))
         {
             Vector3 target = hitInfo.point;
-            target.y = player.transform.position.y;
-            player.transform.LookAt(target);
+            target.y = mesh.transform.position.y;
+            mesh.transform.LookAt(target);
 
         }
     }
 
     private void RotateTowardLookVector()
     {
-        Vector3 lookDirection = Vector3.forward * lookVertical + Vector3.right * lookHorizontal + moveVertical * Vector3.forward + moveHorizontal * Vector3.right;
+        Vector3 lookDirection = Vector3.forward * _lookVertical + Vector3.right * _lookHorizontal + _moveVertical * Vector3.forward + _moveHorizontal * Vector3.right;
 
         if (lookDirection != Vector3.zero)
         {
-            player.transform.rotation = Quaternion.RotateTowards(player.transform.rotation,
+            mesh.transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation,
                 Quaternion.LookRotation(lookDirection, Vector3.up),
                 rotationSpeed * Time.deltaTime);
 
@@ -98,49 +103,51 @@ public class PlayerController : MonoBehaviour
 
     public void OnMoveInput(float horizontal, float vertical)
     {
-        this.moveVertical = vertical;
-        this.moveHorizontal = horizontal;
+        this._moveVertical = vertical;
+        this._moveHorizontal = horizontal;
         //Debug.Log($"Player Controller: Move Input: ({vertical.ToString()}, {horizontal.ToString()})");
     }
 
     public void OnLookInput(float horizontal, float vertical)
     {
         mouseEnabled = false;
-        this.lookVertical = vertical;
-        this.lookHorizontal = horizontal;
+        this._lookVertical = vertical;
+        this._lookHorizontal = horizontal;
     }
 
     public void OnDashInput()
     {
 
         // Check for dash cooldown
-        if (Time.time > lastDashTime + dashCD) StartCoroutine(Dash());
+        if (Time.time > _lastDashTime + dashCD) StartCoroutine(Dash());
     }
 
     public void OnMeleeInput()
     {
+        _anim.Play("MeleeAttack");
     }
 
-    public void OnMeleeHoldInput()
+    public void OnMeleeChargeInput()
     {
     }
 
     public void OnRangedInput()
     {
+        _weaponController.Cast();
     }
     
-    public void OnRangedHoldInput()
+    public void OnRangedChargeInput()
     {
     }
 
     private IEnumerator Dash()
     {
         float startTime = Time.time;
-        lastDashTime = Time.time;
+        _lastDashTime = Time.time;
         while (Time.time < startTime + dashTime)
         {
             // Could use the moveDirection or playerForward
-            Move(moveDirection * dashSpeed);
+            Move(_moveDirection * dashSpeed);
             //Move(player.transform.forward * dashSpeed * Time.deltaTime);
             yield return null;
         }
