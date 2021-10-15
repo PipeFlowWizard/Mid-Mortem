@@ -38,6 +38,7 @@ public class PlayerController : MonoBehaviour
         _cam = Camera.main;
         _lastDashTime = Time.time;
         _anim = mesh.GetComponent<Animator>();
+        
     }
 
     private void Update()
