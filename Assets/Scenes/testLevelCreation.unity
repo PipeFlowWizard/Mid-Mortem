@@ -467,6 +467,9 @@ MonoBehaviour:
   - {fileID: 6146258911036884984, guid: 54bc3ae36af2142429ec3e69a316d83a, type: 3}
   roomXSize: 10
   roomZsize: 10
+  leftRight: {fileID: 6146258911036884984, guid: 54bc3ae36af2142429ec3e69a316d83a, type: 3}
+  leftRightBot: {fileID: 7107966731409505199, guid: 175cc78166c44d54c9d296d8072c98e3, type: 3}
+  leftRightTop: {fileID: 8806623146712373602, guid: 49a453d12ecad9d4e8bea08601b9328a, type: 3}
   gridN: 4
   gridM: 4
 --- !u!4 &2110821420

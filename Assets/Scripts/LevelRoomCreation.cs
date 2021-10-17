@@ -8,7 +8,10 @@ public class LevelRoomCreation : MonoBehaviour
     public GameObject[] possibleLevels;
     public int roomXSize;
     public int roomZsize;
-  
+    public GameObject leftRight;
+    public GameObject leftRightBot;
+    public GameObject leftRightTop;
+
     public int gridN;
     public int gridM;
     //first two ints are coordinates x and z, third int is the type of the room 
@@ -38,11 +41,41 @@ public class LevelRoomCreation : MonoBehaviour
             for(int j = 0; j <gridM; j ++)
             {
 
-                if (grid[i, j] != 0)
+                if (grid[i, j] == 0)
                 {
+                    ////random
+                    //int randIndex = Random.Range(0, possibleLevels.Length);
+
+                    //Instantiate<GameObject>(possibleLevels[randIndex], new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                }
+                else if (grid[i, j] == 1)
+                {
+                    //guaranteed left right
+                   
+
+                    Instantiate<GameObject>(leftRight, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                }
+                else if (grid[i, j] == 2)
+                {
+                    //guaranteed left right bot
                     int randIndex = Random.Range(0, possibleLevels.Length);
 
-                    Instantiate<GameObject>(possibleLevels[randIndex], new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                    Instantiate<GameObject>(leftRightBot, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                }
+                else if (grid[i, j] == 3)
+                {
+                    //guaranteed left right top
+                    int randIndex = Random.Range(0, possibleLevels.Length);
+
+                    Instantiate<GameObject>(leftRightTop, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                }
+                else if (grid[i, j] == 4)
+                {
+                    //start room
+                }
+                else if(grid[i, j] == 5)
+                {
+                   //end room
                 }
             }
         }
@@ -59,8 +92,8 @@ public class LevelRoomCreation : MonoBehaviour
         grid = new int[gridN, gridM];
         bool endDoor =false;
         //choose starting point
-        int initialX = 0;
-        int initialZ = Random.Range(0, gridM);
+        int initialX = Random.Range(0, gridN);
+        int initialZ = 0;
         grid[initialX, initialZ] = 4;
         while (!endDoor)
         {
@@ -70,8 +103,12 @@ public class LevelRoomCreation : MonoBehaviour
                 //move left
                 if (initialX != 0)
                 {
+                    
                     initialX--;
-                    grid[initialX, initialZ] = 1;
+                    if (grid[initialX, initialZ] == 4) { grid[initialX, initialZ] = 4; }
+                    
+                    else grid[initialX, initialZ] = 1;
+                    
                 }
 
             }
@@ -80,8 +117,10 @@ public class LevelRoomCreation : MonoBehaviour
                 //move right
                 if (initialX != (gridN-1))
                 {
+                    
                     initialX++;
-                    grid[initialX, initialZ] = 1;
+                    if (grid[initialX, initialZ] == 4) { grid[initialX, initialZ] = 4; }
+                    else grid[initialX, initialZ] = 1;
                 }
             }
             else if (whereToGo == 5)
@@ -93,7 +132,9 @@ public class LevelRoomCreation : MonoBehaviour
                     break;
                 }
                 //move up
-                grid[initialX, initialZ] = 3;
+                if (grid[initialX, initialZ] == 4) { grid[initialX, initialZ] = 4; }
+
+                else grid[initialX, initialZ] = 3;
                 initialZ++;
                 grid[initialX, initialZ] = 2;
             }
