@@ -77,11 +77,9 @@ public class InputController : MonoBehaviour
         {
             case TapInteraction _:
                 meleeInputEvent.Invoke();
-                Debug.Log("Melee attack");
                 break;
             case SlowTapInteraction _:
                 meleeChargeInputEvent.Invoke();
-                Debug.Log("Melee charged attack");
                 break;
         }
     }
@@ -92,11 +90,9 @@ public class InputController : MonoBehaviour
         {
             case TapInteraction _:
                 rangedInputEvent.Invoke();
-                Debug.Log("Ranged attack");
                 break;
             case SlowTapInteraction _:
                 rangedChargeInputEvent.Invoke();
-                Debug.Log("Ranged charged attack");
                 break;
         }
     }

@@ -7,16 +7,15 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Player player;
+    
     [SerializeField] private float moveSpeed = 20.0f;
     [SerializeField] private float rotationSpeed = 360.0f;
-    [SerializeField] private float dashSpeed = 100.0f;
-    [SerializeField] private float dashTime = .1f;
-    [SerializeField] private float dashCD = .5f;
+    [SerializeField] private float dashCd = .5f;
     
     private Camera _cam;
-    private Animator _anim;
-
-    [SerializeField] private GameObject mesh;
+    public Animator anim;
+    public GameObject mesh;
 
     public bool mouseEnabled = true;
 
@@ -27,24 +26,27 @@ public class PlayerController : MonoBehaviour
     private float _lastDashTime;
 
     private Vector3 _moveDirection;
+    private Vector3 _velocity;
 
-    private Rigidbody _rigidbody;
-    private WeaponController _weaponController;
+
 
     private void Start()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _weaponController = GetComponent<WeaponController>();
         _cam = Camera.main;
         _lastDashTime = Time.time;
-        _anim = mesh.GetComponent<Animator>();
-        
+        // anim = mesh.GetComponent<Animator>();
     }
 
     private void Update()
     {
         _moveDirection = Vector3.forward * _moveVertical + Vector3.right * _moveHorizontal;
+        _velocity = _moveDirection * moveSpeed;
 
+        if (_moveDirection.magnitude < 0.1f)
+        {
+            // State = idle
+            _velocity = Vector2.zero;
+        }
 
         CheckForMouse();
         if (mouseEnabled)
@@ -56,15 +58,20 @@ public class PlayerController : MonoBehaviour
             RotateTowardLookVector();
         }
 
-        Move(_moveDirection * moveSpeed);
     }
 
-
-    private void Move(Vector3 velocity)
+    private void FixedUpdate()
     {
-        //transform.position += velocity;
-        _rigidbody.AddForce(velocity, ForceMode.Acceleration);
+        ApplyVelocity(Time.deltaTime);
     }
+
+    private void ApplyVelocity(float delta)
+    {
+        // player.Rigidbody.AddForce(velocity, ForceMode.Acceleration);
+        var rb = player.Rigidbody;
+        rb.MovePosition(rb.position + _velocity * delta);
+    }
+    
 
     private void CheckForMouse()
     {
@@ -98,7 +105,6 @@ public class PlayerController : MonoBehaviour
             mesh.transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation,
                 Quaternion.LookRotation(lookDirection, Vector3.up),
                 rotationSpeed * Time.deltaTime);
-
         }
     }
 
@@ -106,7 +112,6 @@ public class PlayerController : MonoBehaviour
     {
         this._moveVertical = vertical;
         this._moveHorizontal = horizontal;
-        //Debug.Log($"Player Controller: Move Input: ({vertical.ToString()}, {horizontal.ToString()})");
     }
 
     public void OnLookInput(float horizontal, float vertical)
@@ -116,46 +121,16 @@ public class PlayerController : MonoBehaviour
         this._lookHorizontal = horizontal;
     }
 
+
     public void OnDashInput()
     {
-
         // Check for dash cooldown
-        if (Time.time > _lastDashTime + dashCD) StartCoroutine(Dash());
-    }
-
-    public void OnMeleeInput()
-    {
-        _anim.Play("MeleeAttack");
-    }
-
-    public void OnMeleeChargeInput()
-    {
-    }
-
-    public void OnRangedInput()
-    {
-        _weaponController.Cast();
-    }
-    
-    public void OnRangedChargeInput()
-    {
-    }
-
-    private IEnumerator Dash()
-    {
-        float startTime = Time.time;
-        _lastDashTime = Time.time;
-        while (Time.time < startTime + dashTime)
+        if (player.CurrentAbility && Time.time > _lastDashTime + dashCd && player.canDash)
         {
-            // Could use the moveDirection or playerForward
-            Move(_moveDirection * dashSpeed);
-            //Move(player.transform.forward * dashSpeed * Time.deltaTime);
-            yield return null;
-        }
-
+            _lastDashTime = Time.time;
+            StartCoroutine(player.AbilityCo(player.CurrentAbility.duration));
+        } 
     }
-
-
 
 }
 

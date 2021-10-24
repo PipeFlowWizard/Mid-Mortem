@@ -25,13 +25,7 @@ public class WeaponController : MonoBehaviour
         _attachedWeapon.transform.parent = weaponHold;
     }
 
-    public void Cast()
-    {
-        if (_attachedWeapon != null)
-        {
-            _attachedWeapon.Cast();
-        }
-    }
+
     
 
 }

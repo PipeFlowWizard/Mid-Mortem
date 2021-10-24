@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
 public class Spell : MonoBehaviour
 {
 
     [SerializeField] private float speed;
     [SerializeField] private float damage;
     [SerializeField] private float lifetime = 10.0f;
+    [SerializeField] private Rigidbody rb;
 
     private float _spawnTime;
 
@@ -18,27 +20,36 @@ public class Spell : MonoBehaviour
         _spawnTime = Time.time;
     }
 
-    public void SetSpeed(float speed)
+    // I'll call this myself, as opposed to Start()
+    public void Initialize(Vector3 forward)
     {
-        this.speed = speed;
+        rb.velocity = forward * speed;
     }
+
     private void Update()
     {
-        transform.Translate(Vector3.forward * speed * Time.deltaTime);
-
         if (Time.time > _spawnTime + lifetime)
         {
-            if (gameObject) Destroy(gameObject);
+            if (gameObject)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 
-    // Todo: replace with raycasting
-    private void OnCollisionEnter(Collision other)
+
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-            // Apply damage
-            Destroy(other.gameObject);
+            // Damage
+            Debug.Log("Enemy hit");
+            Destroy(gameObject);
+        }
+
+        if (gameObject && !other.CompareTag("Player") && !other.CompareTag("Ground"))
+        {
+            Debug.Log(other.ToString());
         }
     }
 }
