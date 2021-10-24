@@ -49,7 +49,7 @@ public class Spell : MonoBehaviour
 
         if (gameObject && !other.CompareTag("Player") && !other.CompareTag("Ground"))
         {
-            Debug.Log(other.ToString());
+            Destroy(gameObject);
         }
     }
 }
