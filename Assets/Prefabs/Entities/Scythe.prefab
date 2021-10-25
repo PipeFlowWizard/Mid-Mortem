@@ -508,7 +508,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0825f6018a86784478bced4ba00e4094, type: 2}
+  - {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -589,7 +589,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20f3b7766d330bf48b1548a81c347182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spell: {fileID: 1340668513475526878, guid: 1837cb9a7ee96b746b67f2ab7ea75817, type: 3}
-  spellOrigin: {fileID: 0}
-  spellSpeed: 50
-  spellCD: 100
