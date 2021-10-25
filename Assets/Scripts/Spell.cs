@@ -8,7 +8,7 @@ public class Spell : MonoBehaviour
 {
 
     [SerializeField] private float speed;
-    [SerializeField] private float damage;
+    [SerializeField] private int damage;
     [SerializeField] private float lifetime = 10.0f;
     [SerializeField] private Rigidbody rb;
 
@@ -21,9 +21,10 @@ public class Spell : MonoBehaviour
     }
 
     // I'll call this myself, as opposed to Start()
-    public void Initialize(Vector3 forward)
+    public void Initialize(Vector3 forward, int attack)
     {
         rb.velocity = forward * speed;
+        damage = attack;
     }
 
     private void Update()
@@ -44,6 +45,7 @@ public class Spell : MonoBehaviour
         {
             // Damage
             Debug.Log("Enemy hit");
+            other.GetComponent<Enemy>().TakeDamage(damage);
             Destroy(gameObject);
         }
 

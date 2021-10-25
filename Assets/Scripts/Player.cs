@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SpellCaster))]
 [RequireComponent(typeof(WeaponController))]
-public class Player : MonoBehaviour
+public class Player : Damageable
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Rigidbody rb;
@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
 
     public void OnRangedInput()
     {
-       spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward);
+       spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward, characterStats.attack);
     }
     
     public void OnRangedChargeInput()

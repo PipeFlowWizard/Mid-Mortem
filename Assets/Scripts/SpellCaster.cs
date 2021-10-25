@@ -9,13 +9,13 @@ public class SpellCaster : MonoBehaviour
 
 
     private float _nextSpellTime = 0f;
-    public void Cast(Vector3 spellOrigin, Vector3 spellForward)
+    public void Cast(Vector3 spellOrigin, Vector3 spellForward, int attack)
     {
         if (Time.time > _nextSpellTime)
         {
             _nextSpellTime = Time.time + spellCD / 1000;
             Spell nSpell = Instantiate(spell, spellOrigin, Quaternion.identity);
-            nSpell.Initialize(spellForward);
+            nSpell.Initialize(spellForward, attack);
         }
         
     }
