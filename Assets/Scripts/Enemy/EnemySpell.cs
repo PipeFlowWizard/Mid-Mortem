@@ -10,6 +10,8 @@ public class EnemySpell : MonoBehaviour
     private int attackPower;
     // Lifetime of spell is 15 seconds
     [SerializeField] private int lifeTime = 15;
+    // Tag for Player Interaction
+    private string PLAYER = "PlayerMesh";
 
     // Start is called before the first frame update
     void Awake()
@@ -33,13 +35,14 @@ public class EnemySpell : MonoBehaviour
         
     }
 
-    // When EnemySpell collides with Player, it deals damage, else it is destroyed
+    // When EnemySpell collides with PLAYER, it deals damage, else it is destroyed
     private void OnTriggerEnter(Collider col)
     {
-        // If col has Player tag, then it deals attack damage
-        if(col.tag == "Player")
+        // If col has PLAYER tag, then it deals attack damage
+        if(col.tag == PLAYER)
         {
-            Player player = col.GetComponent<Player>();
+            // Player component is found in Parent Player object
+            Player player = col.GetComponentInParent<Player>();
             player.TakeDamage(attackPower);
         }
         // Else, Start Coroutine to destroy EnemySpell after 15 seconds
