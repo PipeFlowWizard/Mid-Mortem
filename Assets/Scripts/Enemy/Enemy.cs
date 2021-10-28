@@ -58,7 +58,8 @@ public class Enemy : Damageable
         // StartCoroutine(HealthChange());
     }
 
-    // Update is called once per frame
+    
+    // Why is this in fixed update?
     void FixedUpdate()
     {
         // Get Health of Enemy to determine color
