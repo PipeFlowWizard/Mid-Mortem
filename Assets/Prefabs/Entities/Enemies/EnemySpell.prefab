@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7401946214674320646}
   - component: {fileID: 4244123155154827929}
   - component: {fileID: 7255100261022526914}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: EnemySpell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4aacd20bc79d5b7469cabf64a33a4147, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -108,7 +108,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8588160654426122015}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -125,4 +125,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d1f4eac6afaf774d8a40848e82fc7df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spellSpeed: 5
+  lifeTime: 15
