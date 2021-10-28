@@ -21,7 +21,8 @@ public abstract class Damageable : MonoBehaviour
 
 
     // Get Base Health and MP of Character
-    private void Awake()
+    // Dont call on awake, characterStats not loaded in yet
+    private void Start()
     {
         BASE_HEALTH = characterStats.health;
         health = characterStats.health;

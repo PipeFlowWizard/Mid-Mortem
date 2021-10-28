@@ -32,9 +32,9 @@ public class Enemy : Damageable
     public bool waitingForReap;                             // Whether enemy is waiting to be Reaped
 
     // Tags for possible Enemy interaction
-    private string PLAYER = "PlayerMesh";
-    private string ENEMY = "Enemy";
-    private string SCYTHE = "Scythe";
+    private const string PLAYER = "Player";
+    private const string ENEMY = "Enemy";
+    private const string SCYTHE = "PlayerHurtBox";
 
     // Start is called before the first frame update
     void Start()
@@ -230,13 +230,13 @@ public class Enemy : Damageable
     private void OnCollisionEnter(Collision col)
     {
         // If collide with a Player, they take damage and then they move back
-        if (col.transform.tag == PLAYER)
+        if (col.transform.CompareTag(PLAYER))
         {
             meleeAttack = false;
             eRigidBody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
         }
         // If collide with another Enemy, then move to left or right
-        if(col.transform.tag == ENEMY)
+        if(col.transform.CompareTag(ENEMY))
         {
             int index = Random.Range(1, 3);
             if(index == 1)
@@ -255,13 +255,13 @@ public class Enemy : Damageable
     private void OnCollisionExit(Collision col)
     {
         // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
-        if(col.transform.tag == PLAYER)
+        if(col.transform.CompareTag(PLAYER))
         {
             StopEnemy();
             StartCoroutine(MeleeAttackTimer());
         }
         // After Enemy collides with Another Enemy, they stop moving
-        if(col.transform.tag == ENEMY)
+        if(col.transform.CompareTag(ENEMY))
         {
             StopEnemy();
         }
@@ -270,7 +270,7 @@ public class Enemy : Damageable
     private void OnTriggerEnter(Collider other)
     {
         // If Enemy is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
-        if (other.tag == SCYTHE)
+        if (other.CompareTag(SCYTHE))
         {
             // If Enemy is waitingForReap, then they can call the ReapEnemy Function
             // TODO: Add in Reap Animation and adding modifier 
