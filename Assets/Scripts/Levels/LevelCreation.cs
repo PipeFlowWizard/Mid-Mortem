@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-public class LevelRoomCreation : MonoBehaviour
+public class LevelCreation : MonoBehaviour
 {
     public GameObject[] possibleLevels;
     public int roomXSize;
     public int roomZsize;
-    public GameObject leftRight;
+    public GameObject roomPrefab;
     public GameObject leftRightBot;
     public GameObject leftRightTop;
 
@@ -20,7 +20,12 @@ public class LevelRoomCreation : MonoBehaviour
     int[,] grid;
         
     // Start is called before the first frame update
+    [ExecuteInEditMode]
     void Start()
+    {
+        
+    }
+    void createLevel(int keys, int roomSize)
     {
         pathToVictory();
 
@@ -35,10 +40,10 @@ public class LevelRoomCreation : MonoBehaviour
             sb.AppendLine();
         }
         Debug.Log(sb.ToString());
-        for (int i = 0; i <gridN; i ++)
+        for (int i = 0; i < gridN; i++)
         {
-            
-            for(int j = 0; j <gridM; j ++)
+
+            for (int j = 0; j < gridM; j++)
             {
 
                 if (grid[i, j] == 0)
@@ -46,14 +51,16 @@ public class LevelRoomCreation : MonoBehaviour
                     ////random
                     int randIndex = Random.Range(0, possibleLevels.Length);
 
-                    Instantiate<GameObject>(possibleLevels[randIndex], new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                    var room1 = Instantiate<GameObject>(roomPrefab, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                    room1.GetComponent<RoomCreation>().topDoor = false;
+
                 }
                 else if (grid[i, j] == 1)
                 {
                     //guaranteed left right
-                   
 
-                    Instantiate<GameObject>(leftRight, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+
+                    Instantiate<GameObject>(roomPrefab, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
                 }
                 else if (grid[i, j] == 2)
                 {
@@ -73,14 +80,14 @@ public class LevelRoomCreation : MonoBehaviour
                 {
                     //start room
                 }
-                else if(grid[i, j] == 5)
+                else if (grid[i, j] == 5)
                 {
-                   //end room
+                    //end room
                 }
             }
         }
+        //return list of room
     }
-
     // Update is called once per frame
     void Update()
     {

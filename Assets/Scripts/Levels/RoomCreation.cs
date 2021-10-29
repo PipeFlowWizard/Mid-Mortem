@@ -6,6 +6,7 @@ public class RoomCreation : MonoBehaviour
 {
     public bool botDoor, topDoor, rightDoor, leftDoor;
     private GameObject bot, top, right, left;
+    private GameObject botRoom, topRoom, rightRoom, leftRoom;
 
     // Start is called before the first frame update
     [System.Obsolete]
@@ -21,10 +22,16 @@ public class RoomCreation : MonoBehaviour
         right.SetActive(rightDoor);
         left.SetActive(leftDoor);
     }
+    //can create fucntion and call it from levelcreation
+
 
     // Update is called once per frame
     void Update()
     {
         
+    }
+    void ObjectPlacement()
+    {
+
     }
 }
