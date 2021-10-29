@@ -44,9 +44,9 @@ public class LevelRoomCreation : MonoBehaviour
                 if (grid[i, j] == 0)
                 {
                     ////random
-                    //int randIndex = Random.Range(0, possibleLevels.Length);
+                    int randIndex = Random.Range(0, possibleLevels.Length);
 
-                    //Instantiate<GameObject>(possibleLevels[randIndex], new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                    Instantiate<GameObject>(possibleLevels[randIndex], new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
                 }
                 else if (grid[i, j] == 1)
                 {
