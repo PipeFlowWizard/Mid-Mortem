@@ -16,14 +16,16 @@ public class Player : Damageable
     [SerializeField] private WeaponController weaponController;
     [SerializeField] private Ability currentAbility;
     [SerializeField] private Transform shootOut;
-    
+
+    [SerializeField] private Material reaperMaterial;
     public PlayerController PlayerController => playerController;
     public Ability CurrentAbility => currentAbility;
-    
     public Rigidbody Rigidbody => rb;
     public SpellCaster SpellCaster => spellCaster;
 
-    public bool canDash;
+    [HideInInspector] public bool canDash;
+
+    public GameEvent playerDeathEvent;
 
     public void Start()
     {
@@ -48,6 +50,9 @@ public class Player : Damageable
         playerController.anim.Play("MeleeAttack");
     }
     
+    private void ChargedMeleeAttack()
+    {
+    }
     public void OnMeleeInput()
     {
         MeleeAttack();
@@ -55,6 +60,7 @@ public class Player : Damageable
 
     public void OnMeleeChargeInput()
     {
+        ChargedMeleeAttack();
     }
 
     public void OnRangedInput()
@@ -65,5 +71,44 @@ public class Player : Damageable
     public void OnRangedChargeInput()
     {
     }
+
+    public override void TakeDamage(int amount)
+    {
+        base.TakeDamage(amount);
+        
+        // Player ded
+        if (GetHealth() <= 0)
+        {
+            Die();
+        }
+
+        for (int i = 0; i < 5; i++)
+        {
+            StartCoroutine(DamageFlash());
+        }
+        // Make sure reaper is back to origin color (just in case)
+        reaperMaterial.color = Color.black;
+    }
+
+    private IEnumerator DamageFlash()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            Color flash = Color.white;
+            reaperMaterial.color = flash;
+            yield return new WaitForSeconds(.2f);
+            reaperMaterial.color = Color.black;
+            yield return new WaitForSeconds(.2f);
+        }
+
+    }
+
+    private void Die()
+    {
+        // HUD and Game manager can listen to this event
+        playerDeathEvent.Raise();
+        Destroy(gameObject);
+    }
+    
 
 }

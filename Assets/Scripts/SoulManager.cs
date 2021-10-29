@@ -7,8 +7,10 @@ using UnityEngine.InputSystem;
 
 public class SoulManager : MonoBehaviour
 {
+    // All for demo purposes, add to real UI when needed
     [SerializeField] private TextMeshProUGUI soulText;
     [SerializeField] private FloatValue soulCounter;
+    [SerializeField] private GameObject dedUI;
 
     private void Start()
     {
@@ -22,5 +24,11 @@ public class SoulManager : MonoBehaviour
     public void OnSoulCountUpdate()
     {
         soulText.text = soulCounter.runTimeValue.ToString();
+    }
+
+    public void OnDiedEvent()
+    {
+        dedUI.SetActive(true);
+        
     }
 }

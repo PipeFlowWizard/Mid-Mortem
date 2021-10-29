@@ -37,7 +37,7 @@ public abstract class Damageable : MonoBehaviour
 
     // TakeDamage subtracts passed amount from health
     // Passed value is also multiplied by current defense of character
-    public void TakeDamage(int amount)
+    public virtual void TakeDamage(int amount)
     {
         if (health > 0)
         {

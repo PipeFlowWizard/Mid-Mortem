@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using UnityEngine;
 
 // General Enemy class for Enemies
@@ -65,7 +66,10 @@ public class Enemy : Damageable
         // Get Health of Enemy to determine color
         SetEnemyHealthState();
         // Call Action() for currentState 
-        currentState.Action();
+        if (target)
+        {
+            currentState.Action();
+        }
     }
 
     // Rotate Enemy toward Player
@@ -258,6 +262,9 @@ public class Enemy : Damageable
         // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
         if(col.transform.CompareTag(PLAYER))
         {
+            // Debug.Log("Player collision");
+            var player = col.gameObject.GetComponent<Player>();
+            player.TakeDamage(characterStats.attack);
             StopEnemy();
             StartCoroutine(MeleeAttackTimer());
         }

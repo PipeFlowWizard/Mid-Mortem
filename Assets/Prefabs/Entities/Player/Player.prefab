@@ -724,7 +724,9 @@ MonoBehaviour:
   weaponController: {fileID: 6037823677423622052}
   currentAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   shootOut: {fileID: 6037823677484136832}
+  reaperMaterial: {fileID: 0}
   canDash: 0
+  playerDeathEvent: {fileID: 0}
 --- !u!114 &5980914422587083454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1014,7 +1016,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6037823678831599202}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.591, y: -0.285, z: 0}
+  m_LocalPosition: {x: 0.44325, y: -0.67775, z: -0.342}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8000380157025775893}
