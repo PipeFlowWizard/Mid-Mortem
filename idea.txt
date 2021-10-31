@@ -1,0 +1,21 @@
+create methods for different room creation in level creation thing
+create topLeft
+create random etc
+
+bool key, bool start, bool boss
+
+create(bool key=fals, bool boss=false, int size = 10, etc) 
+
+have size n int to determine size of room
+
+slide animation to open doors
+material set
+spawn methods empty
+return grid or list of all rooms created
+
+dont find child of game object maybe create from scratch.... tbd
+
+
+for scalable room:
+
+n coordinates + 2 door + 4 walls

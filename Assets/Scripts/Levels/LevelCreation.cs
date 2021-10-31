@@ -25,7 +25,7 @@ public class LevelCreation : MonoBehaviour
     {
         
     }
-    void createLevel(int keys, int roomSize)
+    void createLevel(int keys, int roomSize, int gridN=4, int gridM=4)
     {
         pathToVictory();
 
@@ -93,8 +93,11 @@ public class LevelCreation : MonoBehaviour
     {
         
     }
-
-    void pathToVictory()
+    GameObject createRoom()
+    {
+        
+    }
+    private void pathToVictory()
     {
         grid = new int[gridN, gridM];
         bool endDoor =false;
