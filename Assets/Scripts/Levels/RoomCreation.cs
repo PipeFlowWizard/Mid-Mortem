@@ -64,10 +64,13 @@ public class RoomCreation : MonoBehaviour
         enemySelf = enemy;
         bossRoomSelf = boss;
         startSelf = start;
-        bot.SetActive(botDoor);
-        top.SetActive(topDoor);
-        right.SetActive(rightDoor);
-        left.SetActive(leftDoor);
+
+        bot.GetComponent<MeshRenderer>().material = botDoor ? green : blue;
+        top.GetComponent<MeshRenderer>().material = topDoor ? green : blue;
+        left.GetComponent<MeshRenderer>().material = leftDoor ? green : blue;
+        right.GetComponent<MeshRenderer>().material = rightDoor ? green : blue;
+
+
         if (enemySelf)
         {
             floor.GetComponent<MeshRenderer>().material = stone;
@@ -108,5 +111,11 @@ public class RoomCreation : MonoBehaviour
         floor.GetComponent<MeshRenderer>().material = pink;
         keyRoomSelf = true;
     }
-
+    public void openDoors()
+    {
+        bot.SetActive(botDoor);
+        top.SetActive(topDoor);
+        right.SetActive(rightDoor);
+        left.SetActive(leftDoor);
+    }
 }
