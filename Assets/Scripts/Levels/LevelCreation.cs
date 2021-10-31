@@ -5,12 +5,10 @@ using UnityEngine;
 
 public class LevelCreation : MonoBehaviour
 {
-    public GameObject[] possibleLevels;
+    
     public int roomXSize;
     public int roomZsize;
     public GameObject roomPrefab;
-    public GameObject leftRightBot;
-    public GameObject leftRightTop;
 
     public int gridN;
     public int gridM;
@@ -18,17 +16,20 @@ public class LevelCreation : MonoBehaviour
     //type is as follows: 0: free-for-all; 1 guaranteed left-right, 2 guaranteed left right bot, 3 guaranteed left right top,4 start,5 end
     //resource used http://tinysubversions.com/spelunkyGen/
     int[,] grid;
+    GameObject[,] placedGrid;
         
     // Start is called before the first frame update
     [ExecuteInEditMode]
     void Start()
     {
-        
+        createLevel();        
     }
-    void createLevel(int keys, int roomSize, int gridN=4, int gridM=4)
+    List<GameObject> createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
     {
+        //guarantee there is a key
+       //return list
         pathToVictory();
-
+        placedGrid = new GameObject[gridN, gridM];
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < gridN; i++)
         {
@@ -40,63 +41,91 @@ public class LevelCreation : MonoBehaviour
             sb.AppendLine();
         }
         Debug.Log(sb.ToString());
+
+        Vector3 pos;
+        GameObject room = null;
+        List<GameObject> rooms = new List<GameObject>();
         for (int i = 0; i < gridN; i++)
         {
 
             for (int j = 0; j < gridM; j++)
             {
-
+               
+                pos = new Vector3(i * roomXSize, 0, j * roomZsize);
+                print(pos);
                 if (grid[i, j] == 0)
                 {
-                    ////random
-                    int randIndex = Random.Range(0, possibleLevels.Length);
-
-                    var room1 = Instantiate<GameObject>(roomPrefab, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
-                    room1.GetComponent<RoomCreation>().topDoor = false;
+                    //random without key and with enemies
+                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                    room.GetComponent<RoomCreation>().createRoom(pos,boss:false,start:false);
 
                 }
                 else if (grid[i, j] == 1)
                 {
                     //guaranteed left right
-
-
-                    Instantiate<GameObject>(roomPrefab, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                    room.GetComponent<RoomCreation>().createRoom(pos, leftAssured:true, rightAssured:true,start:false);
                 }
                 else if (grid[i, j] == 2)
                 {
                     //guaranteed left right bot
-                    int randIndex = Random.Range(0, possibleLevels.Length);
-
-                    Instantiate<GameObject>(leftRightBot, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
+                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                    room.GetComponent<RoomCreation>().createRoom(pos, leftAssured: true,rightAssured:true,botAssured:true, start: false);
                 }
                 else if (grid[i, j] == 3)
                 {
                     //guaranteed left right top
-                    int randIndex = Random.Range(0, possibleLevels.Length);
+                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                    room.GetComponent<RoomCreation>().createRoom(pos, leftAssured: true,rightAssured:true,topAssured:true, start: false);
 
-                    Instantiate<GameObject>(leftRightTop, new Vector3(i * roomXSize, 0, j * roomZsize), Quaternion.identity);
                 }
                 else if (grid[i, j] == 4)
                 {
+                    print("start"+"  "+pos);
                     //start room
+                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                    room.GetComponent<RoomCreation>().createRoom(pos, leftAssured: true, rightAssured: true, start:true,boss:false,enemy:false);
+
+                    print(room.transform.position);
                 }
                 else if (grid[i, j] == 5)
                 {
-                    //end room
+                    print("end" + "  " + pos);
+                    //end room boss assured
+                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                    room.GetComponent<RoomCreation>().createRoom(pos, leftAssured: true, rightAssured: true, botAssured: true, boss:true,start:false,enemy:false);
+                    
                 }
+                placedGrid[i, j] = room;
+                rooms.Add(room);
             }
         }
-        //return list of room
+        addKey(keys);
+        return rooms;
+    }
+    private void addKey(int nbKeys)
+    {
+        while (nbKeys >= 1)
+        {
+            int x = Random.Range(0,gridN);
+            int z = Random.Range(0, gridM);
+            GameObject room = placedGrid[x, z];
+            int theTypeOfRoom = grid[x, z];
+            if((theTypeOfRoom == 1|| theTypeOfRoom == 2 || theTypeOfRoom == 3) && !room.GetComponent<RoomCreation>().keyRoomSelf)
+            {
+                room.GetComponent<RoomCreation>().spawnKey();
+                nbKeys--;
+            }
+
+        }
     }
     // Update is called once per frame
     void Update()
     {
         
     }
-    GameObject createRoom()
-    {
-        
-    }
+    //booleans are for keys, doors, enemy, start, end flags; ratio is to play with the randomness of the rooms. If you want more open rooms than closed one, use a smaller ratio
+   
     private void pathToVictory()
     {
         grid = new int[gridN, gridM];
