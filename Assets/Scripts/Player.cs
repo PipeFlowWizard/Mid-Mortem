@@ -30,6 +30,7 @@ public class Player : Damageable
     public void Start()
     {
         canDash = true;
+        reaperMaterial.color = Color.black;
     }
 
 

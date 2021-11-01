@@ -37,6 +37,11 @@ public class Enemy : Damageable
     private const string ENEMY = "Enemy";
     private const string SCYTHE = "PlayerHurtBox";
 
+    [Header("Events")] 
+    public GameEvent deathEvent;
+    public GameEvent reapedEvent;
+    
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -280,15 +285,24 @@ public class Enemy : Damageable
         // If Enemy is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
         if (other.CompareTag(SCYTHE))
         {
+            var player = other.GetComponentInParent<Player>();
+            
             // If Enemy is waitingForReap, then they can call the ReapEnemy Function
             // TODO: Add in Reap Animation and adding modifier 
             if (waitingForReap)
             {
-
+                Debug.Log("I T S  R E A P I N'  T I M E");
+                reapedEvent.Raise();
+                StopEnemy();
+                KillEnemy();
             }
             // Else, the Enemy just takes normal damage
             else
             {
+                if (player)
+                {
+                    TakeDamage(player.characterStats.attack);
+                }
 
             }
         }
@@ -344,7 +358,9 @@ public class Enemy : Damageable
 
     // Destroy Enemy after 3 seconds
     private IEnumerator EnemyKilled()
-    {
+    { 
+        deathEvent.Raise();
+            
         // After 3 seconds, destroy Enemy Game Object
         yield return new WaitForSeconds(characterStats.rangedSpawn);
         Destroy(gameObject);
