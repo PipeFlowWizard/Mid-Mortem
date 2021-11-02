@@ -60,7 +60,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 86bc1115b2f90a44a9922b79874c73ad, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -535,7 +535,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 86bc1115b2f90a44a9922b79874c73ad, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -725,7 +725,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 86bc1115b2f90a44a9922b79874c73ad, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1128,9 +1128,9 @@ MonoBehaviour:
   right: {fileID: 3383622976315188286}
   left: {fileID: 8048775438066280702}
   floor: {fileID: 5438335544988459809}
-  blue: {fileID: 2100000, guid: 86bc1115b2f90a44a9922b79874c73ad, type: 2}
+  blue: {fileID: 2100000, guid: a2c40f8d37326894c92075fd2274dcd3, type: 2}
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
-  pink: {fileID: 2100000, guid: e917e8cac8b68a642a57fe281a765910, type: 2}
+  pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
   x: 0
   z: 0
@@ -1196,7 +1196,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 86bc1115b2f90a44a9922b79874c73ad, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

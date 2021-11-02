@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoomCreation : MonoBehaviour
+public class Room : MonoBehaviour
 {
     public bool botDoor, topDoor, rightDoor, leftDoor, bossRoomSelf,keyRoomSelf, startSelf, enemySelf;
     [SerializeField]
@@ -14,13 +14,14 @@ public class RoomCreation : MonoBehaviour
     [SerializeField]
     private List<GameObject> xWalls, zWalls;
     private GameObject botRoom, topRoom, rightRoom, leftRoom;
-    
+    private Level _level;
+    public Vector2 spawnArea = Vector2.one;
 
     // Start is called before the first frame update
 
     void Start()
     {
-        
+        _level = GetComponentInParent<Level>();
     }
     //can create fucntion and call it from levelcreation
     public GameObject createRoom(Vector3 pos, bool topAssured = false, bool botAssured = false, bool rightAssured = false, bool leftAssured = false, float ratio = 0.33f,  bool enemy = true, bool boss = false, bool start = false)
@@ -118,4 +119,18 @@ public class RoomCreation : MonoBehaviour
         right.SetActive(rightDoor);
         left.SetActive(leftDoor);
     }
+
+    public void SetLevel(Level level)
+    {
+        this._level = level;
+    }
+
+    public void SpawnInRoomRandom()
+    {
+        //TODO: Make this spawn enemies and items instead of a generic gameobject
+        var gameObject = new GameObject("Spawned");
+        _level.Spawn(Level.SamplePoint(transform.position, spawnArea),(gameObject));
+    }
+    
+    
 }
