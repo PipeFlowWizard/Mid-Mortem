@@ -30,6 +30,7 @@ public class Room : MonoBehaviour
     public GameObject createRoom(Vector3 pos, bool topAssured = false, bool botAssured = false, bool rightAssured = false, bool leftAssured = false, float ratio = 0.33f,  bool enemy = true, bool boss = false, bool start = false)
 
     {
+        ScaleMode(3);
         if (topAssured)
         {
             topDoor = false;
@@ -134,7 +135,46 @@ public class Room : MonoBehaviour
         var point = Level.SamplePoint(transform.position, spawnArea);
         _level.SpawnEnemy(point);
     }
+    private void ScaleMode(int sizeRatio)
+    {
 
+        //scale
+        floor.transform.position = new Vector3(floor.transform.position.x * sizeRatio, 0, floor.transform.position.z * sizeRatio);
+        floor.transform.localScale = new Vector3(floor.transform.localScale.x * sizeRatio, 0, floor.transform.localScale.z * sizeRatio);
+      
+        foreach (GameObject wall in xWalls)
+        {
+            wall.transform.position = new Vector3(wall.transform.position.x * sizeRatio, 0, wall.transform.position.z * sizeRatio);
+            wall.transform.localScale = new Vector3(wall.transform.localScale.x + (sizeRatio - 1) * 4, 1, wall.transform.localScale.z);
+            
+
+        }
+        foreach (GameObject wall in zWalls)
+        {
+            wall.transform.position = new Vector3(wall.transform.position.x * sizeRatio, 0, wall.transform.position.z * sizeRatio);
+            wall.transform.localScale = new Vector3(wall.transform.localScale.x, 1, wall.transform.localScale.z + (sizeRatio - 1) * 4);
+           
+
+        }
+
+        left.transform.position = new Vector3(left.transform.position.x * sizeRatio, 0, left.transform.position.z * sizeRatio);
+        left.transform.localScale = new Vector3(left.transform.localScale.x, 1, left.transform.localScale.z + (sizeRatio - 1) * 2);
+        
+
+
+        right.transform.position = new Vector3(right.transform.position.x * sizeRatio, 0, right.transform.position.z * sizeRatio);
+        right.transform.localScale = new Vector3(right.transform.localScale.x, 1, right.transform.localScale.z + (sizeRatio - 1) * 2);
+       
+
+        top.transform.position = new Vector3(top.transform.position.x * sizeRatio, 0, top.transform.position.z * sizeRatio);
+        top.transform.localScale = new Vector3(top.transform.localScale.x + (sizeRatio - 1) * 2, 1, top.transform.localScale.z);
+       
+
+        bot.transform.position = new Vector3(bot.transform.position.x * sizeRatio, 0, bot.transform.position.z * sizeRatio);
+        bot.transform.localScale = new Vector3(bot.transform.localScale.x + (sizeRatio - 1) * 2, 1, bot.transform.localScale.z);
+        
+
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;

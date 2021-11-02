@@ -5,9 +5,8 @@ using UnityEngine;
 
 public class LevelCreation : MonoBehaviour
 {
+    private int baseConstantRatio = 10;
     
-    public int roomXSize;
-    public int roomZsize;
     public GameObject roomPrefab;
 
     public int gridN;
@@ -53,7 +52,7 @@ public class LevelCreation : MonoBehaviour
             for (int j = 0; j < gridM; j++)
             {
                
-                pos = new Vector3(i * roomXSize, 0, j * roomZsize);
+                pos = new Vector3(i * baseConstantRatio, 0, j * baseConstantRatio);
                 print(pos);
                 if (grid[i, j] == 0)
                 {

@@ -1134,8 +1134,16 @@ MonoBehaviour:
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
   x: 0
   z: 0
-  xWalls: []
-  zWalls: []
+  xWalls:
+  - {fileID: 6640069861604156145}
+  - {fileID: 6095125734947863641}
+  - {fileID: 4504694633193288664}
+  - {fileID: 2119824625159992949}
+  zWalls:
+  - {fileID: 2604141983467478950}
+  - {fileID: 1644003354669278957}
+  - {fileID: 1062207751398247892}
+  - {fileID: 8553453414258236280}
   spawnArea: {x: 8, y: 8}
 --- !u!1 &8048775438066280702
 GameObject:
