@@ -1136,6 +1136,7 @@ MonoBehaviour:
   z: 0
   xWalls: []
   zWalls: []
+  spawnArea: {x: 8, y: 8}
 --- !u!1 &8048775438066280702
 GameObject:
   m_ObjectHideFlags: 0

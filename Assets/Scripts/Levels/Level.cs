@@ -8,6 +8,7 @@ public class Level : MonoBehaviour
 {
 
     public List<Room> Rooms;
+    [SerializeField] private GameObject _enemy;
     
     // Start is called before the first frame update
     void Start()
@@ -25,7 +26,7 @@ public class Level : MonoBehaviour
     public static Vector3 SamplePoint(Vector3 position, Vector2 size)
     {
         Vector2 rand = Random.insideUnitCircle * size / 2;
-        Vector3 point = position + new Vector3(rand.x,rand.y, 0);
+        Vector3 point = position + new Vector3(rand.x,1, rand.y);
         
         //Debug.DrawLine(position, point);
         return point;
@@ -35,6 +36,11 @@ public class Level : MonoBehaviour
     {
         var spawned = Instantiate(gameObject, position, quaternion.identity);
         return spawned;
+    }
+
+    public void SpawnEnemy(Vector3 position)
+    {
+        Spawn(position, _enemy);
     }
 
 }

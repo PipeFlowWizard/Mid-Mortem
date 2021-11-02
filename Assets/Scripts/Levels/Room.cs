@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
@@ -15,13 +17,14 @@ public class Room : MonoBehaviour
     private List<GameObject> xWalls, zWalls;
     private GameObject botRoom, topRoom, rightRoom, leftRoom;
     private Level _level;
-    public Vector2 spawnArea = Vector2.one;
+    public Vector2 spawnArea;
 
     // Start is called before the first frame update
 
     void Start()
     {
         _level = GetComponentInParent<Level>();
+        spawnArea = new Vector2(9,9);
     }
     //can create fucntion and call it from levelcreation
     public GameObject createRoom(Vector3 pos, bool topAssured = false, bool botAssured = false, bool rightAssured = false, bool leftAssured = false, float ratio = 0.33f,  bool enemy = true, bool boss = false, bool start = false)
@@ -125,12 +128,16 @@ public class Room : MonoBehaviour
         this._level = level;
     }
 
-    public void SpawnInRoomRandom()
+    public void SpawnEnemyInRoomRandom()
     {
         //TODO: Make this spawn enemies and items instead of a generic gameobject
-        var gameObject = new GameObject("Spawned");
-        _level.Spawn(Level.SamplePoint(transform.position, spawnArea),(gameObject));
+        var point = Level.SamplePoint(transform.position, spawnArea);
+        _level.SpawnEnemy(point);
     }
-    
-    
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawCube(transform.position,new Vector3(spawnArea.x,.1f,spawnArea.y));
+    }
 }

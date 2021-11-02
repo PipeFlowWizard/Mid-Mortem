@@ -99,7 +99,8 @@ public class LevelCreation : MonoBehaviour
                     
                 }
                 placedGrid[i, j] = room;
-                rooms.Add(room.GetComponent<Room>());
+                room.name = "Room " + "[" + i + "," + j + "]";
+                    rooms.Add(room.GetComponent<Room>());
             }
         }
         addKey(keys);
