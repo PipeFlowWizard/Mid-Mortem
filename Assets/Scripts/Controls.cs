@@ -46,15 +46,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""Attack"",
-                    ""type"": ""Button"",
-                    ""id"": ""a175cc17-bdf8-4166-b100-a37266ef3b8b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
                     ""name"": ""Dash"",
                     ""type"": ""Button"",
                     ""id"": ""9b20ca09-af55-4993-bd72-0824eeca4173"",
@@ -199,28 +190,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""3bba598d-0b3e-4044-81b9-8aa4455e9bfb"",
-                    ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard and mouse"",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""37ed3013-0e2a-4902-b619-46ed96ae054b"",
-                    ""path"": ""<Gamepad>/buttonWest"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Gamepad"",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""782605c4-76c7-41fa-84c6-bc629b6353de"",
                     ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
@@ -238,6 +207,76 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard and mouse"",
                     ""action"": ""Dash"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Action"",
+            ""id"": ""49047346-db6c-4e6a-ab0f-a14db6eb75fa"",
+            ""actions"": [
+                {
+                    ""name"": ""MeleeAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""dee5f377-a3c9-49e9-bde3-f4ea3b8982c2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RangedAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""5dd2a1ca-cd72-4375-9af4-3fb5429b6ed8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""26157088-1387-456c-a76b-99e247eda764"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": ""Tap,SlowTap"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and mouse"",
+                    ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""70037e47-83b5-4aab-8dd2-c79ecf40f69a"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": ""Tap,SlowTap"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""95183303-a0ef-4728-8bfb-9620e12089ee"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": ""Tap,SlowTap"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard and mouse"",
+                    ""action"": ""RangedAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""12a48caa-9e10-4bf5-9d8c-abad9a9087f9"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": ""Tap,SlowTap"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""RangedAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -278,8 +317,11 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Gameplay = asset.FindActionMap("Gameplay", throwIfNotFound: true);
         m_Gameplay_Move = m_Gameplay.FindAction("Move", throwIfNotFound: true);
         m_Gameplay_Look = m_Gameplay.FindAction("Look", throwIfNotFound: true);
-        m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_Dash = m_Gameplay.FindAction("Dash", throwIfNotFound: true);
+        // Action
+        m_Action = asset.FindActionMap("Action", throwIfNotFound: true);
+        m_Action_MeleeAttack = m_Action.FindAction("MeleeAttack", throwIfNotFound: true);
+        m_Action_RangedAttack = m_Action.FindAction("RangedAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -341,7 +383,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     private IGameplayActions m_GameplayActionsCallbackInterface;
     private readonly InputAction m_Gameplay_Move;
     private readonly InputAction m_Gameplay_Look;
-    private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_Dash;
     public struct GameplayActions
     {
@@ -349,7 +390,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         public GameplayActions(@Controls wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Gameplay_Move;
         public InputAction @Look => m_Wrapper.m_Gameplay_Look;
-        public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @Dash => m_Wrapper.m_Gameplay_Dash;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
@@ -366,9 +406,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Look.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
                 @Look.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
                 @Look.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLook;
-                @Attack.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
-                @Attack.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
-                @Attack.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAttack;
                 @Dash.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
                 @Dash.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
                 @Dash.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnDash;
@@ -382,9 +419,6 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                 @Look.started += instance.OnLook;
                 @Look.performed += instance.OnLook;
                 @Look.canceled += instance.OnLook;
-                @Attack.started += instance.OnAttack;
-                @Attack.performed += instance.OnAttack;
-                @Attack.canceled += instance.OnAttack;
                 @Dash.started += instance.OnDash;
                 @Dash.performed += instance.OnDash;
                 @Dash.canceled += instance.OnDash;
@@ -392,6 +426,47 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         }
     }
     public GameplayActions @Gameplay => new GameplayActions(this);
+
+    // Action
+    private readonly InputActionMap m_Action;
+    private IActionActions m_ActionActionsCallbackInterface;
+    private readonly InputAction m_Action_MeleeAttack;
+    private readonly InputAction m_Action_RangedAttack;
+    public struct ActionActions
+    {
+        private @Controls m_Wrapper;
+        public ActionActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MeleeAttack => m_Wrapper.m_Action_MeleeAttack;
+        public InputAction @RangedAttack => m_Wrapper.m_Action_RangedAttack;
+        public InputActionMap Get() { return m_Wrapper.m_Action; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(ActionActions set) { return set.Get(); }
+        public void SetCallbacks(IActionActions instance)
+        {
+            if (m_Wrapper.m_ActionActionsCallbackInterface != null)
+            {
+                @MeleeAttack.started -= m_Wrapper.m_ActionActionsCallbackInterface.OnMeleeAttack;
+                @MeleeAttack.performed -= m_Wrapper.m_ActionActionsCallbackInterface.OnMeleeAttack;
+                @MeleeAttack.canceled -= m_Wrapper.m_ActionActionsCallbackInterface.OnMeleeAttack;
+                @RangedAttack.started -= m_Wrapper.m_ActionActionsCallbackInterface.OnRangedAttack;
+                @RangedAttack.performed -= m_Wrapper.m_ActionActionsCallbackInterface.OnRangedAttack;
+                @RangedAttack.canceled -= m_Wrapper.m_ActionActionsCallbackInterface.OnRangedAttack;
+            }
+            m_Wrapper.m_ActionActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @MeleeAttack.started += instance.OnMeleeAttack;
+                @MeleeAttack.performed += instance.OnMeleeAttack;
+                @MeleeAttack.canceled += instance.OnMeleeAttack;
+                @RangedAttack.started += instance.OnRangedAttack;
+                @RangedAttack.performed += instance.OnRangedAttack;
+                @RangedAttack.canceled += instance.OnRangedAttack;
+            }
+        }
+    }
+    public ActionActions @Action => new ActionActions(this);
     private int m_KeyboardandmouseSchemeIndex = -1;
     public InputControlScheme KeyboardandmouseScheme
     {
@@ -414,7 +489,11 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnLook(InputAction.CallbackContext context);
-        void OnAttack(InputAction.CallbackContext context);
         void OnDash(InputAction.CallbackContext context);
+    }
+    public interface IActionActions
+    {
+        void OnMeleeAttack(InputAction.CallbackContext context);
+        void OnRangedAttack(InputAction.CallbackContext context);
     }
 }
