@@ -17,12 +17,14 @@ public class LevelCreation : MonoBehaviour
     //resource used http://tinysubversions.com/spelunkyGen/
     int[,] grid;
     GameObject[,] placedGrid;
+    private List<GameObject> levelRooms;
+    private GameObject currentLevel;
         
     // Start is called before the first frame update
     [ExecuteInEditMode]
     void Start()
     {
-        createLevel();        
+        createLevel();
     }
     List<GameObject> createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
     {
@@ -101,6 +103,13 @@ public class LevelCreation : MonoBehaviour
             }
         }
         addKey(keys);
+        
+        currentLevel = new GameObject("Level");
+        levelRooms = rooms;
+        foreach (var levelRoom in levelRooms)
+        {
+         levelRoom.transform.SetParent(currentLevel.transform);   
+        }
         return rooms;
     }
     private void addKey(int nbKeys)
@@ -181,5 +190,11 @@ public class LevelCreation : MonoBehaviour
 
         }
         
+    }
+
+    public void GenerateLevel()
+    {
+        DestroyImmediate(currentLevel);
+        createLevel();
     }
 }
