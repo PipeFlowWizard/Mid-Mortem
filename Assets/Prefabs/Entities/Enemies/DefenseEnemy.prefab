@@ -158,7 +158,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5a16b3d4eb6a29148bfc9c4ed75f49c5, type: 2}
+  - {fileID: -876546973899608171, guid: 6f441424fd786b34687c0f1f62e4f604, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -233,3 +233,5 @@ MonoBehaviour:
   colorChange: 0.5
   canReap: 0
   waitingForReap: 0
+  deathEvent: {fileID: 0}
+  reapedEvent: {fileID: 0}
