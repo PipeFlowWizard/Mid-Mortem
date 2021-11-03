@@ -67,7 +67,6 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyVelocity(float delta)
     {
-        // player.Rigidbody.AddForce(velocity, ForceMode.Acceleration);
         var rb = player.Rigidbody;
         rb.MovePosition(rb.position + _velocity * delta);
     }
