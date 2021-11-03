@@ -46,6 +46,7 @@ public class LevelCreation : MonoBehaviour
         currentLevel = new GameObject("Level");
         var level = currentLevel.AddComponent<Level>();
         level.data = data;
+        int rightDoor, topDoor;
         for (int i = 0; i < gridN; i++)
         {
 
@@ -56,43 +57,11 @@ public class LevelCreation : MonoBehaviour
                 pos = new Vector3(i * baseConstantRatio, 0, j * baseConstantRatio);
                 room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
                 room.transform.SetParent(currentLevel.transform);
-                print(pos);
-                if (grid[i, j] == 0)
-                {
-                    //random without key and with enemies
-                    room.GetComponent<Room>().createRoom(pos,boss:false,start:false);
-
-                }
-                else if (grid[i, j] == 1)
-                {
-                    //guaranteed left right
-                    room.GetComponent<Room>().createRoom(pos, leftAssured:true, rightAssured:true,start:false);
-                }
-                else if (grid[i, j] == 2)
-                {
-                    //guaranteed left right bot
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true,rightAssured:true,botAssured:true, start: false);
-                }
-                else if (grid[i, j] == 3)
-                {
-                    //guaranteed left right top
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true,rightAssured:true,topAssured:true, start: false);
-                }
-                else if (grid[i, j] == 4)
-                {
-                    print("start"+"  "+pos);
-                    //start room
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true, rightAssured: true, start:true,boss:false,enemy:false);
-
-                    print(room.transform.position);
-                }
-                else if (grid[i, j] == 5)
-                {
-                    print("end" + "  " + pos);
-                    //end room boss assured
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true, rightAssured: true, botAssured: true, boss:true,start:false,enemy:false);
-                    
-                }
+                rightDoor = topDoor = 6;
+               
+                topDoor = (j < gridM - 1) ? grid[i, j + 1] : 6;
+                rightDoor = (i < gridN - 1) ? grid[i + 1, j] : 6;
+                room.GetComponent<Room>().createRoom(pos, grid[i, j], rightType: rightDoor, topType: topDoor, leftWall:i==0,botWall:j==0);
                 placedGrid[i, j] = room;
                 room.name = "Room " + "[" + i + "," + j + "]";
                 rooms.Add(room.GetComponent<Room>());

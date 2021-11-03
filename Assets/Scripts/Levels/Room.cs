@@ -6,69 +6,59 @@ using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField]  private GameObject bot, top, right, left,floor;
+    [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref;
     [SerializeField]  private Material blue, green, pink, stone;
-    [SerializeField]  private List<GameObject> xWalls, zWalls;
+   
     
-    public int x, z;
+   
     public bool botDoor, topDoor, rightDoor, leftDoor, bossRoomSelf,keyRoomSelf, startSelf, enemySelf;
     private GameObject botRoom, topRoom, rightRoom, leftRoom;
     public Level _level;
     public Vector2 spawnArea;
     public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
     public Color spawnAreaColor = Color.magenta;
-    
+
     /// <summary>
     /// Sets room parameters
     /// </summary>
     /// <returns>Returns the configured room</returns>
-    public GameObject createRoom(Vector3 pos, bool topAssured = false, bool botAssured = false, bool rightAssured = false, bool leftAssured = false, float ratio = 0.33f,  bool enemy = true, bool boss = false, bool start = false)
+    public GameObject createRoom(Vector3 pos, int type, int rightType, int topType, float ratio = 0.33f, bool leftWall = false, bool botWall=false)
 
     {
-        //ScaleMode(3);
-        if (topAssured)
-        {
-            topDoor = false;
-        }
-        else
-        {
-            topDoor = Random.value < ratio;
-        }
-        if (botAssured)
-        {
-            botDoor = false;
-        }
-        else
-        {
-            botDoor = Random.value < ratio;
-        }
-        if (rightAssured)
-        {
-            rightDoor = false;
-        }
-        else
-        {
-            rightDoor = Random.value < ratio;
-        }
-        if (leftAssured)
-        {
-            leftDoor = false;
-        }
-        else
-        {
-            leftDoor = Random.value < ratio;
-        }
 
-        transform.position = pos;
+        if (topType == 6||topType==1) InstantiateWallDoor(topWallPref);
+        else if (topType >= 2 || type == 3) InstantiateWallDoor(topDoorPref);
+        else if (topType == 0)
+        {
+            //flip a coin
+            
+            bool coinFlip = Random.value > ratio;
+            //Door
+            if (coinFlip) InstantiateWallDoor(topDoorPref);
+            //Wall
+            else InstantiateWallDoor(topWallPref);
+        }
+        if (rightType == 6) InstantiateWallDoor(rightWallPref);
+        else if (rightType>0||type>0)InstantiateWallDoor(rightDoorPref);
+        else if (rightType == 0)
+        {
+            //flip a coin
+            bool coinFlip = Random.value > ratio;
+            //Door
+            if (coinFlip) InstantiateWallDoor(rightDoorPref);
+            //Wall
+            else InstantiateWallDoor(rightWallPref);
+            
+        }
+        if (botWall)InstantiateWallDoor(botWallPref);
+        if (leftWall) InstantiateWallDoor(leftWallPref);
+        //check for 0 if top type is 0, flip a coin
         
-        enemySelf = enemy;
-        bossRoomSelf = boss;
-        startSelf = start;
-
-        bot.GetComponent<MeshRenderer>().material = botDoor ? green : blue;
-        top.GetComponent<MeshRenderer>().material = topDoor ? green : blue;
-        left.GetComponent<MeshRenderer>().material = leftDoor ? green : blue;
-        right.GetComponent<MeshRenderer>().material = rightDoor ? green : blue;
+       
+        bossRoomSelf = type==5;
+        startSelf = type==4;
+        enemySelf = bossRoomSelf==startSelf;
+      
 
 
         if (enemySelf)
@@ -90,11 +80,6 @@ public class Room : MonoBehaviour
         }
 
 
-
-        //if (KeyRoom) spawnKey();
-        //if (enemy) ;//spawnEnemy;
-        //if (start) ;//spawnPlayer
-        //if (bossRoom) ; //spawnBoss
         return this.gameObject;
     }
     
@@ -102,13 +87,7 @@ public class Room : MonoBehaviour
         floor.GetComponent<MeshRenderer>().material = pink;
         keyRoomSelf = true;
     }
-    public void openDoors()
-    {
-        bot.SetActive(botDoor);
-        top.SetActive(topDoor);
-        right.SetActive(rightDoor);
-        left.SetActive(leftDoor);
-    }
+  
     
     public void SetLevel(Level level)
     {
@@ -125,7 +104,12 @@ public class Room : MonoBehaviour
         Debug.Log("SEIRR");
         _level.SpawnEnemy(point);
     }
-  
+  private void InstantiateWallDoor(GameObject prefab)
+    {
+        GameObject door;
+        door = Instantiate<GameObject>(prefab, transform);
+        door.transform.SetParent(this.transform);
+    }
     //Draw the spawning area
     private void OnDrawGizmos()
     {
