@@ -17,4 +17,12 @@ public class GameManager : MonoBehaviour
     {
         
     }
+    
+    // Step 1
+        // Create level
+        //  Initialize fields to defaults
+        // Step 2
+        // Spawn Player
+    // Step 3
+        // Spawn room enemies on room unlock
 }

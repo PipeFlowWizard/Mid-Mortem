@@ -20,10 +20,10 @@ public class Room : MonoBehaviour
     public Vector2 spawnArea;
 
     public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
+    public Color spawnAreaColor = Color.magenta;
 
     void Start()
     {
-        spawnArea = new Vector2(9,9);
         
     }
     //can create fucntion and call it from levelcreation
@@ -178,7 +178,8 @@ public class Room : MonoBehaviour
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.magenta;
+        spawnAreaColor.a = 0.25f;
+        Gizmos.color = spawnAreaColor;
         Gizmos.DrawCube(transform.position,new Vector3(SpawnArea.x,.1f,SpawnArea.y));
     }
 }
