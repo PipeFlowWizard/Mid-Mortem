@@ -82,6 +82,7 @@ public class Enemy : Damageable
     {
         // Get vector pointing towards Player
         Vector3 direction = target.position - transform.position;
+        direction.y = 0;
         // Get Quaternion to rotate towards Player
         Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
         // Rotate Enemy, use Slerp to make Rotation gradual
