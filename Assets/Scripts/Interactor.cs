@@ -13,11 +13,17 @@ public class Interactor : MonoBehaviour
     private Collider _collider;
     private MeshRenderer _visual;
     public int numColliders = 0;
+    public Color _colorNormal, _colorActive;
     
     private void Start()
     {
         _visual = GetComponentInChildren<MeshRenderer>();
         _collider = GetComponent<SphereCollider>();
+        _colorActive = _visual.material.color;
+        _colorNormal = _visual.material.color;
+
+        _colorActive.a = 0.4f;
+        _colorNormal.a = 0.1f;
     }
     
 
@@ -28,7 +34,7 @@ public class Interactor : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             numColliders++;
-            _visual.enabled = true;
+            _visual.material.color = _colorActive;
         }
     }
 
@@ -38,7 +44,7 @@ public class Interactor : MonoBehaviour
         {
             numColliders--;
             if (numColliders == 0)
-                _visual.enabled = false;
+                _visual.material.color = _colorNormal;
         }
     }
 }

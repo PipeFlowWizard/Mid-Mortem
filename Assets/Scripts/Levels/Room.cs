@@ -6,27 +6,22 @@ using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
-    public bool botDoor, topDoor, rightDoor, leftDoor, bossRoomSelf,keyRoomSelf, startSelf, enemySelf;
-    [SerializeField]
-    private GameObject bot, top, right, left,floor;
-    [SerializeField]
-    private Material blue, green, pink, stone;
-    [SerializeField]
+    [SerializeField]  private GameObject bot, top, right, left,floor;
+    [SerializeField]  private Material blue, green, pink, stone;
+    [SerializeField]  private List<GameObject> xWalls, zWalls;
+    
     public int x, z;
-    [SerializeField]
-    private List<GameObject> xWalls, zWalls;
+    public bool botDoor, topDoor, rightDoor, leftDoor, bossRoomSelf,keyRoomSelf, startSelf, enemySelf;
     private GameObject botRoom, topRoom, rightRoom, leftRoom;
     public Level _level;
     public Vector2 spawnArea;
-
     public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
     public Color spawnAreaColor = Color.magenta;
-
-    void Start()
-    {
-        
-    }
-    //can create fucntion and call it from levelcreation
+    
+    /// <summary>
+    /// Sets room parameters
+    /// </summary>
+    /// <returns>Returns the configured room</returns>
     public GameObject createRoom(Vector3 pos, bool topAssured = false, bool botAssured = false, bool rightAssured = false, bool leftAssured = false, float ratio = 0.33f,  bool enemy = true, bool boss = false, bool start = false)
 
     {
@@ -102,16 +97,7 @@ public class Room : MonoBehaviour
         //if (bossRoom) ; //spawnBoss
         return this.gameObject;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    void ObjectPlacement()
-    {
-
-    }
+    
     public void spawnKey() {
         floor.GetComponent<MeshRenderer>().material = pink;
         keyRoomSelf = true;
@@ -123,12 +109,15 @@ public class Room : MonoBehaviour
         right.SetActive(rightDoor);
         left.SetActive(leftDoor);
     }
-
+    
     public void SetLevel(Level level)
     {
         this._level = level;
     }
 
+    /// <summary>
+    /// Spawns a default enemy at random position in the current room
+    /// </summary>
     public void SpawnEnemyInRoomRandom()
     {
         //TODO: Make this spawn enemies and items instead of a generic gameobject
@@ -136,46 +125,8 @@ public class Room : MonoBehaviour
         Debug.Log("SEIRR");
         _level.SpawnEnemy(point);
     }
-    private void ScaleMode(int sizeRatio)
-    {
-        transform.position = new Vector3(transform.position.x * sizeRatio,0,transform.position.z * sizeRatio);
-        /*//scale
-        floor.transform.position = new Vector3(floor.transform.position.x * sizeRatio, 0, floor.transform.position.z * sizeRatio);
-        floor.transform.localScale = new Vector3(floor.transform.localScale.x * sizeRatio, 0, floor.transform.localScale.z * sizeRatio);
-      
-        foreach (GameObject wall in xWalls)
-        {
-            wall.transform.position = new Vector3(wall.transform.position.x * sizeRatio, 0, wall.transform.position.z * sizeRatio);
-            wall.transform.localScale = new Vector3(wall.transform.localScale.x + (sizeRatio - 1) * 4, 1, wall.transform.localScale.z);
-            
-
-        }
-        foreach (GameObject wall in zWalls)
-        {
-            wall.transform.position = new Vector3(wall.transform.position.x * sizeRatio, 0, wall.transform.position.z * sizeRatio);
-            wall.transform.localScale = new Vector3(wall.transform.localScale.x, 1, wall.transform.localScale.z + (sizeRatio - 1) * 4);
-           
-
-        }
-
-        left.transform.position = new Vector3(left.transform.position.x * sizeRatio, 0, left.transform.position.z * sizeRatio);
-        left.transform.localScale = new Vector3(left.transform.localScale.x, 1, left.transform.localScale.z + (sizeRatio - 1) * 2);
-        
-
-
-        right.transform.position = new Vector3(right.transform.position.x * sizeRatio, 0, right.transform.position.z * sizeRatio);
-        right.transform.localScale = new Vector3(right.transform.localScale.x, 1, right.transform.localScale.z + (sizeRatio - 1) * 2);
-       
-
-        top.transform.position = new Vector3(top.transform.position.x * sizeRatio, 0, top.transform.position.z * sizeRatio);
-        top.transform.localScale = new Vector3(top.transform.localScale.x + (sizeRatio - 1) * 2, 1, top.transform.localScale.z);
-       
-
-        bot.transform.position = new Vector3(bot.transform.position.x * sizeRatio, 0, bot.transform.position.z * sizeRatio);
-        bot.transform.localScale = new Vector3(bot.transform.localScale.x + (sizeRatio - 1) * 2, 1, bot.transform.localScale.z);*/
-        
-
-    }
+  
+    //Draw the spawning area
     private void OnDrawGizmos()
     {
         spawnAreaColor.a = 0.25f;

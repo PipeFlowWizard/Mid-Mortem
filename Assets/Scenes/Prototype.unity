@@ -2052,14 +2052,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 0
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 1856486106}
   top: {fileID: 845281705}
   right: {fileID: 437857803}
@@ -2069,8 +2061,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1130685218}
   - {fileID: 561073379}
@@ -2081,6 +2071,16 @@ MonoBehaviour:
   - {fileID: 476571929}
   - {fileID: 2094989639}
   - {fileID: 1170645230}
+  x: 0
+  z: 0
+  botDoor: 0
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -2520,14 +2520,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 0
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 1955042423}
   top: {fileID: 627607974}
   right: {fileID: 870621056}
@@ -2537,8 +2529,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1339178145}
   - {fileID: 139960961}
@@ -2549,6 +2539,16 @@ MonoBehaviour:
   - {fileID: 127934242}
   - {fileID: 1096978581}
   - {fileID: 407476207}
+  x: 0
+  z: 0
+  botDoor: 0
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -3904,14 +3904,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 0
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 1
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 0
   bot: {fileID: 1434880662}
   top: {fileID: 1632657514}
   right: {fileID: 1546737391}
@@ -3921,8 +3913,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1886003480}
   - {fileID: 1856732903}
@@ -3933,6 +3923,16 @@ MonoBehaviour:
   - {fileID: 1963281075}
   - {fileID: 2025753340}
   - {fileID: 1025148970}
+  x: 0
+  z: 0
+  botDoor: 0
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 1
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 0
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -5023,14 +5023,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 1
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 310174919}
   top: {fileID: 499949152}
   right: {fileID: 2050105622}
@@ -5040,8 +5032,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1337192612}
   - {fileID: 284576652}
@@ -5052,6 +5042,16 @@ MonoBehaviour:
   - {fileID: 952307689}
   - {fileID: 1415596118}
   - {fileID: 798008715}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 1
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -5206,14 +5206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 131076053}
   top: {fileID: 728693389}
   right: {fileID: 1604587168}
@@ -5223,8 +5215,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 63007946}
   - {fileID: 1298494859}
@@ -5235,6 +5225,16 @@ MonoBehaviour:
   - {fileID: 1029726454}
   - {fileID: 888900274}
   - {fileID: 2014949399}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -7735,6 +7735,43 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 747873373}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &767594185 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5921356020398977297, guid: 234010d501453e741b4011de6325c490, type: 3}
+  m_PrefabInstance: {fileID: 1920921090}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &767594191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 767594185}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!1 &769654863
 GameObject:
   m_ObjectHideFlags: 0
@@ -7859,14 +7896,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 1
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 578443839}
   top: {fileID: 571157744}
   right: {fileID: 1167389244}
@@ -7876,8 +7905,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1116310350}
   - {fileID: 2132940972}
@@ -7888,6 +7915,16 @@ MonoBehaviour:
   - {fileID: 1101680393}
   - {fileID: 1548770537}
   - {fileID: 1545252589}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 1
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -8327,14 +8364,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 1804311408}
   top: {fileID: 2060257965}
   right: {fileID: 16780898}
@@ -8344,8 +8373,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 659011119}
   - {fileID: 1314919675}
@@ -8356,6 +8383,16 @@ MonoBehaviour:
   - {fileID: 745750870}
   - {fileID: 671564359}
   - {fileID: 1889655488}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -8510,14 +8547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 53950538}
   top: {fileID: 203321018}
   right: {fileID: 1166788810}
@@ -8527,8 +8556,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 310174146}
   - {fileID: 524865679}
@@ -8539,6 +8566,16 @@ MonoBehaviour:
   - {fileID: 432106542}
   - {fileID: 838482561}
   - {fileID: 1962933761}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -10988,14 +11025,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 0
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 1457770504}
   top: {fileID: 556555243}
   right: {fileID: 685640616}
@@ -11005,8 +11034,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1708888728}
   - {fileID: 1639674122}
@@ -11017,6 +11044,16 @@ MonoBehaviour:
   - {fileID: 876574141}
   - {fileID: 2072198448}
   - {fileID: 378261413}
+  x: 0
+  z: 0
+  botDoor: 0
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -11456,14 +11493,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 140707716}
   top: {fileID: 1052149911}
   right: {fileID: 29916317}
@@ -11473,8 +11502,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 821461153}
   - {fileID: 1750036079}
@@ -11485,6 +11512,16 @@ MonoBehaviour:
   - {fileID: 1791210607}
   - {fileID: 2098390818}
   - {fileID: 966638971}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -11929,14 +11966,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 1
-  enemySelf: 0
   bot: {fileID: 435355156}
   top: {fileID: 992346215}
   right: {fileID: 607200413}
@@ -11946,8 +11975,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 2021472164}
   - {fileID: 1561750010}
@@ -11958,6 +11985,16 @@ MonoBehaviour:
   - {fileID: 1378181296}
   - {fileID: 1522429284}
   - {fileID: 1894197461}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 1
+  enemySelf: 0
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -13954,14 +13991,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 0
-  topDoor: 1
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 1629341250}
   top: {fileID: 1877605139}
   right: {fileID: 999849317}
@@ -13971,8 +14000,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1365863249}
   - {fileID: 6222426}
@@ -13983,6 +14010,16 @@ MonoBehaviour:
   - {fileID: 168869039}
   - {fileID: 582560959}
   - {fileID: 1739966447}
+  x: 0
+  z: 0
+  botDoor: 0
+  topDoor: 1
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -14707,14 +14744,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 0
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 607634512}
   top: {fileID: 983565662}
   right: {fileID: 1652567996}
@@ -14724,8 +14753,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1287433069}
   - {fileID: 364679441}
@@ -14736,6 +14763,16 @@ MonoBehaviour:
   - {fileID: 2061337222}
   - {fileID: 1613373689}
   - {fileID: 1189377137}
+  x: 0
+  z: 0
+  botDoor: 0
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -20042,21 +20079,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 5921356020398977299, guid: 234010d501453e741b4011de6325c490, type: 3}
+      propertyPath: orthographic size
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977300, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalPosition.y
       value: 19.373257
       objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977300, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3413322
+      value: 0.34133223
       objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977300, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.009044147
+      value: 0.009044205
       objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977300, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0032844774
+      value: -0.0032844984
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253088, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_Follow
@@ -20066,21 +20107,25 @@ PrefabInstance:
       propertyPath: m_LookAt
       value: 
       objectReference: {fileID: 1024996321}
+    - target: {fileID: 5921356021688253088, guid: 234010d501453e741b4011de6325c490, type: 3}
+      propertyPath: m_Lens.OrthographicSize
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253089, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalPosition.y
       value: 19.373257
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253089, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3413322
+      value: 0.34133223
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253089, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.009044147
+      value: 0.009044205
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253089, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0032844774
+      value: -0.0032844984
       objectReference: {fileID: 0}
     - target: {fileID: 6229206948689011438, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_RootOrder
@@ -20157,14 +20202,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 538033480}
   top: {fileID: 989991872}
   right: {fileID: 935681706}
@@ -20174,8 +20211,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 470421455}
   - {fileID: 929201176}
@@ -20186,6 +20221,16 @@ MonoBehaviour:
   - {fileID: 1551806107}
   - {fileID: 584859097}
   - {fileID: 1273289952}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -21752,14 +21797,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 0
-  topDoor: 0
-  rightDoor: 0
-  leftDoor: 0
-  bossRoomSelf: 0
-  keyRoomSelf: 1
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 1241074977}
   top: {fileID: 436786684}
   right: {fileID: 1520676620}
@@ -21769,8 +21806,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 1508209192}
   - {fileID: 56606222}
@@ -21781,6 +21816,16 @@ MonoBehaviour:
   - {fileID: 225026000}
   - {fileID: 272440627}
   - {fileID: 121347767}
+  x: 0
+  z: 0
+  botDoor: 0
+  topDoor: 0
+  rightDoor: 0
+  leftDoor: 0
+  bossRoomSelf: 0
+  keyRoomSelf: 1
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
@@ -22125,14 +22170,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botDoor: 1
-  topDoor: 0
-  rightDoor: 1
-  leftDoor: 1
-  bossRoomSelf: 0
-  keyRoomSelf: 0
-  startSelf: 0
-  enemySelf: 1
   bot: {fileID: 917972281}
   top: {fileID: 194723072}
   right: {fileID: 2021002960}
@@ -22142,8 +22179,6 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
   xWalls:
   - {fileID: 831071774}
   - {fileID: 746075017}
@@ -22154,6 +22189,16 @@ MonoBehaviour:
   - {fileID: 2085101331}
   - {fileID: 1068352953}
   - {fileID: 181761580}
+  x: 0
+  z: 0
+  botDoor: 1
+  topDoor: 0
+  rightDoor: 1
+  leftDoor: 1
+  bossRoomSelf: 0
+  keyRoomSelf: 0
+  startSelf: 0
+  enemySelf: 1
   _level: {fileID: 1999590141}
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
