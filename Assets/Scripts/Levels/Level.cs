@@ -6,10 +6,10 @@ using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
 {
-
-    public List<Room> Rooms;
-    [SerializeField] private GameObject _enemy;
     
+    public LevelData data;
+    public List<Room> Rooms;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +40,7 @@ public class Level : MonoBehaviour
 
     public void SpawnEnemy(Vector3 position)
     {
-        Spawn(position, _enemy);
+        Spawn(position, data.Spawnables[0]);
     }
 
 }

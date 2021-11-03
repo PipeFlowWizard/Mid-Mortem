@@ -16,21 +16,21 @@ public class Room : MonoBehaviour
     [SerializeField]
     private List<GameObject> xWalls, zWalls;
     private GameObject botRoom, topRoom, rightRoom, leftRoom;
-    private Level _level;
+    public Level _level;
     public Vector2 spawnArea;
 
-    // Start is called before the first frame update
+    public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
 
     void Start()
     {
-        _level = GetComponentInParent<Level>();
         spawnArea = new Vector2(9,9);
+        
     }
     //can create fucntion and call it from levelcreation
     public GameObject createRoom(Vector3 pos, bool topAssured = false, bool botAssured = false, bool rightAssured = false, bool leftAssured = false, float ratio = 0.33f,  bool enemy = true, bool boss = false, bool start = false)
 
     {
-        ScaleMode(3);
+        //ScaleMode(3);
         if (topAssured)
         {
             topDoor = false;
@@ -132,13 +132,14 @@ public class Room : MonoBehaviour
     public void SpawnEnemyInRoomRandom()
     {
         //TODO: Make this spawn enemies and items instead of a generic gameobject
-        var point = Level.SamplePoint(transform.position, spawnArea);
+        Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        Debug.Log("SEIRR");
         _level.SpawnEnemy(point);
     }
     private void ScaleMode(int sizeRatio)
     {
-
-        //scale
+        transform.position = new Vector3(transform.position.x * sizeRatio,0,transform.position.z * sizeRatio);
+        /*//scale
         floor.transform.position = new Vector3(floor.transform.position.x * sizeRatio, 0, floor.transform.position.z * sizeRatio);
         floor.transform.localScale = new Vector3(floor.transform.localScale.x * sizeRatio, 0, floor.transform.localScale.z * sizeRatio);
       
@@ -171,13 +172,13 @@ public class Room : MonoBehaviour
        
 
         bot.transform.position = new Vector3(bot.transform.position.x * sizeRatio, 0, bot.transform.position.z * sizeRatio);
-        bot.transform.localScale = new Vector3(bot.transform.localScale.x + (sizeRatio - 1) * 2, 1, bot.transform.localScale.z);
+        bot.transform.localScale = new Vector3(bot.transform.localScale.x + (sizeRatio - 1) * 2, 1, bot.transform.localScale.z);*/
         
 
     }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.magenta;
-        Gizmos.DrawCube(transform.position,new Vector3(spawnArea.x,.1f,spawnArea.y));
+        Gizmos.DrawCube(transform.position,new Vector3(SpawnArea.x,.1f,SpawnArea.y));
     }
 }

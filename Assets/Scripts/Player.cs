@@ -23,14 +23,13 @@ public class Player : Damageable
     public Rigidbody Rigidbody => rb;
     public SpellCaster SpellCaster => spellCaster;
 
-    [HideInInspector] public bool canDash;
+    [HideInInspector] public bool canDash; 
 
     public GameEvent playerDeathEvent;
 
     public void Start()
     {
         canDash = true;
-        reaperMaterial.color = Color.black;
     }
 
 

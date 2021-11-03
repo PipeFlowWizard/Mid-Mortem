@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
@@ -8,6 +9,7 @@ public class LevelCreation : MonoBehaviour
     private int baseConstantRatio = 10;
     
     public GameObject roomPrefab;
+    [SerializeField] public LevelData data;
 
     public int gridN;
     public int gridM;
@@ -19,12 +21,7 @@ public class LevelCreation : MonoBehaviour
     private List<GameObject> levelRooms;
     private GameObject currentLevel;
         
-    // Start is called before the first frame update
-    [ExecuteInEditMode]
-    void Start()
-    {
-        createLevel();
-    }
+   
     void createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
     {
         //guarantee there is a key
@@ -46,45 +43,45 @@ public class LevelCreation : MonoBehaviour
         Vector3 pos;
         GameObject room = null;
         List<Room> rooms = new List<Room>();
+        currentLevel = new GameObject("Level");
+        var level = currentLevel.AddComponent<Level>();
+        level.data = data;
         for (int i = 0; i < gridN; i++)
         {
 
             for (int j = 0; j < gridM; j++)
             {
+                
                
                 pos = new Vector3(i * baseConstantRatio, 0, j * baseConstantRatio);
+                room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                room.transform.SetParent(currentLevel.transform);
                 print(pos);
                 if (grid[i, j] == 0)
                 {
                     //random without key and with enemies
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
                     room.GetComponent<Room>().createRoom(pos,boss:false,start:false);
 
                 }
                 else if (grid[i, j] == 1)
                 {
                     //guaranteed left right
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
                     room.GetComponent<Room>().createRoom(pos, leftAssured:true, rightAssured:true,start:false);
                 }
                 else if (grid[i, j] == 2)
                 {
                     //guaranteed left right bot
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
                     room.GetComponent<Room>().createRoom(pos, leftAssured: true,rightAssured:true,botAssured:true, start: false);
                 }
                 else if (grid[i, j] == 3)
                 {
                     //guaranteed left right top
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
                     room.GetComponent<Room>().createRoom(pos, leftAssured: true,rightAssured:true,topAssured:true, start: false);
-
                 }
                 else if (grid[i, j] == 4)
                 {
                     print("start"+"  "+pos);
                     //start room
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
                     room.GetComponent<Room>().createRoom(pos, leftAssured: true, rightAssured: true, start:true,boss:false,enemy:false);
 
                     print(room.transform.position);
@@ -93,23 +90,20 @@ public class LevelCreation : MonoBehaviour
                 {
                     print("end" + "  " + pos);
                     //end room boss assured
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
                     room.GetComponent<Room>().createRoom(pos, leftAssured: true, rightAssured: true, botAssured: true, boss:true,start:false,enemy:false);
                     
                 }
                 placedGrid[i, j] = room;
                 room.name = "Room " + "[" + i + "," + j + "]";
-                    rooms.Add(room.GetComponent<Room>());
+                rooms.Add(room.GetComponent<Room>());
             }
         }
         addKey(keys);
         
-        currentLevel = new GameObject("Level");
-        var level = currentLevel.AddComponent<Level>();
         level.Rooms = rooms;
         foreach (var levelRoom in rooms)
         {
-            levelRoom.transform.SetParent(currentLevel.transform);
+            
             levelRoom.SetLevel(level);
         }
     }
