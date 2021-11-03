@@ -1,68 +1,48 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class HpBarScript : MonoBehaviour
 {
-    [SerializeField] private float hp = 100;
-    [SerializeField] private float maxHp = 100;
+    [SerializeField] private float hp;
+    [SerializeField] private float maxHp;
     [SerializeField] private Image hpFill;
-    [SerializeField] private GameObject sadBorder;
-    [SerializeField] private GameObject happyBorder;
-    [SerializeField] private GameObject medBorder;
-    [SerializeField] private GameObject deadBorder;
+    public Sprite happySprite;
+    public Sprite medSprite;
+    public Sprite sadSprite;
+    public Sprite deadSprite;
     [SerializeField] private Transform Player; // Get Player HP from Player Transform
 
-    // Testing: 
-    private float dmgCounter = 0f;
-    private float dmgTime = 1f;
+    private Image image;
 
-    // Update is called once per frame
-    void Update()
+    private float medThreshold = 0.6f;
+    private float sadThreshold = 0.3f;
+
+    private void Start()
     {
-        dmgCounter += Time.deltaTime;
-        if(dmgCounter > dmgTime)
-        {
-            hp -= 15f;
-            dmgCounter = 0;
-        }
-        UpdateHP();
-        
+        image = transform.Find("Face").GetComponent<Image>();
     }
-    private void UpdateHP()
+
+    private void Update()
     {
-        
         float ratio = hp / maxHp;
         hpFill.fillAmount = ratio;
-        if (ratio > 0.65f)
-        {
-            sadBorder.gameObject.SetActive(false);
-            happyBorder.gameObject.SetActive(true);
-            medBorder.gameObject.SetActive(false);
-            deadBorder.gameObject.SetActive(false);
-  
-        }
-        else if(ratio < 0.33 && ratio > 0)
-        {
-            sadBorder.gameObject.SetActive(true);
-            happyBorder.gameObject.SetActive(false);
-            medBorder.gameObject.SetActive(false);
-            deadBorder.gameObject.SetActive(false);
-        }
-        else if(ratio <= 0){
-            sadBorder.gameObject.SetActive(false);
-            happyBorder.gameObject.SetActive(false);
-            medBorder.gameObject.SetActive(false);
-            deadBorder.gameObject.SetActive(true);
-        }
+
+        if (ratio > medThreshold)
+            image.sprite = happySprite;
+        else if (ratio > sadThreshold)
+            image.sprite = medSprite;
+        else if (ratio > 0)
+            image.sprite = sadSprite;
         else
-        {
-            sadBorder.gameObject.SetActive(false);
-            happyBorder.gameObject.SetActive(false);
-            medBorder.gameObject.SetActive(true);
-            deadBorder.gameObject.SetActive(false);
-        }
-        
+            image.sprite = deadSprite;
+    }
+
+    public void UpdateHP(float value)
+    {
+        hp += value;
+        if (hp > maxHp)
+            hp = maxHp;
+        else if (hp < 0)
+            hp = 0;
     }
 }
