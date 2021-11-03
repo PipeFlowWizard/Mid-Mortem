@@ -81,16 +81,51 @@ public class LevelCreation : MonoBehaviour
         while (nbKeys >= 1)
         {
             int x = Random.Range(0,gridN);
-            int z = Random.Range(0, gridM);
+            int z = Random.Range(1, gridM-1);
             GameObject room = placedGrid[x, z];
             int theTypeOfRoom = grid[x, z];
-            if((theTypeOfRoom == 1|| theTypeOfRoom == 2 || theTypeOfRoom == 3) && !room.GetComponent<Room>().keyRoomSelf)
+            //check if room is not trivial and is not isolated
+            if((theTypeOfRoom==0) && !room.GetComponent<Room>().keyRoomSelf&&!isIsolated(x,z))
             {
                 room.GetComponent<Room>().spawnKey();
                 nbKeys--;
             }
 
         }
+    }
+
+    private bool isIsolated(int x, int z)
+    {
+        bool isIsolated = true;
+        int i = x;
+        int j = z;
+        j += 1;
+                if (j > 0 && j < gridM && i > 0 && i < gridN)
+                {
+                    isIsolated = grid[i, j] == 0;
+                    if (!isIsolated) return isIsolated;
+                }
+
+        j = z - 1;
+        if (j > 0 && j < gridM && i > 0 && i < gridN)
+        {
+            isIsolated = grid[i, j] == 0;
+            if (!isIsolated) return isIsolated;
+        }
+        j = z;
+        i += 1;
+        if (j > 0 && j < gridM && i > 0 && i < gridN)
+        {
+            isIsolated = grid[i, j] == 0;
+            if (!isIsolated) return isIsolated;
+        }
+        i = x - 1;
+        if (j > 0 && j < gridM && i > 0 && i < gridN)
+        {
+            isIsolated = grid[i, j] == 0;
+            if (!isIsolated) return isIsolated;
+        }
+        return isIsolated;
     }
     // Update is called once per frame
     void Update()
