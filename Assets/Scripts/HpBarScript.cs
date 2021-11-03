@@ -4,13 +4,16 @@ using UnityEngine.UI;
 public class HpBarScript : MonoBehaviour
 {
     [SerializeField] private float hp;
+    [SerializeField] private GameObject Player;
     [SerializeField] private float maxHp;
     [SerializeField] private Image hpFill;
     public Sprite happySprite;
     public Sprite medSprite;
     public Sprite sadSprite;
     public Sprite deadSprite;
-    [SerializeField] private Transform Player; // Get Player HP from Player Transform
+
+    private Damageable playerHealth;
+    //[SerializeField] private Transform Player; // Get Player HP from Player Transform
 
     private Image image;
 
@@ -20,10 +23,12 @@ public class HpBarScript : MonoBehaviour
     private void Start()
     {
         image = transform.Find("Face").GetComponent<Image>();
+        playerHealth = Player.GetComponent<Damageable>();
     }
 
     private void Update()
     {
+        hp = playerHealth.GetHealth();
         float ratio = hp / maxHp;
         hpFill.fillAmount = ratio;
 
