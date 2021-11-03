@@ -281,6 +281,126 @@ public partial class @Controls : IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""UI"",
+            ""id"": ""f9d79ec6-821f-4e67-8214-255871563ca6"",
+            ""actions"": [
+                {
+                    ""name"": ""PauseGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7692f35-2c94-492b-8416-a54192665144"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""b49828d3-8258-44a0-82d4-badd7266de19"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PauseGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""Debug"",
+            ""id"": ""d126f3d4-db5e-4b21-bd8a-d99898a11bfc"",
+            ""actions"": [
+                {
+                    ""name"": ""Health"",
+                    ""type"": ""Button"",
+                    ""id"": ""41a7d26b-eae3-4214-84a1-0870e08c390b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SoulQueue"",
+                    ""type"": ""Button"",
+                    ""id"": ""a048bf13-2932-4469-8c4d-cc0e42cbaf69"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""7f7f2e64-fa2e-4ef9-aed9-75e21b4e64b6"",
+                    ""path"": ""1DAxis(minValue=-10,maxValue=10)"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Health"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Negative"",
+                    ""id"": ""7bae3988-8fbc-4e46-bff5-c787575937ad"",
+                    ""path"": ""<Keyboard>/minus"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Health"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""Positive"",
+                    ""id"": ""8ac56e83-94ef-4486-a372-d79d81db8a2a"",
+                    ""path"": ""<Keyboard>/equals"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Health"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""1D Axis"",
+                    ""id"": ""9766b284-589c-4b08-90a3-ed527b7a1edb"",
+                    ""path"": ""1DAxis"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SoulQueue"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""negative"",
+                    ""id"": ""056cd4cd-8d40-4687-bd57-3c0194e59a66"",
+                    ""path"": ""<Keyboard>/pageDown"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SoulQueue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""positive"",
+                    ""id"": ""3afd5e21-43e0-45e7-b007-27ebba1721b2"",
+                    ""path"": ""<Keyboard>/pageUp"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SoulQueue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -322,6 +442,13 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         m_Action = asset.FindActionMap("Action", throwIfNotFound: true);
         m_Action_MeleeAttack = m_Action.FindAction("MeleeAttack", throwIfNotFound: true);
         m_Action_RangedAttack = m_Action.FindAction("RangedAttack", throwIfNotFound: true);
+        // UI
+        m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
+        m_UI_PauseGame = m_UI.FindAction("PauseGame", throwIfNotFound: true);
+        // Debug
+        m_Debug = asset.FindActionMap("Debug", throwIfNotFound: true);
+        m_Debug_Health = m_Debug.FindAction("Health", throwIfNotFound: true);
+        m_Debug_SoulQueue = m_Debug.FindAction("SoulQueue", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -467,6 +594,80 @@ public partial class @Controls : IInputActionCollection2, IDisposable
         }
     }
     public ActionActions @Action => new ActionActions(this);
+
+    // UI
+    private readonly InputActionMap m_UI;
+    private IUIActions m_UIActionsCallbackInterface;
+    private readonly InputAction m_UI_PauseGame;
+    public struct UIActions
+    {
+        private @Controls m_Wrapper;
+        public UIActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @PauseGame => m_Wrapper.m_UI_PauseGame;
+        public InputActionMap Get() { return m_Wrapper.m_UI; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIActions set) { return set.Get(); }
+        public void SetCallbacks(IUIActions instance)
+        {
+            if (m_Wrapper.m_UIActionsCallbackInterface != null)
+            {
+                @PauseGame.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseGame;
+                @PauseGame.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseGame;
+                @PauseGame.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPauseGame;
+            }
+            m_Wrapper.m_UIActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @PauseGame.started += instance.OnPauseGame;
+                @PauseGame.performed += instance.OnPauseGame;
+                @PauseGame.canceled += instance.OnPauseGame;
+            }
+        }
+    }
+    public UIActions @UI => new UIActions(this);
+
+    // Debug
+    private readonly InputActionMap m_Debug;
+    private IDebugActions m_DebugActionsCallbackInterface;
+    private readonly InputAction m_Debug_Health;
+    private readonly InputAction m_Debug_SoulQueue;
+    public struct DebugActions
+    {
+        private @Controls m_Wrapper;
+        public DebugActions(@Controls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Health => m_Wrapper.m_Debug_Health;
+        public InputAction @SoulQueue => m_Wrapper.m_Debug_SoulQueue;
+        public InputActionMap Get() { return m_Wrapper.m_Debug; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(DebugActions set) { return set.Get(); }
+        public void SetCallbacks(IDebugActions instance)
+        {
+            if (m_Wrapper.m_DebugActionsCallbackInterface != null)
+            {
+                @Health.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnHealth;
+                @Health.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnHealth;
+                @Health.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnHealth;
+                @SoulQueue.started -= m_Wrapper.m_DebugActionsCallbackInterface.OnSoulQueue;
+                @SoulQueue.performed -= m_Wrapper.m_DebugActionsCallbackInterface.OnSoulQueue;
+                @SoulQueue.canceled -= m_Wrapper.m_DebugActionsCallbackInterface.OnSoulQueue;
+            }
+            m_Wrapper.m_DebugActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Health.started += instance.OnHealth;
+                @Health.performed += instance.OnHealth;
+                @Health.canceled += instance.OnHealth;
+                @SoulQueue.started += instance.OnSoulQueue;
+                @SoulQueue.performed += instance.OnSoulQueue;
+                @SoulQueue.canceled += instance.OnSoulQueue;
+            }
+        }
+    }
+    public DebugActions @Debug => new DebugActions(this);
     private int m_KeyboardandmouseSchemeIndex = -1;
     public InputControlScheme KeyboardandmouseScheme
     {
@@ -495,5 +696,14 @@ public partial class @Controls : IInputActionCollection2, IDisposable
     {
         void OnMeleeAttack(InputAction.CallbackContext context);
         void OnRangedAttack(InputAction.CallbackContext context);
+    }
+    public interface IUIActions
+    {
+        void OnPauseGame(InputAction.CallbackContext context);
+    }
+    public interface IDebugActions
+    {
+        void OnHealth(InputAction.CallbackContext context);
+        void OnSoulQueue(InputAction.CallbackContext context);
     }
 }

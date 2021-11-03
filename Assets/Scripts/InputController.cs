@@ -13,6 +13,10 @@ using UnityEngine.Events;
 [Serializable] public class MeleeChargeInputEvent : UnityEvent {}
 [Serializable] public class RangedInputEvent : UnityEvent {}
 [Serializable] public class RangedChargeInputEvent : UnityEvent {}
+[Serializable] public class PauseGameInputEvent : UnityEvent {}
+[Serializable] public class HealthInputEvent : UnityEvent<float> {}
+[Serializable] public class SoulQueueInputEvent : UnityEvent<int> { }
+
 public class InputController : MonoBehaviour
 {
     private Controls _controls;
@@ -23,6 +27,9 @@ public class InputController : MonoBehaviour
     public MeleeChargeInputEvent meleeChargeInputEvent;
     public RangedInputEvent rangedInputEvent;
     public RangedChargeInputEvent rangedChargeInputEvent;
+    public PauseGameInputEvent pauseGameInputEvent;
+    public HealthInputEvent healthInputEvent;
+    public SoulQueueInputEvent soulQueueInputEvent;
 
     private void Awake()
     {
@@ -44,6 +51,15 @@ public class InputController : MonoBehaviour
         _controls.Action.MeleeAttack.performed += OnMeleePerformed;
         _controls.Action.RangedAttack.performed += OnRangedPerformed;
 
+        // UI
+        _controls.UI.Enable();
+        _controls.UI.PauseGame.performed += _ => OnPausePerformed();
+
+        // Debug
+        _controls.Debug.Enable();
+        _controls.Debug.Health.performed += OnHealthPerformed;
+        _controls.Debug.SoulQueue.performed += OnSoulQueuePerformed;
+
     }
 
 
@@ -51,6 +67,7 @@ public class InputController : MonoBehaviour
     {
         _controls.Gameplay.Disable();
         _controls.Action.Disable();
+        _controls.Debug.Disable();
     }
 
     private void OnMovePerformed(InputAction.CallbackContext ctx)
@@ -101,6 +118,18 @@ public class InputController : MonoBehaviour
         }
     }
 
+    private void OnPausePerformed()
+    {
+        pauseGameInputEvent.Invoke();
+    }
 
+    private void OnHealthPerformed(InputAction.CallbackContext ctx)
+    {
+        healthInputEvent.Invoke(ctx.ReadValue<float>());
+    }
 
+    private void OnSoulQueuePerformed(InputAction.CallbackContext ctx)
+    {
+        soulQueueInputEvent.Invoke((int) ctx.ReadValue<float>());
+    }
 }
