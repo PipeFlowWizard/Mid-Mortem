@@ -81,11 +81,13 @@ public class LevelCreation : MonoBehaviour
                 theRoom.SetLeftDoor(i == 0 ? null : placedGrid[i - 1, j].GetComponent<Room>().GetRightDoor());
                 theRoom.SetBotRoom(j == 0 ? null : placedGrid[i, j - 1].GetComponent<Room>());
                 theRoom.SetLeftRoom(i == 0 ? null : placedGrid[i - 1, j].GetComponent<Room>());
-                theRoom.SetTopRoom(j < gridM - 1 ? null : placedGrid[i, j + 1].GetComponent<Room>());
-                theRoom.SetRightRoom(i < gridN - 1 ? null : placedGrid[i + 1, j].GetComponent<Room>());
+                theRoom.SetTopRoom(j >= gridM - 1 ? null : placedGrid[i, j + 1].GetComponent<Room>());
+                theRoom.SetRightRoom(i >= gridN - 1 ? null : placedGrid[i + 1, j].GetComponent<Room>());
+                
+
             }
         }
-                addKey(keys);
+        addKey(keys);
         
         level.Rooms = rooms;
         foreach (var levelRoom in rooms)
@@ -107,6 +109,7 @@ public class LevelCreation : MonoBehaviour
             {
                 room.GetComponent<Room>().spawnKey();
                 nbKeys--;
+                
             }
 
         }
