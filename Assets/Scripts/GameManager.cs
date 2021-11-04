@@ -26,10 +26,19 @@ public class GameManager : MonoBehaviour
             // Spawn obstacles in all rooms
             // Step 4
             // Spawn enemies in next rooms
-            for (int i = 0; i < 4; i++ )
-                _level.Rooms[0].SpawnEnemyInRoomRandom();
             
 
+            foreach (var room in  _level.Rooms)
+            {
+                if (room.startSelf)
+                {
+                    player.transform.position = room.transform.position + Vector3.up;
+                    for (int i = 0; i < 4; i++ )
+                        room.SpawnEnemyInRoomRandom();
+                }
+            }
+
+            
     }
 
     // Update is called once per frame
