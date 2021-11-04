@@ -64,15 +64,19 @@ public class LevelCreation : MonoBehaviour
                 room.GetComponent<Room>().createRoom(pos, grid[i, j], rightType: rightDoor, topType: topDoor, leftWall:i==0,botWall:j==0);
                 placedGrid[i, j] = room;
                 room.name = "Room " + "[" + i + "," + j + "]";
-                rooms.Add(room.GetComponent<Room>());
+                Room theRoom = room.GetComponent<Room>();
+                theRoom.SetBotDoor(j==0?null:placedGrid[i, j - 1].GetComponent<Room>().GetTopDoor());
+                theRoom.SetLeftDoor(i == 0 ? null:placedGrid[i - 1, j].GetComponent<Room>().GetRightDoor()); ;
+
+                rooms.Add(theRoom);
+                
             }
         }
         addKey(keys);
         
         level.Rooms = rooms;
         foreach (var levelRoom in rooms)
-        {
-            
+        { 
             levelRoom.SetLevel(level);
         }
     }

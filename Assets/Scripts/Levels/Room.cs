@@ -18,6 +18,7 @@ public class Room : MonoBehaviour
     public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
     public Color spawnAreaColor = Color.magenta;
 
+    public GameObject botDoorRef, topDoorRef, rightDoorRef, leftDoorRef;
     /// <summary>
     /// Sets room parameters
     /// </summary>
@@ -25,27 +26,31 @@ public class Room : MonoBehaviour
     public GameObject createRoom(Vector3 pos, int type, int rightType, int topType, float ratio = 0.33f, bool leftWall = false, bool botWall=false)
 
     {
+        botDoorRef = null;
+        topDoorRef = null;
+        rightDoorRef = null;
+        leftDoorRef = null;
 
         if (topType == 6||topType==1) InstantiateWallDoor(topWallPref);
-        else if (topType >= 2 || type == 3) InstantiateWallDoor(topDoorPref);
+        else if (topType >= 2 || type == 3) topDoorRef = InstantiateWallDoor(topDoorPref);
         else if (topType == 0)
         {
             //flip a coin
             
             bool coinFlip = Random.value > ratio;
             //Door
-            if (coinFlip) InstantiateWallDoor(topDoorPref);
+            if (coinFlip) topDoorRef = InstantiateWallDoor(topDoorPref);
             //Wall
             else InstantiateWallDoor(topWallPref);
         }
         if (rightType == 6) InstantiateWallDoor(rightWallPref);
-        else if (rightType>0||type>0)InstantiateWallDoor(rightDoorPref);
+        else if (rightType>0||type>0) rightDoorRef = InstantiateWallDoor(rightDoorPref);
         else if (rightType == 0)
         {
             //flip a coin
             bool coinFlip = Random.value > ratio;
             //Door
-            if (coinFlip) InstantiateWallDoor(rightDoorPref);
+            if (coinFlip) rightDoorRef = InstantiateWallDoor(rightDoorPref);
             //Wall
             else InstantiateWallDoor(rightWallPref);
             
@@ -93,7 +98,22 @@ public class Room : MonoBehaviour
     {
         this._level = level;
     }
-
+    public void SetLeftDoor(GameObject Door)
+    {
+        this.leftDoorRef = Door;
+    }
+    public GameObject GetRightDoor()
+    {
+        return this.rightDoorRef;
+    }
+    public GameObject GetTopDoor()
+    {
+        return this.topDoorRef;
+    }
+    public void SetBotDoor(GameObject Door)
+    {
+        this.botDoorRef = Door;
+    }
     /// <summary>
     /// Spawns a default enemy at random position in the current room
     /// </summary>
@@ -104,11 +124,12 @@ public class Room : MonoBehaviour
         Debug.Log("SEIRR");
         _level.SpawnEnemy(point);
     }
-  private void InstantiateWallDoor(GameObject prefab)
+  private GameObject InstantiateWallDoor(GameObject prefab)
     {
         GameObject door;
         door = Instantiate<GameObject>(prefab, transform);
         door.transform.SetParent(this.transform);
+        return door;
     }
     //Draw the spawning area
     private void OnDrawGizmos()
