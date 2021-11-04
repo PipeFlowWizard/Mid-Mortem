@@ -18,7 +18,7 @@ public class DashAbility : Ability
         if (rb)
         {
             rb.velocity = Vector3.zero;
-            rb.AddForce(forward.normalized * dashForce, ForceMode.VelocityChange);
+            rb.AddForce(forward.normalized * dashForce, ForceMode.VelocityChange );
         }
     }
 }

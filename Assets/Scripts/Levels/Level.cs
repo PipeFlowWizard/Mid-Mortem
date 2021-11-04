@@ -31,7 +31,7 @@ public class Level : MonoBehaviour
 
     public void SpawnEnemy(Vector3 position)
     {
-        Spawn(position, data.Spawnables[3]);
+        Spawn(position, data.Spawnables[0]);
     }
 
 }

@@ -235,3 +235,4 @@ MonoBehaviour:
   waitingForReap: 0
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
+  currentRoom: {fileID: 0}
