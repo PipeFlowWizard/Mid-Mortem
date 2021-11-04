@@ -29,9 +29,10 @@ public class Level : MonoBehaviour
         return spawned;
     }
 
-    public void SpawnEnemy(Vector3 position)
+    public void SpawnEnemy(Vector3 position, Room currentroom)
     {
-        Spawn(position, data.Spawnables[0]);
+        var enemy = Spawn(position, data.Spawnables[0]);
+        enemy.GetComponent<Enemy>()._currentRoom = currentroom;
     }
 
 }

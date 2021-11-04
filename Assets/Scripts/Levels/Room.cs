@@ -17,6 +17,28 @@ public class Room : MonoBehaviour
     public Vector2 spawnArea;
     public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
     public Color spawnAreaColor = Color.magenta;
+    [SerializeField]
+    private List<Door> doors;
+    public int currentEnemyCount = 0;
+    public bool isCleared = false;
+    public int CurrentEnemyCount
+    {
+        get => currentEnemyCount;
+        set
+        {
+            currentEnemyCount = value;
+            if (currentEnemyCount == 0)
+            {
+                isCleared = true;
+                //call event
+                Debug.Log("OpenDoors");
+                foreach (var door in doors)
+                {
+                    door.openDoor();
+                }
+            }
+        }
+    }
 
     public Door botDoorRef, topDoorRef, rightDoorRef, leftDoorRef;
     /// <summary>
@@ -138,7 +160,8 @@ public class Room : MonoBehaviour
         //TODO: Make this spawn enemies and items instead of a generic gameobject
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
         Debug.Log("SEIRR");
-        _level.SpawnEnemy(point);
+        _level.SpawnEnemy(point,this);
+        currentEnemyCount++;
     }
   private Door InstantiateDoor(GameObject prefab)
     {

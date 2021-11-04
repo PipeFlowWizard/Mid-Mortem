@@ -5,26 +5,38 @@ using UnityEngine;
 public class Door : MonoBehaviour
 {
    
-    Room adjacent1, adjacent2;
-    bool isOpen;
+    public Room adjacent1, adjacent2;
+    bool isOpen = false;
     
     // Start is called before the first frame update
     void Start()
     {
-        isOpen = false;
+        //isOpen = false;
     }
 
-    bool openDoor()
+    public bool openDoor()
     {
         if (!isOpen)
         {
             //can change to sliding animation later
             gameObject.SetActive(false);
             //init room adjacent1
-            
+
+            if (!adjacent1.isCleared)
+            {
+                for(int i = 0; i < 2; i++)
+                    adjacent1.SpawnEnemyInRoomRandom();
+            }
+            if (!adjacent2.isCleared)
+            {
+                for(int i = 0; i < 2; i++)
+                    adjacent2.SpawnEnemyInRoomRandom();
+            }
 
             //init room adjacent2
+            isOpen = true;
         }
+
         return isOpen;
     }
     public void SetAdjacent1(Room adjacent)

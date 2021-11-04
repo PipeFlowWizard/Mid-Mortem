@@ -41,7 +41,9 @@ public class Enemy : Damageable
     public GameEvent deathEvent;
     public GameEvent reapedEvent;
 
-    public Room currentRoom;
+    public Room _currentRoom;
+
+    public bool isDead = false;
 
     // Start is called before the first frame update
     void Start()
@@ -236,6 +238,8 @@ public class Enemy : Damageable
         eRigidBody.constraints = RigidbodyConstraints.None;
         eRigidBody.AddForce(-pushBackForce * rotationDamp * transform.forward, ForceMode.Impulse);
         eRigidBody.velocity = Vector3.zero;
+        if(!isDead) _currentRoom.CurrentEnemyCount = _currentRoom.CurrentEnemyCount - 1;
+        isDead = true;
         StartCoroutine(EnemyKilled());
     }
 
@@ -361,11 +365,11 @@ public class Enemy : Damageable
     // Destroy Enemy after 3 seconds
     private IEnumerator EnemyKilled()
     {
+        
         deathEvent.Raise();
-
         // After 3 seconds, destroy Enemy Game Object
         yield return new WaitForSeconds(characterStats.rangedSpawn);
-        //currentRoom.CurrentEnemyCount--;
+        
         Destroy(gameObject);
     }
 }
