@@ -80,8 +80,16 @@ public class Room : MonoBehaviour
         if (botWall)InstantiateWall(botWallPref);
         if (leftWall) InstantiateWall(leftWallPref);
         //check for 0 if top type is 0, flip a coin
-        
-       
+
+        if (rightDoorRef)
+        {
+            rightDoorRef.SetAdjacent1(this);
+
+        }
+        if (topDoorRef)
+        {
+            topDoorRef.SetAdjacent1(this);
+        }
         bossRoomSelf = type==5;
         startSelf = type==4;
         enemySelf = bossRoomSelf==startSelf;
@@ -123,6 +131,7 @@ public class Room : MonoBehaviour
     public void SetLeftDoor(Door Door)
     {
         this.leftDoorRef = Door;
+        if(Door)doors.Add(Door);
     }
     public Door GetRightDoor()
     {
@@ -135,6 +144,7 @@ public class Room : MonoBehaviour
     public void SetBotDoor(Door Door)
     {
         this.botDoorRef = Door;
+        if(Door)doors.Add(Door);
     }
     public void SetTopRoom(Room room)
     {
@@ -168,8 +178,9 @@ public class Room : MonoBehaviour
         GameObject door;
         door = Instantiate<GameObject>(prefab, transform);
         door.transform.SetParent(this.transform);
-
-        return door.GetComponent<Door>();
+        Door theDoor = door.GetComponent<Door>();
+        doors.Add(theDoor);
+        return theDoor;
     }
     private void InstantiateWall(GameObject prefab)
     {
