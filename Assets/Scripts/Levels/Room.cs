@@ -18,7 +18,7 @@ public class Room : MonoBehaviour
     public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
     public Color spawnAreaColor = Color.magenta;
 
-    public GameObject botDoorRef, topDoorRef, rightDoorRef, leftDoorRef;
+    public Door botDoorRef, topDoorRef, rightDoorRef, leftDoorRef;
     /// <summary>
     /// Sets room parameters
     /// </summary>
@@ -98,19 +98,19 @@ public class Room : MonoBehaviour
     {
         this._level = level;
     }
-    public void SetLeftDoor(GameObject Door)
+    public void SetLeftDoor(Door Door)
     {
         this.leftDoorRef = Door;
     }
-    public GameObject GetRightDoor()
+    public Door GetRightDoor()
     {
         return this.rightDoorRef;
     }
-    public GameObject GetTopDoor()
+    public Door GetTopDoor()
     {
         return this.topDoorRef;
     }
-    public void SetBotDoor(GameObject Door)
+    public void SetBotDoor(Door Door)
     {
         this.botDoorRef = Door;
     }
