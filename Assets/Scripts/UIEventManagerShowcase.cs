@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UIEventManagerShowcase : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class UIEventManagerShowcase : MonoBehaviour
     [SerializeField] private GameObject dedUI;
     [SerializeField] private GameObject normalReapUI;
     [SerializeField] private GameObject bossReapUI;
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private Image soulFill;
 
     private void Start()
     {
@@ -26,6 +29,14 @@ public class UIEventManagerShowcase : MonoBehaviour
     public void OnSoulCountUpdate()
     {
         soulText.text = soulCounter.runTimeValue.ToString();
+        float ratio = soulCounter.runTimeValue / 100f;
+        soulFill.fillAmount = ratio;
+    }
+
+    public void OnPaused()
+    {
+        pauseUI.SetActive(true);
+        StartCoroutine(TurnOffUI(bossReapUI));
     }
 
     public void OnNormalEnemyReap()
@@ -48,6 +59,7 @@ public class UIEventManagerShowcase : MonoBehaviour
     public void OnDiedEvent()
     {
         dedUI.SetActive(true);
+        dedUI.GetComponent<Burning>().SetBurning(true);
         
     }
 }
