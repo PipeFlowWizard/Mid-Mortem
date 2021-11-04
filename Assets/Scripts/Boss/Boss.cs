@@ -1,38 +1,39 @@
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using UnityEngine;
 
-// General Enemy class for Enemies
-public class Enemy : Damageable
+public class Boss : Damageable
 {
-    private State currentState;                             // Current State of Enemy
+    private State currentState;                             // Current State of Boss
 
-    // Enemy Movement
-    private Rigidbody eRigidBody;                           // Reference to RigidBody of Enemy
+    // Boss Movement
+    private Rigidbody eRigidBody;                           // Reference to RigidBody of Boss
     public bool isMoving;                                   // Bool to determine if Player is moving
 
     // Reference to Player
-    public Transform target;                                // Enemy target (Player)
+    public Transform target;                                // Boss target (Player)
 
-    // Enemy Attack
-    [SerializeField] private GameObject enemySpell;         // Reference to EnemySpell GameObject
-    [SerializeField] private float pushBackForce = 15.0f;   // Push Enemy back after attacking Player with melee
+    // Boss Attack
+    [SerializeField] private GameObject BossSpell;          // Reference to BossSpell GameObject
+    [SerializeField] private float zOffset = 10.0f;         // zOffset for Boss Ranged Attacks
+    [SerializeField] private float yOffset = 10.0f;         // yOffset for Boss Ranged Attacks
+    private Vector3 attackDir;                              // Direction of Player Attack            
+    [SerializeField] private float pushBackForce = 15.0f;   // Push Boss back after attacking Player with melee
     public bool meleeAttack;                                // Bool to determine when to Melee attack 
     public bool rangeAttack;                                // Bool to determine when to Ranged attack
     [SerializeField] private float rotationDamp = 0.5f;     // Rotational Dampening so rotation is gradual
 
-    // Enemy Material
-    private Material eMaterial;                             // Reference to Enemy Material
-    private Color enemyColor;                               // Original Enemy Color
+    // Boss Material
+    private Material eMaterial;                             // Reference to Boss Material
+    private Color BossColor;                                // Original Boss Color
     private bool flash;                                     // Bool to determine when to change fadeAmount
     [SerializeField] private float colorChange = 0.5f;      // Change color every 0.5 seconds
 
-    // Reap quantities of Enemy
-    public bool canReap;                                    // Enemy is now weakend enough and can be reaped
-    public bool waitingForReap;                             // Whether enemy is waiting to be Reaped
+    // Reap quantities of Boss
+    public bool canReap;                                    // Boss is now weakend enough and can be reaped
+    public bool waitingForReap;                             // Whether Boss is waiting to be Reaped
 
-    // Tags for possible Enemy interaction
+    // Tags for possible Boss interaction
     private const string PLAYER = "Player";
     private const string ENEMY = "Enemy";
     private const string SCYTHE = "PlayerHurtBox";
@@ -47,20 +48,20 @@ public class Enemy : Damageable
     {
         // Get Transform of Player, Target
         GetPlayer();
-        // Get reference to Enemy RigidBody
+        // Get reference to Boss RigidBody
         eRigidBody = GetComponent<Rigidbody>();
-        // Get reference to Enemy Material and color
+        // Get reference to Boss Material and color
         eMaterial = GetComponent<MeshRenderer>().material;
-        enemyColor = eMaterial.color;
+        BossColor = eMaterial.color;
         // canReap, rangeAttack and meleeAttack start as true
         canReap = true;
         meleeAttack = true;
         rangeAttack = true;
         // Set current state to IDLE
-        SetState(new IdleEnemyState(this));
+        SetState(new IdleBossState(this));
         // Take Damage
         // StartCoroutine(LoseHealth());
-        // Change color of Enemy
+        // Change color of Boss
         // StartCoroutine(HealthChange());
     }
 
@@ -68,8 +69,8 @@ public class Enemy : Damageable
     // Why is this in fixed update?
     void FixedUpdate()
     {
-        // Get Health of Enemy to determine color
-        SetEnemyHealthState();
+        // Get Health of Boss to determine color
+        SetBossHealthState();
         // Call Action() for currentState 
         if (target)
         {
@@ -77,58 +78,60 @@ public class Enemy : Damageable
         }
     }
 
-    // Rotate Enemy toward Player
-    public void TurnEnemy()
+    // Rotate Boss toward Player
+    public void TurnBoss()
     {
         // Get vector pointing towards Player
         Vector3 direction = target.position - transform.position;
+        // Set attackDir to direction
+        attackDir = direction.normalized;
         direction.y = 0;
         // Get Quaternion to rotate towards Player
         Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
-        // Rotate Enemy, use Slerp to make Rotation gradual
+        // Rotate Boss, use Slerp to make Rotation gradual
         transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp);
     }
 
-    // Move Enemy toward Player
-    public void MoveEnemy()
+    // Move Boss toward Player
+    public void MoveBoss()
     {
         // Set isMoving to true
         isMoving = true;
-        // Move Enemy in direction they are facing using RigidBody
+        // Move Boss in direction they are facing using RigidBody
         eRigidBody.MovePosition(transform.position + transform.forward * characterStats.speed * Time.deltaTime);
     }
 
-    // Stop Enemy Movement
-    public void StopEnemy()
+    // Stop Boss Movement
+    public void StopBoss()
     {
         // Set isMoving to false
         isMoving = false;
-        // Set velocity of Enemy
+        // Set velocity of Boss
         eRigidBody.velocity = Vector3.zero;
     }
 
-    // ReapEnemy Destroys the Enemy Game Object and returns the type of Enemy and modifier boost
-    // Can only get a modifier boost if Enemy is waiting for reap, being in ReapEnemyState
-    public (string enemyType, int mod) ReapEnemy()
+    // ReapBoss Destroys the Boss Game Object and returns the type of Boss and modifier boost
+    // Can only get a modifier boost if Boss is waiting for reap, being in ReapBossState
+    public (string BossType, int mod) ReapBoss()
     {
         if (waitingForReap)
         {
-            // If Enemy is ATTACK type, return "Attack" and modStat
+            // If Boss is ATTACK type, return "Attack" and modStat
             if (characterStats.characterType == CharacterStats.CharacterType.ATTACK)
             {
                 return ("Attack", characterStats.modStatBoost);
             }
-            // Else if Enemy is DEFENSE type, return "Defense" and modStat
+            // Else if Boss is DEFENSE type, return "Defense" and modStat
             else if (characterStats.characterType == CharacterStats.CharacterType.DEFENSE)
             {
                 return ("Defense", characterStats.modStatBoost);
             }
-            // Else if Enemy is SPEED type, return "Speed" and modStat
+            // Else if Boss is SPEED type, return "Speed" and modStat
             else if (characterStats.characterType == CharacterStats.CharacterType.SPEED)
             {
                 return ("Speed", characterStats.modStatBoost);
             }
-            // Else, if Enemy is none of those types, return Health and modStat
+            // Else, if Boss is none of those types, return Health and modStat
             else
             {
                 return ("Health", characterStats.modStatBoost);
@@ -140,16 +143,16 @@ public class Enemy : Damageable
         }
     }
 
-    // Used to create Enemy Ranged Attack
+    // Used to create Boss Ranged Attack
     public void RangedAttack()
     {
         // Offset is transform.forward
         // Instantiate Spell
-        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward, Quaternion.identity);
-        // Get Reference to EnemySpell Component
+        GameObject spellObj = Instantiate(BossSpell, transform.position + (transform.forward * zOffset) - (transform.up * yOffset), Quaternion.identity);
+        // Get Reference to BossSpell Component
         EnemySpell spell = spellObj.GetComponent<EnemySpell>();
         // Set direction and speed of spell
-        spell.FireSpell(transform.forward, characterStats.attack_speed, characterStats.attack);
+        spell.FireSpell(attackDir, characterStats.attack_speed, characterStats.attack);
         // Start Timer to wait for next Ranged Attack
         StartCoroutine(RangeAttackTimer());
     }
@@ -169,7 +172,7 @@ public class Enemy : Damageable
         }
     }
 
-    // SetState sets the current State of Enemy
+    // SetState sets the current State of Boss
     public void SetState(State state)
     {
         // If currentState is already assigned, then call OnStateExit for that State
@@ -186,16 +189,16 @@ public class Enemy : Damageable
         }
     }
 
-    // Change Enemy Material based on health
-    private void SetEnemyHealthState()
+    // Change Boss Material based on health
+    private void SetBossHealthState()
     {
-        // If health is less than 50 but greater than 25, the Enemy turns yellow
+        // If health is less than 50 but greater than 25, the Boss turns yellow
         // Call CurrentHealthState
         if (CurrentHealthState() == 1)
         {
             if (flash)
             {
-                eMaterial.color = enemyColor;
+                eMaterial.color = BossColor;
             }
             else
             {
@@ -204,12 +207,12 @@ public class Enemy : Damageable
                 eMaterial.color = yellow;
             }
         }
-        // If health is less than 25, Enemy turns red
+        // If health is less than 25, Boss turns red
         else if (CurrentHealthState() == 2)
         {
             if (flash)
             {
-                eMaterial.color = enemyColor;
+                eMaterial.color = BossColor;
             }
             else
             {
@@ -220,22 +223,22 @@ public class Enemy : Damageable
         }
     }
 
-    // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
-    public void ReapEnemyTimer()
+    // ReapBossTimer starts ReapTimer so Player has 10 seconds to reap Boss
+    public void ReapBossTimer()
     {
         // Start ReapTimer Coroutine
         StartCoroutine(ReapTimer());
     }
 
-    // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
-    public void KillEnemy()
+    // KillBoss knocks the Boss down and Stops all Coroutines and sets attack to false
+    public void KillBoss()
     {
         meleeAttack = false;
         rangeAttack = false;
         eRigidBody.constraints = RigidbodyConstraints.None;
         eRigidBody.AddForce(-pushBackForce * rotationDamp * transform.forward, ForceMode.Impulse);
         eRigidBody.velocity = Vector3.zero;
-        StartCoroutine(EnemyKilled());
+        StartCoroutine(BossKilled());
     }
 
     private void OnCollisionEnter(Collision col)
@@ -245,8 +248,9 @@ public class Enemy : Damageable
         {
             meleeAttack = false;
             eRigidBody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
+            StartCoroutine(MeleeAttackTimer());
         }
-        // If collide with another Enemy, then move to left or right
+        // If collide with another Boss, then move to left or right
         if (col.transform.CompareTag(ENEMY))
         {
             int index = Random.Range(1, 3);
@@ -265,39 +269,38 @@ public class Enemy : Damageable
 
     private void OnCollisionExit(Collision col)
     {
-        // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
+        // After Boss collides with Player, they stop moving, and Call AttackTimer for 2 seconds
         if (col.transform.CompareTag(PLAYER))
         {
             // Debug.Log("Player collision");
             var player = col.gameObject.GetComponent<Player>();
             player.TakeDamage(characterStats.attack);
-            StopEnemy();
-            StartCoroutine(MeleeAttackTimer());
+            StopBoss();
         }
-        // After Enemy collides with Another Enemy, they stop moving
+        // After Boss collides with Another Boss, they stop moving
         if (col.transform.CompareTag(ENEMY))
         {
-            StopEnemy();
+            StopBoss();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // If Enemy is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
+        // If Boss is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
         if (other.CompareTag(SCYTHE))
         {
             var player = other.GetComponentInParent<Player>();
 
-            // If Enemy is waitingForReap, then they can call the ReapEnemy Function
+            // If Boss is waitingForReap, then they can call the ReapBoss Function
             // TODO: Add in Reap Animation and adding modifier 
             if (waitingForReap)
             {
                 Debug.Log("I T S  R E A P I N'  T I M E");
                 reapedEvent.Raise();
-                StopEnemy();
-                KillEnemy();
+                StopBoss();
+                KillBoss();
             }
-            // Else, the Enemy just takes normal damage
+            // Else, the Boss just takes normal damage
             else
             {
                 if (player)
@@ -309,7 +312,7 @@ public class Enemy : Damageable
         }
     }
 
-    // Timer between ranged attacks for Enemy
+    // Timer between ranged attacks for Boss
     private IEnumerator RangeAttackTimer()
     {
         // Every 3 seconds set launch to true
@@ -317,11 +320,12 @@ public class Enemy : Damageable
         rangeAttack = true;
     }
 
-    // Timer between attacks for Enemy
+    // Timer between attacks for Boss
     private IEnumerator MeleeAttackTimer()
     {
         // Every 3 seconds set launch to true
         yield return new WaitForSeconds(characterStats.meleeSpawn);
+        print("Attack");
         meleeAttack = true;
     }
 
@@ -336,7 +340,7 @@ public class Enemy : Damageable
         }
     }
 
-    // Change color of Enemy every half-second seconds based on current health
+    // Change color of Boss every half-second seconds based on current health
     private IEnumerator HealthChange()
     {
         while (GetHealth() != 0)
@@ -347,22 +351,22 @@ public class Enemy : Damageable
         }
     }
 
-    // Make Enemy wait 10 seconds in Reaped State
+    // Make Boss wait 10 seconds in Reaped State
     private IEnumerator ReapTimer()
     {
-        // After 10 seconds, Enemy can no longer be reaped and returns to previous state
+        // After 10 seconds, Boss can no longer be reaped and returns to previous state
         yield return new WaitForSeconds(characterStats.reapTime);
         canReap = false;
         waitingForReap = false;
         //StartCoroutine(LoseHealth());
     }
 
-    // Destroy Enemy after 3 seconds
-    private IEnumerator EnemyKilled()
+    // Destroy Boss after 3 seconds
+    private IEnumerator BossKilled()
     {
         deathEvent.Raise();
 
-        // After 3 seconds, destroy Enemy Game Object
+        // After 3 seconds, destroy Boss Game Object
         yield return new WaitForSeconds(characterStats.rangedSpawn);
         Destroy(gameObject);
     }

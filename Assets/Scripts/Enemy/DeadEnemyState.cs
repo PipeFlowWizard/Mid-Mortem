@@ -19,6 +19,6 @@ public class DeadEnemyState : State
     // Killed Enemy doesn't do anything on Action
     public override void Action()
     {
-        
+       
     }
 }

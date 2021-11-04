@@ -21,7 +21,7 @@ MonoBehaviour:
   defense: 0.85
   speed: 3
   max_range: 50
-  chase_range: 0.5
+  chase_range: 7
   attack_speed: 5
   modStatBoost: 10
   characterType: 0
