@@ -24,25 +24,22 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        if (video.frame > 75)
+        print(video.frame);
+        if (video.frame > 52)
         {
             showInfo();
         }
         else
-        {
+            gameObject.transform.GetChild(4).gameObject.SetActive(false);
 
-        }
     }
 
     public void pauseGame()
     {
-        print(video.frame);
-        // TODO: Only Show UI When Video Stopped Playing
         player.GetComponent<PlayerController>().enabled ^= true;
         input.SetActive(!input.activeSelf);
         Time.timeScale = (Time.timeScale == 1.0f ? 0.0f : 1.0f);
         gameObject.SetActive(!gameObject.activeSelf);
-        
     }
 
     void showInfo()
