@@ -31,32 +31,32 @@ public class Room : MonoBehaviour
         rightDoorRef = null;
         leftDoorRef = null;
 
-        if (topType == 6||topType==1) InstantiateWallDoor(topWallPref);
-        else if (topType >= 2 || type == 3) topDoorRef = InstantiateWallDoor(topDoorPref);
+        if (topType == 6||topType==1) InstantiateWall(topWallPref);
+        else if (topType >= 2 || type == 3) topDoorRef = InstantiateDoor(topDoorPref);
         else if (topType == 0)
         {
             //flip a coin
             
             bool coinFlip = Random.value > ratio;
             //Door
-            if (coinFlip) topDoorRef = InstantiateWallDoor(topDoorPref);
+            if (coinFlip) topDoorRef = InstantiateDoor(topDoorPref);
             //Wall
-            else InstantiateWallDoor(topWallPref);
+            else InstantiateWall(topWallPref);
         }
-        if (rightType == 6) InstantiateWallDoor(rightWallPref);
-        else if (rightType>0||type>0) rightDoorRef = InstantiateWallDoor(rightDoorPref);
+        if (rightType == 6) InstantiateWall(rightWallPref);
+        else if (rightType>0||type>0) rightDoorRef = InstantiateDoor(rightDoorPref);
         else if (rightType == 0)
         {
             //flip a coin
             bool coinFlip = Random.value > ratio;
             //Door
-            if (coinFlip) rightDoorRef = InstantiateWallDoor(rightDoorPref);
+            if (coinFlip) rightDoorRef = InstantiateDoor(rightDoorPref);
             //Wall
-            else InstantiateWallDoor(rightWallPref);
+            else InstantiateWall(rightWallPref);
             
         }
-        if (botWall)InstantiateWallDoor(botWallPref);
-        if (leftWall) InstantiateWallDoor(leftWallPref);
+        if (botWall)InstantiateWall(botWallPref);
+        if (leftWall) InstantiateWall(leftWallPref);
         //check for 0 if top type is 0, flip a coin
         
        
@@ -124,12 +124,20 @@ public class Room : MonoBehaviour
         Debug.Log("SEIRR");
         _level.SpawnEnemy(point);
     }
-  private GameObject InstantiateWallDoor(GameObject prefab)
+  private Door InstantiateDoor(GameObject prefab)
     {
         GameObject door;
         door = Instantiate<GameObject>(prefab, transform);
         door.transform.SetParent(this.transform);
-        return door;
+
+        return door.GetComponent<Door>();
+    }
+    private void InstantiateWall(GameObject prefab)
+    {
+        GameObject wall;
+        wall = Instantiate<GameObject>(prefab, transform);
+        wall.transform.SetParent(this.transform);
+
     }
     //Draw the spawning area
     private void OnDrawGizmos()
