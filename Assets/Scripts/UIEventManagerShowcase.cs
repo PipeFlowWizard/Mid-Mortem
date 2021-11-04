@@ -59,6 +59,7 @@ public class UIEventManagerShowcase : MonoBehaviour
     public void OnDiedEvent()
     {
         dedUI.SetActive(true);
+        dedUI.GetComponent<Burning>().SetBurning(true);
         
     }
 }

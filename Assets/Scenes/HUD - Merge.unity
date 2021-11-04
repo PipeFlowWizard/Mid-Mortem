@@ -410,7 +410,7 @@ VideoPlayer:
   m_RenderMode: 2
   m_AspectRatio: 2
   m_DataSource: 0
-  m_PlaybackSpeed: 1.66
+  m_PlaybackSpeed: 3.27
   m_AudioOutputMode: 2
   m_TargetAudioSources: []
   m_DirectAudioVolumes: []
@@ -1298,7 +1298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 27e2728db0eacae409562f6d9be9bfb0, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1323,7 +1323,7 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373873327}
-  m_CullTransparentMesh: 1
+  m_CullTransparentMesh: 0
 --- !u!1 &387588902
 GameObject:
   m_ObjectHideFlags: 0
@@ -1996,6 +1996,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8103064924768368066, guid: 166fffe30a5ad184f95b5b0cbae1cee5, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 27e2728db0eacae409562f6d9be9bfb0, type: 2}
     - target: {fileID: 8103064924768368069, guid: 166fffe30a5ad184f95b5b0cbae1cee5, type: 3}
       propertyPath: m_Name
       value: AttackEnemy
@@ -7197,6 +7201,7 @@ GameObject:
   - component: {fileID: 2057656742}
   - component: {fileID: 2057656744}
   - component: {fileID: 2057656743}
+  - component: {fileID: 2057656745}
   m_Layer: 5
   m_Name: Panel
   m_TagString: Untagged
@@ -7262,6 +7267,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2057656741}
   m_CullTransparentMesh: 1
+--- !u!114 &2057656745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2057656741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b58f4de3c95af7749a57ee9c30bcb635, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2093889116
 GameObject:
   m_ObjectHideFlags: 0
