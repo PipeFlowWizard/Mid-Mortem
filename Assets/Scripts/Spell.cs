@@ -49,6 +49,14 @@ public class Spell : MonoBehaviour
             Destroy(gameObject);
         }
 
+        if (other.CompareTag("Boss"))
+        {
+            // Damage
+            Debug.Log("Boss hit");
+            other.GetComponent<Boss>().TakeDamage(damage);
+            Destroy(gameObject);
+        }
+
         if (gameObject && !other.CompareTag("Player") && !other.CompareTag("Ground"))
         {
             Destroy(gameObject);
