@@ -724,9 +724,9 @@ MonoBehaviour:
   weaponController: {fileID: 6037823677423622052}
   currentAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   shootOut: {fileID: 6037823677484136832}
-  reaperMaterial: {fileID: 0}
+  reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   canDash: 0
-  playerDeathEvent: {fileID: 0}
+  playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
 --- !u!114 &5980914422587083454
 MonoBehaviour:
   m_ObjectHideFlags: 0
