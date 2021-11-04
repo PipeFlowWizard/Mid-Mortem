@@ -17,7 +17,12 @@ public class GameManager : MonoBehaviour
             // Create level
             //  Initialize fields to defaults
             // Step 2
-            // Spawn Player
+            // Spawn Player in start room
+            // Step 3
+            // Spawn obstacles in all rooms
+            // Step 4
+            // Spawn enemies in next rooms
+
     }
 
     // Update is called once per frame

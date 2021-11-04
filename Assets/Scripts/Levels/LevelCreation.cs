@@ -79,6 +79,7 @@ public class LevelCreation : MonoBehaviour
         { 
             levelRoom.SetLevel(level);
         }
+        level.transform.localScale = new Vector3(10,10,10);
     }
     private void addKey(int nbKeys)
     {
