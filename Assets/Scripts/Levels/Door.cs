@@ -26,11 +26,19 @@ public class Door : MonoBehaviour
             {
                 for(int i = 0; i < 2; i++)
                     adjacent1.SpawnEnemyInRoomRandom();
+                if (adjacent1.bossRoomSelf)
+                {
+                    adjacent1.SpawnBossInRoomRandom();
+                }
             }
             if (!adjacent2.isCleared)
             {
                 for(int i = 0; i < 2; i++)
                     adjacent2.SpawnEnemyInRoomRandom();
+                if (adjacent2.bossRoomSelf)
+                {
+                    adjacent2.SpawnBossInRoomRandom();
+                }
             }
 
             //init room adjacent2

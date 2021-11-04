@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private GameObject player;
+
+    private Level _level;
     
 
     // Start is called before the first frame update
@@ -15,13 +17,18 @@ public class GameManager : MonoBehaviour
         //TODO: Generate Level, spawn entities and set defaults
             // Step 1
             // Create level
+            GetComponent<LevelCreation>().createLevel();
+            _level = FindObjectOfType<Level>();
             //  Initialize fields to defaults
             // Step 2
-            // Spawn Player in start room
+            // 
             // Step 3
             // Spawn obstacles in all rooms
             // Step 4
             // Spawn enemies in next rooms
+            for (int i = 0; i < 4; i++ )
+                _level.Rooms[0].SpawnEnemyInRoomRandom();
+            
 
     }
 

@@ -10,6 +10,11 @@ public class Level : MonoBehaviour
     public LevelData data;
     public List<Room> Rooms;
     
+    
+    
+    
+    
+    
     /// <summary>
     /// Samples a random point within a rectangular area surrounding a point
     /// </summary>
@@ -35,4 +40,9 @@ public class Level : MonoBehaviour
         enemy.GetComponent<Enemy>()._currentRoom = currentroom;
     }
 
+    public void SpawnBoss(Vector3 position, Room currentroom)
+    {
+        var enemy = Spawn(position, data.Spawnables[3]);
+        enemy.GetComponent<Enemy>()._currentRoom = currentroom;
+    }
 }

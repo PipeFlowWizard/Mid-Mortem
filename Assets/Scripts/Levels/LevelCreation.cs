@@ -22,7 +22,7 @@ public class LevelCreation : MonoBehaviour
     private GameObject currentLevel;
         
    
-    void createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
+    public void createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
     {
         //guarantee there is a key
        //return list
@@ -98,7 +98,7 @@ public class LevelCreation : MonoBehaviour
         { 
             levelRoom.SetLevel(level);
         }
-        level.transform.localScale = new Vector3(10,10,10);
+        level.transform.localScale = new Vector3(5,5,5);
     }
     private void addKey(int nbKeys)
     {
