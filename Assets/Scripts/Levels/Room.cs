@@ -12,7 +12,7 @@ public class Room : MonoBehaviour
     
    
     public bool botDoor, topDoor, rightDoor, leftDoor, bossRoomSelf,keyRoomSelf, startSelf, enemySelf;
-    private GameObject botRoom, topRoom, rightRoom, leftRoom;
+    private Room botRoom, topRoom, rightRoom, leftRoom;
     public Level _level;
     public Vector2 spawnArea;
     public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
@@ -113,6 +113,22 @@ public class Room : MonoBehaviour
     public void SetBotDoor(Door Door)
     {
         this.botDoorRef = Door;
+    }
+    public void SetTopRoom(Room room)
+    {
+        this.topRoom = room;
+    }
+    public void SetBotRoom(Room room)
+    {
+        this.botRoom = room;
+    }
+    public void SetLeftRoom(Room room)
+    {
+        this.leftRoom = room;
+    }
+    public void SetRightRoom(Room room)
+    {
+        this.rightRoom = room;
     }
     /// <summary>
     /// Spawns a default enemy at random position in the current room

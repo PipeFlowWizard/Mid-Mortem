@@ -27,6 +27,14 @@ public class Door : MonoBehaviour
         }
         return isOpen;
     }
+    public void SetAdjacent1(Room adjacent)
+    {
+        this.adjacent1 = adjacent;
+    }
+    public void SetAdjacent2(Room adjacent)
+    {
+        this.adjacent2 = adjacent;
+    }
     // Update is called once per frame
     void Update()
     {

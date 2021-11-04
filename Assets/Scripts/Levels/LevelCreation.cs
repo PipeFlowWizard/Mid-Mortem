@@ -67,7 +67,11 @@ public class LevelCreation : MonoBehaviour
                 Room theRoom = room.GetComponent<Room>();
                 theRoom.SetBotDoor(j==0?null:placedGrid[i, j - 1].GetComponent<Room>().GetTopDoor());
                 theRoom.SetLeftDoor(i == 0 ? null:placedGrid[i - 1, j].GetComponent<Room>().GetRightDoor());
-
+                theRoom.SetBotRoom(j == 0 ? null : placedGrid[i, j - 1].GetComponent<Room>());
+                theRoom.SetLeftRoom(i == 0 ? null : placedGrid[i - 1, j].GetComponent<Room>());
+                theRoom.SetTopRoom(j <gridM-1 ? null : placedGrid[i, j + 1].GetComponent<Room>());
+                theRoom.SetRightRoom(i <gridN-1 ? null : placedGrid[i + 1, j].GetComponent<Room>());
+                
                 rooms.Add(theRoom);
                 
             }
