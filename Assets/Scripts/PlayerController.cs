@@ -12,7 +12,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float moveSpeed = 20.0f;
     [SerializeField] private float rotationSpeed = 360.0f;
     [SerializeField] private float dashCd = .5f;
-    
+
+    private Rigidbody _rigidbody;
     private Camera _cam;
     public Animator anim;
     public GameObject mesh;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         _cam = Camera.main;
+        _rigidbody = GetComponent<Rigidbody>();
         _lastDashTime = Time.time;
         // anim = mesh.GetComponent<Animator>();
     }
@@ -62,13 +64,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        ApplyVelocity(Time.deltaTime);
+        ApplyVelocity();
     }
 
-    private void ApplyVelocity(float delta)
+    private void ApplyVelocity()
     {
-        var rb = player.Rigidbody;
-        rb.MovePosition(rb.position + _velocity * delta);
+        _rigidbody.AddForce(_velocity -_rigidbody.velocity,ForceMode.VelocityChange);
     }
     
 
