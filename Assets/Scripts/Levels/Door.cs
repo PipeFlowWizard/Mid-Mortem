@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Door : MonoBehaviour
 {
-
+   
     Room adjacent1, adjacent2;
     bool isOpen;
     
