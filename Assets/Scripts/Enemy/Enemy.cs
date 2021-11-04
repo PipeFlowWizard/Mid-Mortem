@@ -41,6 +41,7 @@ public class Enemy : Damageable
     public GameEvent deathEvent;
     public GameEvent reapedEvent;
 
+    public Room currentRoom;
 
     // Start is called before the first frame update
     void Start()
@@ -364,6 +365,7 @@ public class Enemy : Damageable
 
         // After 3 seconds, destroy Enemy Game Object
         yield return new WaitForSeconds(characterStats.rangedSpawn);
+        currentRoom.CurrentEnemyCount--;
         Destroy(gameObject);
     }
 }
