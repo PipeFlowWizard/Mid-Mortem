@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e0b2b9678557a14690bbb07d49ae078, type: 3}
   m_Name: PlayerDash
   m_EditorClassIdentifier: 
-  soulCost: 10
+  soulCost: 5
   duration: 0.1
   playerSoulCount: {fileID: 11400000, guid: ea5f9415dcdef0c4d80d3d5495518b35, type: 2}
   playerAbilityUsedEvent: {fileID: 11400000, guid: 013d2414095806649aaa1d405dec9db2, type: 2}

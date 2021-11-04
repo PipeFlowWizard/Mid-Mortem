@@ -36,6 +36,7 @@ public class Enemy : Damageable
     private const string PLAYER = "Player";
     private const string ENEMY = "Enemy";
     private const string SCYTHE = "PlayerHurtBox";
+    private const string PLAYER_SPELL = "PlayerSpell";
 
     [Header("Events")]
     public GameEvent deathEvent;
@@ -310,6 +311,16 @@ public class Enemy : Damageable
                     TakeDamage(player.characterStats.attack);
                 }
 
+            }
+        }
+
+        if (other.CompareTag(PLAYER_SPELL))
+        {
+            var player = other.GetComponentInParent<Player>();
+            
+            if (player)
+            {
+                TakeDamage(player.characterStats.attack);
             }
         }
     }

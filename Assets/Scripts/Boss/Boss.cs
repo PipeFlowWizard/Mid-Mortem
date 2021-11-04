@@ -50,9 +50,9 @@ public class Boss : Damageable
         GetPlayer();
         // Get reference to Boss RigidBody
         eRigidBody = GetComponent<Rigidbody>();
-        // Get reference to Boss Material and color
-        eMaterial = GetComponent<MeshRenderer>().material;
-        BossColor = eMaterial.color;
+        // // Get reference to Boss Material and color
+        // eMaterial = GetComponent<MeshRenderer>().material;
+        // BossColor = eMaterial.color;
         // canReap, rangeAttack and meleeAttack start as true
         canReap = true;
         meleeAttack = true;
@@ -198,13 +198,13 @@ public class Boss : Damageable
         {
             if (flash)
             {
-                eMaterial.color = BossColor;
+                // eMaterial.color = BossColor;
             }
             else
             {
                 Color yellow = Color.yellow;
                 yellow.a = 0.5f;
-                eMaterial.color = yellow;
+                // eMaterial.color = yellow;
             }
         }
         // If health is less than 25, Boss turns red
@@ -218,7 +218,7 @@ public class Boss : Damageable
             {
                 Color red = Color.red;
                 red.a = 0.5f;
-                eMaterial.color = red;
+                // eMaterial.color = red;
             }
         }
     }
