@@ -69,7 +69,8 @@ public class PlayerController : MonoBehaviour
 
     private void ApplyVelocity()
     {
-        _rigidbody.AddForce(_velocity -_rigidbody.velocity,ForceMode.VelocityChange);
+        
+        _rigidbody.AddForce(_velocity -_rigidbody.velocity,ForceMode.Acceleration);
     }
     
 

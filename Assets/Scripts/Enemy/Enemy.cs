@@ -365,7 +365,7 @@ public class Enemy : Damageable
 
         // After 3 seconds, destroy Enemy Game Object
         yield return new WaitForSeconds(characterStats.rangedSpawn);
-        currentRoom.CurrentEnemyCount--;
+        //currentRoom.CurrentEnemyCount--;
         Destroy(gameObject);
     }
 }
