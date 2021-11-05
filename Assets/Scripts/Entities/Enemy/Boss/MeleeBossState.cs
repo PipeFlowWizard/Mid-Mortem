@@ -28,12 +28,12 @@ public class MeleeBossState : State
             boss.SetState(new ReapBossState(boss));
         }
         // If target of boss is null or distance > max_range, then set boss State to IdleBossState
-        else if (boss.target == null || distance >= boss.characterStats.max_range)
+        else if (boss.target == null || distance >= boss.entityStats.maxRange)
         {
             boss.SetState(new IdleBossState(boss));
         }
         // If distance to boss is greater than chase_range, then boss State is RangedBossState
-        else if (distance > boss.characterStats.chase_range)
+        else if (distance > boss.entityStats.chaseRange)
         {
             boss.SetState(new RangedBossState(boss));
         }

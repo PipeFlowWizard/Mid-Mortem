@@ -12,7 +12,7 @@ public class HpBarScript : MonoBehaviour
     public Sprite sadSprite;
     public Sprite deadSprite;
 
-    private Damageable playerHealth;
+    private Entity playerHealth;
     //[SerializeField] private Transform Player; // Get Player HP from Player Transform
 
     private Image image;
@@ -23,12 +23,12 @@ public class HpBarScript : MonoBehaviour
     private void Start()
     {
         image = transform.Find("Face").GetComponent<Image>();
-        playerHealth = Player.GetComponent<Damageable>();
+        playerHealth = Player.GetComponent<Entity>();
     }
 
     private void Update()
     {
-        hp = playerHealth.GetHealth();
+        hp = playerHealth.CurrentHealth;
         float ratio = hp / maxHp;
         hpFill.fillAmount = ratio;
 

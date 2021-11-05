@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
-// General Enemy class for Enemies
-public class Enemy : Damageable
+public class Enemy : Entity
 {
     private State currentState;                             // Current State of Enemy
 
@@ -33,10 +32,6 @@ public class Enemy : Damageable
     public bool waitingForReap;                             // Whether enemy is waiting to be Reaped
 
     // Tags for possible Enemy interaction
-    private const string PLAYER = "Player";
-    private const string ENEMY = "Enemy";
-    private const string SCYTHE = "PlayerHurtBox";
-    private const string PLAYER_SPELL = "PlayerSpell";
 
     [Header("Events")]
     public GameEvent deathEvent;
@@ -46,6 +41,11 @@ public class Enemy : Damageable
 
     public bool isDead = false;
 
+    // TODO: Separate into different components based on regions
+    
+    
+    #region UnityCallbacks
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -70,6 +70,7 @@ public class Enemy : Damageable
 
 
     // Why is this in fixed update?
+
     void FixedUpdate()
     {
         // Get Health of Enemy to determine color
@@ -81,9 +82,93 @@ public class Enemy : Damageable
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        // If Enemy is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
+        if (other.CompareTag("PlayerHurtBox"))
+        {
+            var player = other.GetComponentInParent<Player>();
+
+            // If Enemy is waitingForReap, then they can call the ReapEnemy Function
+            // TODO: Add in Reap Animation and adding modifier 
+            if (waitingForReap)
+            {
+                Debug.Log("I T S  R E A P I N'  T I M E");
+                reapedEvent.Raise();
+                StopEnemy();
+                KillEnemy();
+            }
+            // Else, the Enemy just takes normal damage
+            else
+            {
+                if (player)
+                {
+                    TakeDamage(player.entityStats.attack);
+                }
+
+            }
+        }
+
+        if (other.CompareTag("PlayerSpell"))
+        {
+            var player = other.GetComponentInParent<Player>();
+            
+            if (player)
+            {
+                TakeDamage(player.entityStats.attack);
+            }
+        }
+    }
+    
+    private void OnCollisionEnter(Collision col)
+    {
+        // If collide with a Player, they take damage and then they move back
+        if (col.transform.CompareTag("Player"))
+        {
+            meleeAttack = false;
+            eRigidBody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
+        }
+        // If collide with another Enemy, then move to left or right
+        if (col.transform.CompareTag("Enemy"))
+        {
+            int index = Random.Range(1, 3);
+            if (index == 1)
+            {
+                // Move right
+                eRigidBody.AddForce(pushBackForce * transform.right, ForceMode.Impulse);
+            }
+            else
+            {
+                // Move left
+                eRigidBody.AddForce(-pushBackForce * transform.right, ForceMode.Impulse);
+            }
+        }
+    }
+
+    private void OnCollisionExit(Collision col)
+    {
+        // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
+        if (col.transform.CompareTag("Player"))
+        {
+            // Debug.Log("Player collision");
+            var player = col.gameObject.GetComponent<Player>();
+            player.TakeDamage(entityStats.attack);
+            StopEnemy();
+            StartCoroutine(MeleeAttackTimer());
+        }
+        // After Enemy collides with Another Enemy, they stop moving
+        if (col.transform.CompareTag("Enemy"))
+        {
+            StopEnemy();
+        }
+    }
+    
+    #endregion
+
     #region Movement
 
     // Rotate Enemy toward Player
+
     public void TurnEnemy()
     {
         // Get vector pointing towards Player
@@ -96,15 +181,17 @@ public class Enemy : Damageable
     }
 
     // Move Enemy toward Player
+
     public void MoveEnemy()
     {
         // Set isMoving to true
         isMoving = true;
         // Move Enemy in direction they are facing using RigidBody
-        eRigidBody.MovePosition(transform.position + transform.forward * characterStats.speed * Time.deltaTime);
+        eRigidBody.MovePosition(transform.position + transform.forward * entityStats.speed * Time.deltaTime);
     }
 
     // Stop Enemy Movement
+
     public void StopEnemy()
     {
         // Set isMoving to false
@@ -115,60 +202,15 @@ public class Enemy : Damageable
 
     #endregion
 
-    // ReapEnemy Destroys the Enemy Game Object and returns the type of Enemy and modifier boost
-    // Can only get a modifier boost if Enemy is waiting for reap, being in ReapEnemyState
-    public (string enemyType, int mod) ReapEnemy()
-    {
-        if (waitingForReap)
-        {
-            // If Enemy is ATTACK type, return "Attack" and modStat
-            if (characterStats.characterType == CharacterStats.CharacterType.ATTACK)
-            {
-                return ("Attack", characterStats.modStatBoost);
-            }
-            // Else if Enemy is DEFENSE type, return "Defense" and modStat
-            else if (characterStats.characterType == CharacterStats.CharacterType.DEFENSE)
-            {
-                return ("Defense", characterStats.modStatBoost);
-            }
-            // Else if Enemy is SPEED type, return "Speed" and modStat
-            else if (characterStats.characterType == CharacterStats.CharacterType.SPEED)
-            {
-                return ("Speed", characterStats.modStatBoost);
-            }
-            // Else, if Enemy is none of those types, return Health and modStat
-            else
-            {
-                return ("Health", characterStats.modStatBoost);
-            }
-        }
-        else
-        {
-            return ("Null", 0);
-        }
-    }
-
-    // Used to create Enemy Ranged Attack
-    public void RangedAttack()
-    {
-        // Offset is transform.forward
-        // Instantiate Spell
-        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward, Quaternion.identity);
-        // Get Reference to EnemySpell Component
-        EnemySpell spell = spellObj.GetComponent<EnemySpell>();
-        // Set direction and speed of spell
-        spell.FireSpell(transform.forward, characterStats.attack_speed, characterStats.attack);
-        // Start Timer to wait for next Ranged Attack
-        StartCoroutine(RangeAttackTimer());
-    }
-
+   
     // GetPlayer returns reference to Player transform
+
     public void GetPlayer()
     {
         // Else find GameObject with Player tag
-        if (GameObject.FindGameObjectWithTag(PLAYER))
+        if (GameObject.FindGameObjectWithTag("Player"))
         {
-            target = GameObject.FindGameObjectWithTag(PLAYER).transform;
+            target = GameObject.FindGameObjectWithTag("Player").transform;
         }
         // If Player not in scene, target is null
         else
@@ -177,7 +219,11 @@ public class Enemy : Damageable
         }
     }
 
+    #region  State Machine
+
     // SetState sets the current State of Enemy
+
+
     public void SetState(State state)
     {
         // If currentState is already assigned, then call OnStateExit for that State
@@ -195,6 +241,8 @@ public class Enemy : Damageable
     }
 
     // Change Enemy Material based on health
+
+
     private void SetEnemyHealthState()
     {
         // If health is less than 50 but greater than 25, the Enemy turns yellow
@@ -228,6 +276,82 @@ public class Enemy : Damageable
         }
     }
 
+    #endregion
+
+   
+
+    #region Combat
+
+    // Timer between ranged attacks for Enemy
+
+    private IEnumerator RangeAttackTimer()
+    {
+        // Every 3 seconds set launch to true
+        yield return new WaitForSeconds(entityStats.rangedSpawn);
+        rangeAttack = true;
+    }
+
+
+    // Timer between attacks for Enemy
+
+    private IEnumerator MeleeAttackTimer()
+    {
+        // Every 3 seconds set launch to true
+        yield return new WaitForSeconds(entityStats.meleeSpawn);
+        meleeAttack = true;
+    }
+
+
+    // Take 10 damage every 2 seconds
+
+    public IEnumerator LoseHealth()
+    {
+        while (!waitingForReap)
+        {
+            // Every 2 seconds take damage
+            yield return new WaitForSeconds(entityStats.meleeSpawn);
+            TakeDamage(10);
+        }
+    }
+
+
+    // Change color of Enemy every half-second seconds based on current health
+
+    private IEnumerator HealthChange()
+    {
+        while (CurrentHealth != 0)
+        {
+            // Every half-second set flash to true to change color
+            yield return new WaitForSeconds(colorChange);
+            flash = !flash;
+        }
+    }
+
+
+    // Make Enemy wait 10 seconds in Reaped State
+
+    private IEnumerator ReapTimer()
+    {
+        // After 10 seconds, Enemy can no longer be reaped and returns to previous state
+        yield return new WaitForSeconds(entityStats.reapTime);
+        canReap = false;
+        waitingForReap = false;
+        //StartCoroutine(LoseHealth());
+    }
+
+
+    // Destroy Enemy after 3 seconds
+
+    private IEnumerator EnemyKilled()
+    {
+        
+        deathEvent.Raise();
+        // After 3 seconds, destroy Enemy Game Object
+        yield return new WaitForSeconds(entityStats.rangedSpawn);
+        
+        Destroy(gameObject);
+    }
+
     // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
     public void ReapEnemyTimer()
     {
@@ -247,144 +371,59 @@ public class Enemy : Damageable
         isDead = true;
         StartCoroutine(EnemyKilled());
     }
+    
+    // ReapEnemy Destroys the Enemy Game Object and returns the type of Enemy and modifier boost
 
-    private void OnCollisionEnter(Collision col)
+    // Can only get a modifier boost if Enemy is waiting for reap, being in ReapEnemyState
+
+    public (string enemyType, int mod) ReapEnemy()
     {
-        // If collide with a Player, they take damage and then they move back
-        if (col.transform.CompareTag(PLAYER))
+        if (waitingForReap)
         {
-            meleeAttack = false;
-            eRigidBody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
-        }
-        // If collide with another Enemy, then move to left or right
-        if (col.transform.CompareTag(ENEMY))
-        {
-            int index = Random.Range(1, 3);
-            if (index == 1)
+            // If Enemy is ATTACK type, return "Attack" and modStat
+            if (entityStats.entityType == EntityStats.EntityType.ATTACK)
             {
-                // Move right
-                eRigidBody.AddForce(pushBackForce * transform.right, ForceMode.Impulse);
+                return ("Attack", entityStats.modStatBoost);
             }
+            // Else if Enemy is DEFENSE type, return "Defense" and modStat
+            else if (entityStats.entityType == EntityStats.EntityType.DEFENSE)
+            {
+                return ("Defense", entityStats.modStatBoost);
+            }
+            // Else if Enemy is SPEED type, return "Speed" and modStat
+            else if (entityStats.entityType == EntityStats.EntityType.SPEED)
+            {
+                return ("Speed", entityStats.modStatBoost);
+            }
+            // Else, if Enemy is none of those types, return Health and modStat
             else
             {
-                // Move left
-                eRigidBody.AddForce(-pushBackForce * transform.right, ForceMode.Impulse);
+                return ("Health", entityStats.modStatBoost);
             }
         }
-    }
-
-    private void OnCollisionExit(Collision col)
-    {
-        // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
-        if (col.transform.CompareTag(PLAYER))
+        else
         {
-            // Debug.Log("Player collision");
-            var player = col.gameObject.GetComponent<Player>();
-            player.TakeDamage(characterStats.attack);
-            StopEnemy();
-            StartCoroutine(MeleeAttackTimer());
-        }
-        // After Enemy collides with Another Enemy, they stop moving
-        if (col.transform.CompareTag(ENEMY))
-        {
-            StopEnemy();
+            return ("Null", 0);
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    // Used to create Enemy Ranged Attack
+
+    public void RangedAttack()
     {
-        // If Enemy is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
-        if (other.CompareTag(SCYTHE))
-        {
-            var player = other.GetComponentInParent<Player>();
-
-            // If Enemy is waitingForReap, then they can call the ReapEnemy Function
-            // TODO: Add in Reap Animation and adding modifier 
-            if (waitingForReap)
-            {
-                Debug.Log("I T S  R E A P I N'  T I M E");
-                reapedEvent.Raise();
-                StopEnemy();
-                KillEnemy();
-            }
-            // Else, the Enemy just takes normal damage
-            else
-            {
-                if (player)
-                {
-                    TakeDamage(player.characterStats.attack);
-                }
-
-            }
-        }
-
-        if (other.CompareTag(PLAYER_SPELL))
-        {
-            var player = other.GetComponentInParent<Player>();
-            
-            if (player)
-            {
-                TakeDamage(player.characterStats.attack);
-            }
-        }
+        // Offset is transform.forward
+        // Instantiate Spell
+        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward, Quaternion.identity);
+        // Get Reference to EnemySpell Component
+        EnemySpell spell = spellObj.GetComponent<EnemySpell>();
+        // Set direction and speed of spell
+        spell.FireSpell(transform.forward, entityStats.attackSpeed, entityStats.attack);
+        // Start Timer to wait for next Ranged Attack
+        StartCoroutine(RangeAttackTimer());
     }
 
-    // Timer between ranged attacks for Enemy
-    private IEnumerator RangeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(characterStats.rangedSpawn);
-        rangeAttack = true;
-    }
 
-    // Timer between attacks for Enemy
-    private IEnumerator MeleeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(characterStats.meleeSpawn);
-        meleeAttack = true;
-    }
-
-    // Take 10 damage every 2 seconds
-    public IEnumerator LoseHealth()
-    {
-        while (!waitingForReap)
-        {
-            // Every 2 seconds take damage
-            yield return new WaitForSeconds(characterStats.meleeSpawn);
-            TakeDamage(10);
-        }
-    }
-
-    // Change color of Enemy every half-second seconds based on current health
-    private IEnumerator HealthChange()
-    {
-        while (GetHealth() != 0)
-        {
-            // Every half-second set flash to true to change color
-            yield return new WaitForSeconds(colorChange);
-            flash = !flash;
-        }
-    }
-
-    // Make Enemy wait 10 seconds in Reaped State
-    private IEnumerator ReapTimer()
-    {
-        // After 10 seconds, Enemy can no longer be reaped and returns to previous state
-        yield return new WaitForSeconds(characterStats.reapTime);
-        canReap = false;
-        waitingForReap = false;
-        //StartCoroutine(LoseHealth());
-    }
-
-    // Destroy Enemy after 3 seconds
-    private IEnumerator EnemyKilled()
-    {
-        
-        deathEvent.Raise();
-        // After 3 seconds, destroy Enemy Game Object
-        yield return new WaitForSeconds(characterStats.rangedSpawn);
-        
-        Destroy(gameObject);
-    }
+    #endregion
 }
+
+// General Enemy class for Enemies

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss : Damageable
+public class Boss : Entity
 {
     private State currentState;                             // Current State of Boss
 
@@ -98,7 +98,7 @@ public class Boss : Damageable
         // Set isMoving to true
         isMoving = true;
         // Move Boss in direction they are facing using RigidBody
-        eRigidBody.MovePosition(transform.position + transform.forward * characterStats.speed * Time.deltaTime);
+        eRigidBody.MovePosition(transform.position + transform.forward * entityStats.speed * Time.deltaTime);
     }
 
     // Stop Boss Movement
@@ -117,24 +117,24 @@ public class Boss : Damageable
         if (waitingForReap)
         {
             // If Boss is ATTACK type, return "Attack" and modStat
-            if (characterStats.characterType == CharacterStats.CharacterType.ATTACK)
+            if (entityStats.entityType == EntityStats.EntityType.ATTACK)
             {
-                return ("Attack", characterStats.modStatBoost);
+                return ("Attack", entityStats.modStatBoost);
             }
             // Else if Boss is DEFENSE type, return "Defense" and modStat
-            else if (characterStats.characterType == CharacterStats.CharacterType.DEFENSE)
+            else if (entityStats.entityType == EntityStats.EntityType.DEFENSE)
             {
-                return ("Defense", characterStats.modStatBoost);
+                return ("Defense", entityStats.modStatBoost);
             }
             // Else if Boss is SPEED type, return "Speed" and modStat
-            else if (characterStats.characterType == CharacterStats.CharacterType.SPEED)
+            else if (entityStats.entityType == EntityStats.EntityType.SPEED)
             {
-                return ("Speed", characterStats.modStatBoost);
+                return ("Speed", entityStats.modStatBoost);
             }
             // Else, if Boss is none of those types, return Health and modStat
             else
             {
-                return ("Health", characterStats.modStatBoost);
+                return ("Health", entityStats.modStatBoost);
             }
         }
         else
@@ -152,7 +152,7 @@ public class Boss : Damageable
         // Get Reference to BossSpell Component
         EnemySpell spell = spellObj.GetComponent<EnemySpell>();
         // Set direction and speed of spell
-        spell.FireSpell(attackDir, characterStats.attack_speed, characterStats.attack);
+        spell.FireSpell(attackDir, entityStats.attackSpeed, entityStats.attack);
         // Start Timer to wait for next Ranged Attack
         StartCoroutine(RangeAttackTimer());
     }
@@ -274,7 +274,7 @@ public class Boss : Damageable
         {
             // Debug.Log("Player collision");
             var player = col.gameObject.GetComponent<Player>();
-            player.TakeDamage(characterStats.attack);
+            player.TakeDamage(entityStats.attack);
             StopBoss();
         }
         // After Boss collides with Another Boss, they stop moving
@@ -305,7 +305,7 @@ public class Boss : Damageable
             {
                 if (player)
                 {
-                    TakeDamage(player.characterStats.attack);
+                    TakeDamage(player.entityStats.attack);
                 }
 
             }
@@ -316,7 +316,7 @@ public class Boss : Damageable
     private IEnumerator RangeAttackTimer()
     {
         // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(characterStats.rangedSpawn);
+        yield return new WaitForSeconds(entityStats.rangedSpawn);
         rangeAttack = true;
     }
 
@@ -324,7 +324,7 @@ public class Boss : Damageable
     private IEnumerator MeleeAttackTimer()
     {
         // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(characterStats.meleeSpawn);
+        yield return new WaitForSeconds(entityStats.meleeSpawn);
         print("Attack");
         meleeAttack = true;
     }
@@ -335,7 +335,7 @@ public class Boss : Damageable
         while (!waitingForReap)
         {
             // Every 2 seconds take damage
-            yield return new WaitForSeconds(characterStats.meleeSpawn);
+            yield return new WaitForSeconds(entityStats.meleeSpawn);
             TakeDamage(10);
         }
     }
@@ -343,7 +343,7 @@ public class Boss : Damageable
     // Change color of Boss every half-second seconds based on current health
     private IEnumerator HealthChange()
     {
-        while (GetHealth() != 0)
+        while (CurrentHealth != 0)
         {
             // Every half-second set flash to true to change color
             yield return new WaitForSeconds(colorChange);
@@ -355,7 +355,7 @@ public class Boss : Damageable
     private IEnumerator ReapTimer()
     {
         // After 10 seconds, Boss can no longer be reaped and returns to previous state
-        yield return new WaitForSeconds(characterStats.reapTime);
+        yield return new WaitForSeconds(entityStats.reapTime);
         canReap = false;
         waitingForReap = false;
         //StartCoroutine(LoseHealth());
@@ -367,7 +367,7 @@ public class Boss : Damageable
         deathEvent.Raise();
 
         // After 3 seconds, destroy Boss Game Object
-        yield return new WaitForSeconds(characterStats.rangedSpawn);
+        yield return new WaitForSeconds(entityStats.rangedSpawn);
         Destroy(gameObject);
     }
 }

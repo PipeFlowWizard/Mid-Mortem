@@ -31,12 +31,12 @@ public class IdleEnemyState : State
             // Get Enemy distance from Player
             float distance = GetPlayerDistance();
             // If ditance is less than max_range and greater than chase_range, set Enemy state to RangedEnemyState
-            if (distance < enemy.characterStats.max_range && distance > enemy.characterStats.chase_range)
+            if (distance < enemy.entityStats.maxRange && distance > enemy.entityStats.chaseRange)
             {
                 enemy.SetState(new RangedEnemyState(enemy));
             }
             // Else if distance is less than chase_range, them set Enemy State to MeleeEnemyState
-            else if(distance <= enemy.characterStats.chase_range)
+            else if(distance <= enemy.entityStats.chaseRange)
             {
                 enemy.SetState(new MeleeEnemyState(enemy));
             }
