@@ -7,6 +7,9 @@ TagManager:
   - Enemy
   - Ground
   - PlayerHurtBox
+  - Level
+  - Boss
+  - PlayerSpell
   layers:
   - Default
   - TransparentFX

@@ -769,11 +769,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9168904845298654688}
-  - component: {fileID: 5949139118861388702}
   - component: {fileID: 1075622692755567338}
   m_Layer: 0
   m_Name: LeftTopRightBot 2
-  m_TagString: Untagged
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -804,19 +803,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5949139118861388702
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4894454598334188755}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 10, y: 1, z: 10}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1075622692755567338
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -850,6 +836,9 @@ MonoBehaviour:
   z: 0
   xWalls: []
   zWalls: []
+  _level: {fileID: 0}
+  spawnArea: {x: 0, y: 0}
+  spawnAreaColor: {r: 1, g: 0, b: 1, a: 1}
 --- !u!1 &6564884708891448050
 GameObject:
   m_ObjectHideFlags: 0

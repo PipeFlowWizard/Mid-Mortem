@@ -6,73 +6,94 @@ using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
+    [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref;
+    [SerializeField]  private Material blue, green, pink, stone;
+   
+    
+   
     public bool botDoor, topDoor, rightDoor, leftDoor, bossRoomSelf,keyRoomSelf, startSelf, enemySelf;
-    [SerializeField]
-    private GameObject bot, top, right, left,floor;
-    [SerializeField]
-    private Material blue, green, pink, stone;
-    [SerializeField]
-    public int x, z;
-    [SerializeField]
-    private List<GameObject> xWalls, zWalls;
-    private GameObject botRoom, topRoom, rightRoom, leftRoom;
-    private Level _level;
+    private Room botRoom, topRoom, rightRoom, leftRoom;
+    public Level _level;
     public Vector2 spawnArea;
-
-    // Start is called before the first frame update
-
-    void Start()
+    public Vector2 SpawnArea => spawnArea * new Vector2(transform.lossyScale.x,transform.lossyScale.y);
+    public Color spawnAreaColor = Color.magenta;
+    [SerializeField]
+    private List<Door> doors;
+    public int currentEnemyCount = 0;
+    public bool isCleared = false;
+    public int CurrentEnemyCount
     {
-        _level = GetComponentInParent<Level>();
-        spawnArea = new Vector2(9,9);
+        get => currentEnemyCount;
+        set
+        {
+            currentEnemyCount = value;
+            if (currentEnemyCount <= 0)
+            {
+                isCleared = true;
+                //call event
+                Debug.Log("OpenDoors");
+                foreach (var door in doors)
+                {
+                    door.openDoor();
+                }
+            }
+        }
     }
-    //can create fucntion and call it from levelcreation
-    public GameObject createRoom(Vector3 pos, bool topAssured = false, bool botAssured = false, bool rightAssured = false, bool leftAssured = false, float ratio = 0.33f,  bool enemy = true, bool boss = false, bool start = false)
+
+    public Door botDoorRef, topDoorRef, rightDoorRef, leftDoorRef;
+    /// <summary>
+    /// Sets room parameters
+    /// </summary>
+    /// <returns>Returns the configured room</returns>
+    public GameObject createRoom(Vector3 pos, int type, int rightType, int topType, float ratio = 0.33f, bool leftWall = false, bool botWall=false)
 
     {
-        if (topAssured)
-        {
-            topDoor = false;
-        }
-        else
-        {
-            topDoor = Random.value < ratio;
-        }
-        if (botAssured)
-        {
-            botDoor = false;
-        }
-        else
-        {
-            botDoor = Random.value < ratio;
-        }
-        if (rightAssured)
-        {
-            rightDoor = false;
-        }
-        else
-        {
-            rightDoor = Random.value < ratio;
-        }
-        if (leftAssured)
-        {
-            leftDoor = false;
-        }
-        else
-        {
-            leftDoor = Random.value < ratio;
-        }
+        botDoorRef = null;
+        topDoorRef = null;
+        rightDoorRef = null;
+        leftDoorRef = null;
 
-        transform.position = pos;
-        
-        enemySelf = enemy;
-        bossRoomSelf = boss;
-        startSelf = start;
+        if (topType == 6||topType==1) InstantiateWall(topWallPref);
+        else if (topType >= 2 || type == 3) topDoorRef = InstantiateDoor(topDoorPref);
+        else if (topType == 0)
+        {
+            //flip a coin
+            
+            bool coinFlip = Random.value > ratio;
+            //Door
+            if (coinFlip) topDoorRef = InstantiateDoor(topDoorPref);
+            //Wall
+            else InstantiateWall(topWallPref);
+        }
+        if (rightType == 6) InstantiateWall(rightWallPref);
+        else if (rightType>0||type>0) rightDoorRef = InstantiateDoor(rightDoorPref);
+        else if (rightType == 0)
+        {
+            //flip a coin
+            bool coinFlip = Random.value > ratio;
+            //Door
+            if (coinFlip) rightDoorRef = InstantiateDoor(rightDoorPref);
+            //Wall
+            else InstantiateWall(rightWallPref);
+            
+        }
+        if (botWall)InstantiateWall(botWallPref);
+        if (leftWall) InstantiateWall(leftWallPref);
+        //check for 0 if top type is 0, flip a coin
 
-        bot.GetComponent<MeshRenderer>().material = botDoor ? green : blue;
-        top.GetComponent<MeshRenderer>().material = topDoor ? green : blue;
-        left.GetComponent<MeshRenderer>().material = leftDoor ? green : blue;
-        right.GetComponent<MeshRenderer>().material = rightDoor ? green : blue;
+        if (rightDoorRef)
+        {
+            rightDoorRef.SetAdjacent1(this);
+
+        }
+        if (topDoorRef)
+        {
+            topDoorRef.SetAdjacent1(this);
+        }
+        bossRoomSelf = type==5;
+        startSelf = type==4;
+        enemySelf = bossRoomSelf==startSelf;
+      
 
 
         if (enemySelf)
@@ -94,50 +115,93 @@ public class Room : MonoBehaviour
         }
 
 
-
-        //if (KeyRoom) spawnKey();
-        //if (enemy) ;//spawnEnemy;
-        //if (start) ;//spawnPlayer
-        //if (bossRoom) ; //spawnBoss
         return this.gameObject;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-    void ObjectPlacement()
-    {
-
-    }
+    
     public void spawnKey() {
         floor.GetComponent<MeshRenderer>().material = pink;
         keyRoomSelf = true;
     }
-    public void openDoors()
-    {
-        bot.SetActive(botDoor);
-        top.SetActive(topDoor);
-        right.SetActive(rightDoor);
-        left.SetActive(leftDoor);
-    }
-
+  
+    
     public void SetLevel(Level level)
     {
         this._level = level;
     }
-
+    public void SetLeftDoor(Door Door)
+    {
+        this.leftDoorRef = Door;
+        if(Door)doors.Add(Door);
+    }
+    public Door GetRightDoor()
+    {
+        return this.rightDoorRef;
+    }
+    public Door GetTopDoor()
+    {
+        return this.topDoorRef;
+    }
+    public void SetBotDoor(Door Door)
+    {
+        this.botDoorRef = Door;
+        if(Door)doors.Add(Door);
+    }
+    public void SetTopRoom(Room room)
+    {
+        this.topRoom = room;
+    }
+    public void SetBotRoom(Room room)
+    {
+        this.botRoom = room;
+    }
+    public void SetLeftRoom(Room room)
+    {
+        this.leftRoom = room;
+    }
+    public void SetRightRoom(Room room)
+    {
+        this.rightRoom = room;
+    }
+    /// <summary>
+    /// Spawns a default enemy at random position in the current room
+    /// </summary>
     public void SpawnEnemyInRoomRandom()
     {
         //TODO: Make this spawn enemies and items instead of a generic gameobject
-        var point = Level.SamplePoint(transform.position, spawnArea);
-        _level.SpawnEnemy(point);
+        Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        _level.SpawnEnemy(point,this);
+        currentEnemyCount++;
     }
+    
+    public void SpawnBossInRoomRandom()
+    {
+        //TODO: Make this spawn enemies and items instead of a generic gameobject
+        Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        Debug.Log("SEIRR");
+        _level.SpawnBoss(point,this);
+        // currentEnemyCount++;
+    }
+  private Door InstantiateDoor(GameObject prefab)
+    {
+        GameObject door;
+        door = Instantiate<GameObject>(prefab, transform);
+        door.transform.SetParent(this.transform);
+        Door theDoor = door.GetComponent<Door>();
+        doors.Add(theDoor);
+        return theDoor;
+    }
+    private void InstantiateWall(GameObject prefab)
+    {
+        GameObject wall;
+        wall = Instantiate<GameObject>(prefab, transform);
+        wall.transform.SetParent(this.transform);
 
+    }
+    //Draw the spawning area
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.magenta;
-        Gizmos.DrawCube(transform.position,new Vector3(spawnArea.x,.1f,spawnArea.y));
+        spawnAreaColor.a = 0.25f;
+        Gizmos.color = spawnAreaColor;
+        Gizmos.DrawCube(transform.position,new Vector3(SpawnArea.x,.1f,SpawnArea.y));
     }
 }

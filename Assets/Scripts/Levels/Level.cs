@@ -6,29 +6,25 @@ using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
 {
-
+    
+    public LevelData data;
     public List<Room> Rooms;
-    [SerializeField] private GameObject _enemy;
     
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     
-
+    
+    
+    
+    
+    /// <summary>
+    /// Samples a random point within a rectangular area surrounding a point
+    /// </summary>
+    /// <param name="position">The center point of the sampling area</param>
+    /// <param name="size">height and width of the area to sample</param>
+    /// <returns>Returns a random point from within the sampling area</returns>
     public static Vector3 SamplePoint(Vector3 position, Vector2 size)
     {
         Vector2 rand = Random.insideUnitCircle * size / 2;
         Vector3 point = position + new Vector3(rand.x,1, rand.y);
-        
-        //Debug.DrawLine(position, point);
         return point;
     }
 
@@ -38,9 +34,17 @@ public class Level : MonoBehaviour
         return spawned;
     }
 
-    public void SpawnEnemy(Vector3 position)
+    public void SpawnEnemy(Vector3 position, Room currentroom)
     {
-        Spawn(position, _enemy);
+        var rand = Random.Range(0, 2);
+        var enemy = Spawn(position, data.Spawnables[rand]);
+        enemy.GetComponent<Enemy>()._currentRoom = currentroom;
     }
 
+    public void SpawnBoss(Vector3 position, Room currentroom)
+    {
+        
+        var enemy = Spawn(position, data.Spawnables[3]);
+        // enemy.GetComponent<Enemy>()._currentRoom = currentroom;
+    }
 }

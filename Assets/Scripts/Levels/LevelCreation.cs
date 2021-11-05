@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
 public class LevelCreation : MonoBehaviour
 {
+    private int baseConstantRatio = 10;
     
-    public int roomXSize;
-    public int roomZsize;
     public GameObject roomPrefab;
+    [SerializeField] public LevelData data;
 
     public int gridN;
     public int gridM;
@@ -20,13 +21,8 @@ public class LevelCreation : MonoBehaviour
     private List<GameObject> levelRooms;
     private GameObject currentLevel;
         
-    // Start is called before the first frame update
-    [ExecuteInEditMode]
-    void Start()
-    {
-        createLevel();
-    }
-    void createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
+   
+    public void createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
     {
         //guarantee there is a key
        //return list
@@ -47,88 +43,114 @@ public class LevelCreation : MonoBehaviour
         Vector3 pos;
         GameObject room = null;
         List<Room> rooms = new List<Room>();
+        currentLevel = new GameObject("Level");
+        var level = currentLevel.AddComponent<Level>();
+        level.data = data;
+        int rightDoor, topDoor;
         for (int i = 0; i < gridN; i++)
         {
 
             for (int j = 0; j < gridM; j++)
             {
+                
                
-                pos = new Vector3(i * roomXSize, 0, j * roomZsize);
-                print(pos);
-                if (grid[i, j] == 0)
-                {
-                    //random without key and with enemies
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
-                    room.GetComponent<Room>().createRoom(pos,boss:false,start:false);
-
-                }
-                else if (grid[i, j] == 1)
-                {
-                    //guaranteed left right
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
-                    room.GetComponent<Room>().createRoom(pos, leftAssured:true, rightAssured:true,start:false);
-                }
-                else if (grid[i, j] == 2)
-                {
-                    //guaranteed left right bot
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true,rightAssured:true,botAssured:true, start: false);
-                }
-                else if (grid[i, j] == 3)
-                {
-                    //guaranteed left right top
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true,rightAssured:true,topAssured:true, start: false);
-
-                }
-                else if (grid[i, j] == 4)
-                {
-                    print("start"+"  "+pos);
-                    //start room
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true, rightAssured: true, start:true,boss:false,enemy:false);
-
-                    print(room.transform.position);
-                }
-                else if (grid[i, j] == 5)
-                {
-                    print("end" + "  " + pos);
-                    //end room boss assured
-                    room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
-                    room.GetComponent<Room>().createRoom(pos, leftAssured: true, rightAssured: true, botAssured: true, boss:true,start:false,enemy:false);
-                    
-                }
+                pos = new Vector3(i * baseConstantRatio, 0, j * baseConstantRatio);
+                room = Instantiate<GameObject>(roomPrefab, pos, Quaternion.identity);
+                room.transform.SetParent(currentLevel.transform);
+                rightDoor = topDoor = 6;
+               
+                topDoor = (j < gridM - 1) ? grid[i, j + 1] : 6;
+                rightDoor = (i < gridN - 1) ? grid[i + 1, j] : 6;
+                room.GetComponent<Room>().createRoom(pos, grid[i, j], rightType: rightDoor, topType: topDoor, leftWall:i==0,botWall:j==0);
                 placedGrid[i, j] = room;
                 room.name = "Room " + "[" + i + "," + j + "]";
-                    rooms.Add(room.GetComponent<Room>());
+                Room theRoom = room.GetComponent<Room>();
+                
+                rooms.Add(theRoom);
+                
+            }
+        }
+        for (int i = 0; i < gridN; i++)
+        {
+
+            for (int j = 0; j < gridM; j++)
+            {
+                room = placedGrid[i, j];
+                Room theRoom = room.GetComponent<Room>();
+                Door currentDoor = j == 0 ? null : placedGrid[i, j - 1].GetComponent<Room>().GetTopDoor();
+                theRoom.SetBotDoor(currentDoor);
+                if (currentDoor) currentDoor.SetAdjacent2(theRoom);
+                currentDoor = i == 0 ? null : placedGrid[i - 1, j].GetComponent<Room>().GetRightDoor();
+                theRoom.SetLeftDoor(currentDoor);
+                if (currentDoor) currentDoor.SetAdjacent2(theRoom);
+                theRoom.SetBotRoom(j == 0 ? null : placedGrid[i, j - 1].GetComponent<Room>());
+                theRoom.SetLeftRoom(i == 0 ? null : placedGrid[i - 1, j].GetComponent<Room>());
+                theRoom.SetTopRoom(j >= gridM - 1 ? null : placedGrid[i, j + 1].GetComponent<Room>());
+                theRoom.SetRightRoom(i >= gridN - 1 ? null : placedGrid[i + 1, j].GetComponent<Room>());
+                
+
             }
         }
         addKey(keys);
         
-        currentLevel = new GameObject("Level");
-        var level = currentLevel.AddComponent<Level>();
         level.Rooms = rooms;
         foreach (var levelRoom in rooms)
-        {
-            levelRoom.transform.SetParent(currentLevel.transform);
+        { 
             levelRoom.SetLevel(level);
         }
+        level.transform.localScale = new Vector3(5,5,5);
     }
     private void addKey(int nbKeys)
     {
         while (nbKeys >= 1)
         {
             int x = Random.Range(0,gridN);
-            int z = Random.Range(0, gridM);
+            int z = Random.Range(1, gridM-1);
             GameObject room = placedGrid[x, z];
             int theTypeOfRoom = grid[x, z];
-            if((theTypeOfRoom == 1|| theTypeOfRoom == 2 || theTypeOfRoom == 3) && !room.GetComponent<Room>().keyRoomSelf)
+            //check if room is not trivial and is not isolated
+            if((theTypeOfRoom==0) && !room.GetComponent<Room>().keyRoomSelf&&!isIsolated(x,z))
             {
                 room.GetComponent<Room>().spawnKey();
                 nbKeys--;
+                
             }
 
         }
+    }
+
+    private bool isIsolated(int x, int z)
+    {
+        bool isIsolated = true;
+        int i = x;
+        int j = z;
+        j += 1;
+                if (j > 0 && j < gridM && i > 0 && i < gridN)
+                {
+                    isIsolated = grid[i, j] == 0;
+                    if (!isIsolated) return isIsolated;
+                }
+
+        j = z - 1;
+        if (j > 0 && j < gridM && i > 0 && i < gridN)
+        {
+            isIsolated = grid[i, j] == 0;
+            if (!isIsolated) return isIsolated;
+        }
+        j = z;
+        i += 1;
+        if (j > 0 && j < gridM && i > 0 && i < gridN)
+        {
+            isIsolated = grid[i, j] == 0;
+            if (!isIsolated) return isIsolated;
+        }
+        i = x - 1;
+        if (j > 0 && j < gridM && i > 0 && i < gridN)
+        {
+            isIsolated = grid[i, j] == 0;
+            if (!isIsolated) return isIsolated;
+        }
+        return isIsolated;
     }
     // Update is called once per frame
     void Update()

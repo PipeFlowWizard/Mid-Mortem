@@ -724,9 +724,9 @@ MonoBehaviour:
   weaponController: {fileID: 6037823677423622052}
   currentAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   shootOut: {fileID: 6037823677484136832}
-  reaperMaterial: {fileID: 0}
+  reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   canDash: 0
-  playerDeathEvent: {fileID: 0}
+  playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
 --- !u!114 &5980914422587083454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5980914422587083449}
-  moveSpeed: 5
+  moveSpeed: 40
   rotationSpeed: 720
   dashCd: 0.5
   anim: {fileID: 6037823677362757639}
@@ -755,12 +755,12 @@ Rigidbody:
   m_GameObject: {fileID: 5980914422587083455}
   serializedVersion: 2
   m_Mass: 1.5
-  m_Drag: 1
+  m_Drag: 2
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 3
 --- !u!114 &6037823677423622052
 MonoBehaviour:
@@ -922,7 +922,7 @@ GameObject:
   - component: {fileID: 6037823677193222805}
   m_Layer: 0
   m_Name: HurtBox
-  m_TagString: Player
+  m_TagString: PlayerHurtBox
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
