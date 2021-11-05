@@ -14,7 +14,7 @@ public class ReapEnemyState : State
     // On Entering this State, Enemy should stop moving
     public override void OnStateEnter()
     {
-        enemy.StopEnemy();
+        enemy.Movement.StopEnemy();
         enemy.waitingForReap = true;
         enemy.ReapEnemyTimer();
     }
@@ -23,7 +23,7 @@ public class ReapEnemyState : State
     public override void Action()
     {
         // If canReap is true, then Enemy does nothing and faces enemy
-        enemy.TurnEnemy();
+        enemy.Movement.TurnEnemy();
         // If Enemy health is 0, then Enemy State is DeadEnemyState
         // CurrentHealthState returns 3 when health is 0
         if (enemy.CurrentHealthState() == 3)

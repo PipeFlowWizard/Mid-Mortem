@@ -222,8 +222,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19430e8e541cdb4397fe338bd43ca3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterStats: {fileID: 11400000, guid: 1de8243940ce95f489eec5e3f8221d3f, type: 2}
-  isMoving: 0
+  entityStats: {fileID: 11400000, guid: 1de8243940ce95f489eec5e3f8221d3f, type: 2}
   target: {fileID: 0}
   enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
   pushBackForce: 4
@@ -235,4 +234,5 @@ MonoBehaviour:
   waitingForReap: 0
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
-  currentRoom: {fileID: 0}
+  _currentRoom: {fileID: 0}
+  isDead: 0

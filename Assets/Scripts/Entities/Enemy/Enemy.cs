@@ -3,13 +3,17 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemyMovement))]
 public class Enemy : Entity
 {
     private State currentState;                             // Current State of Enemy
 
+    private EnemyMovement _movement;
+
+    public EnemyMovement Movement => _movement;
+
     // Enemy Movement
     private Rigidbody eRigidBody;                           // Reference to RigidBody of Enemy
-    public bool isMoving;                                   // Bool to determine if Player is moving
 
     // Reference to Player
     public Transform target;                                // Enemy target (Player)
@@ -49,6 +53,7 @@ public class Enemy : Entity
     // Start is called before the first frame update
     void Start()
     {
+        _movement = GetComponent<EnemyMovement>();
         // Get Transform of Player, Target
         GetPlayer();
         // Get reference to Enemy RigidBody
@@ -95,7 +100,7 @@ public class Enemy : Entity
             {
                 Debug.Log("I T S  R E A P I N'  T I M E");
                 reapedEvent.Raise();
-                StopEnemy();
+                _movement.StopEnemy();
                 KillEnemy();
             }
             // Else, the Enemy just takes normal damage
@@ -153,56 +158,18 @@ public class Enemy : Entity
             // Debug.Log("Player collision");
             var player = col.gameObject.GetComponent<Player>();
             player.TakeDamage(entityStats.attack);
-            StopEnemy();
+            _movement.StopEnemy();
             StartCoroutine(MeleeAttackTimer());
         }
         // After Enemy collides with Another Enemy, they stop moving
         if (col.transform.CompareTag("Enemy"))
         {
-            StopEnemy();
+            _movement.StopEnemy();
         }
     }
     
     #endregion
-
-    #region Movement
-
-    // Rotate Enemy toward Player
-
-    public void TurnEnemy()
-    {
-        // Get vector pointing towards Player
-        Vector3 direction = target.position - transform.position;
-        direction.y = 0;
-        // Get Quaternion to rotate towards Player
-        Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
-        // Rotate Enemy, use Slerp to make Rotation gradual
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp);
-    }
-
-    // Move Enemy toward Player
-
-    public void MoveEnemy()
-    {
-        // Set isMoving to true
-        isMoving = true;
-        // Move Enemy in direction they are facing using RigidBody
-        eRigidBody.MovePosition(transform.position + transform.forward * entityStats.speed * Time.deltaTime);
-    }
-
-    // Stop Enemy Movement
-
-    public void StopEnemy()
-    {
-        // Set isMoving to false
-        isMoving = false;
-        // Set velocity of Enemy
-        eRigidBody.velocity = Vector3.zero;
-    }
-
-    #endregion
-
-   
+    
     // GetPlayer returns reference to Player transform
 
     public void GetPlayer()
