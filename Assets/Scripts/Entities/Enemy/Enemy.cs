@@ -4,36 +4,42 @@ using Cinemachine;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
+[RequireComponent(typeof(EnemyCombat))]
 public class Enemy : Entity
 {
-    private State currentState;                             // Current State of Enemy
+    private State currentState; // Current State of Enemy
 
-    private EnemyMovement _movement;
-
+    [SerializeField] private EnemyMovement _movement;
+    [SerializeField] private EnemyCombat _combat;
     public EnemyMovement Movement => _movement;
+    public EnemyCombat Combat => _combat;
+
+    public Room CurrentRoom
+    {
+        get => _currentRoom;
+        set
+        { 
+            if(!_currentRoom) _currentRoom = value;
+        }
+    }
 
     // Enemy Movement
-    private Rigidbody eRigidBody;                           // Reference to RigidBody of Enemy
+    private Rigidbody _rigidbody;                           // Reference to RigidBody of Enemy
 
     // Reference to Player
     public Transform target;                                // Enemy target (Player)
 
     // Enemy Attack
-    [SerializeField] private GameObject enemySpell;         // Reference to EnemySpell GameObject
     [SerializeField] private float pushBackForce = 15.0f;   // Push Enemy back after attacking Player with melee
-    public bool meleeAttack;                                // Bool to determine when to Melee attack 
-    public bool rangeAttack;                                // Bool to determine when to Ranged attack
-    [SerializeField] private float rotationDamp = 0.5f;     // Rotational Dampening so rotation is gradual
-
+    public bool meleeAttack = true;                                // Bool to determine when to Melee attack 
+    
     // Enemy Material
-    private Material eMaterial;                             // Reference to Enemy Material
+    private Material _material;                             // Reference to Enemy Material
     private Color enemyColor;                               // Original Enemy Color
     private bool flash;                                     // Bool to determine when to change fadeAmount
-    [SerializeField] private float colorChange = 0.5f;      // Change color every 0.5 seconds
 
     // Reap quantities of Enemy
-    public bool canReap;                                    // Enemy is now weakend enough and can be reaped
-    public bool waitingForReap;                             // Whether enemy is waiting to be Reaped
+    public bool canReap = true;                                    // Enemy is now weakend enough and can be reaped
 
     // Tags for possible Enemy interaction
 
@@ -41,7 +47,7 @@ public class Enemy : Entity
     public GameEvent deathEvent;
     public GameEvent reapedEvent;
 
-    public Room _currentRoom;
+    private Room _currentRoom;
 
     public bool isDead = false;
 
@@ -49,33 +55,31 @@ public class Enemy : Entity
     
     
     #region UnityCallbacks
-    
+
+
+    protected override void Awake()
+    {
+        base.Awake();
+    }
     // Start is called before the first frame update
     void Start()
     {
+        _rigidbody = GetComponent<Rigidbody>();
         _movement = GetComponent<EnemyMovement>();
+        _combat = GetComponent<EnemyCombat>();
         // Get Transform of Player, Target
         GetPlayer();
         // Get reference to Enemy RigidBody
-        eRigidBody = GetComponent<Rigidbody>();
+        
         // Get reference to Enemy Material and color
-        eMaterial = GetComponent<MeshRenderer>().material;
-        enemyColor = eMaterial.color;
-        // canReap, rangeAttack and meleeAttack start as true
-        canReap = true;
-        meleeAttack = true;
-        rangeAttack = true;
+        _material = GetComponent<MeshRenderer>().material;
+        enemyColor = _material.color;
         // Set current state to IDLE
         SetState(new IdleEnemyState(this));
-        // Take Damage
-        // StartCoroutine(LoseHealth());
-        // Change color of Enemy
-        // StartCoroutine(HealthChange());
     }
 
 
     // Why is this in fixed update?
-
     void FixedUpdate()
     {
         // Get Health of Enemy to determine color
@@ -87,51 +91,17 @@ public class Enemy : Entity
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        // If Enemy is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
-        if (other.CompareTag("PlayerHurtBox"))
-        {
-            var player = other.GetComponentInParent<Player>();
-
-            // If Enemy is waitingForReap, then they can call the ReapEnemy Function
-            // TODO: Add in Reap Animation and adding modifier 
-            if (waitingForReap)
-            {
-                Debug.Log("I T S  R E A P I N'  T I M E");
-                reapedEvent.Raise();
-                _movement.StopEnemy();
-                KillEnemy();
-            }
-            // Else, the Enemy just takes normal damage
-            else
-            {
-                if (player)
-                {
-                    TakeDamage(player.entityStats.attack);
-                }
-
-            }
-        }
-
-        if (other.CompareTag("PlayerSpell"))
-        {
-            var player = other.GetComponentInParent<Player>();
-            
-            if (player)
-            {
-                TakeDamage(player.entityStats.attack);
-            }
-        }
-    }
+    
     
     private void OnCollisionEnter(Collision col)
     {
+        //Movement
+        
         // If collide with a Player, they take damage and then they move back
         if (col.transform.CompareTag("Player"))
         {
             meleeAttack = false;
-            eRigidBody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
+            _rigidbody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
         }
         // If collide with another Enemy, then move to left or right
         if (col.transform.CompareTag("Enemy"))
@@ -140,33 +110,17 @@ public class Enemy : Entity
             if (index == 1)
             {
                 // Move right
-                eRigidBody.AddForce(pushBackForce * transform.right, ForceMode.Impulse);
+                _rigidbody.AddForce(pushBackForce * transform.right, ForceMode.Impulse);
             }
             else
             {
                 // Move left
-                eRigidBody.AddForce(-pushBackForce * transform.right, ForceMode.Impulse);
+                _rigidbody.AddForce(-pushBackForce * transform.right, ForceMode.Impulse);
             }
         }
     }
 
-    private void OnCollisionExit(Collision col)
-    {
-        // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
-        if (col.transform.CompareTag("Player"))
-        {
-            // Debug.Log("Player collision");
-            var player = col.gameObject.GetComponent<Player>();
-            player.TakeDamage(entityStats.attack);
-            _movement.StopEnemy();
-            StartCoroutine(MeleeAttackTimer());
-        }
-        // After Enemy collides with Another Enemy, they stop moving
-        if (col.transform.CompareTag("Enemy"))
-        {
-            _movement.StopEnemy();
-        }
-    }
+    
     
     #endregion
     
@@ -207,7 +161,7 @@ public class Enemy : Entity
         }
     }
 
-    // Change Enemy Material based on health
+    // Change Enemy Material based on health --> Combat or Normal?
 
 
     private void SetEnemyHealthState()
@@ -218,13 +172,13 @@ public class Enemy : Entity
         {
             if (flash)
             {
-                eMaterial.color = enemyColor;
+                _material.color = enemyColor;
             }
             else
             {
                 Color yellow = Color.yellow;
                 yellow.a = 0.5f;
-                eMaterial.color = yellow;
+                _material.color = yellow;
             }
         }
         // If health is less than 25, Enemy turns red
@@ -232,163 +186,16 @@ public class Enemy : Entity
         {
             if (flash)
             {
-                eMaterial.color = enemyColor;
+                _material.color = enemyColor;
             }
             else
             {
                 Color red = Color.red;
                 red.a = 0.5f;
-                eMaterial.color = red;
+                _material.color = red;
             }
         }
     }
-
-    #endregion
-
-   
-
-    #region Combat
-
-    // Timer between ranged attacks for Enemy
-
-    private IEnumerator RangeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(entityStats.rangedSpawn);
-        rangeAttack = true;
-    }
-
-
-    // Timer between attacks for Enemy
-
-    private IEnumerator MeleeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(entityStats.meleeSpawn);
-        meleeAttack = true;
-    }
-
-
-    // Take 10 damage every 2 seconds
-
-    public IEnumerator LoseHealth()
-    {
-        while (!waitingForReap)
-        {
-            // Every 2 seconds take damage
-            yield return new WaitForSeconds(entityStats.meleeSpawn);
-            TakeDamage(10);
-        }
-    }
-
-
-    // Change color of Enemy every half-second seconds based on current health
-
-    private IEnumerator HealthChange()
-    {
-        while (CurrentHealth != 0)
-        {
-            // Every half-second set flash to true to change color
-            yield return new WaitForSeconds(colorChange);
-            flash = !flash;
-        }
-    }
-
-
-    // Make Enemy wait 10 seconds in Reaped State
-
-    private IEnumerator ReapTimer()
-    {
-        // After 10 seconds, Enemy can no longer be reaped and returns to previous state
-        yield return new WaitForSeconds(entityStats.reapTime);
-        canReap = false;
-        waitingForReap = false;
-        //StartCoroutine(LoseHealth());
-    }
-
-
-    // Destroy Enemy after 3 seconds
-
-    private IEnumerator EnemyKilled()
-    {
-        
-        deathEvent.Raise();
-        // After 3 seconds, destroy Enemy Game Object
-        yield return new WaitForSeconds(entityStats.rangedSpawn);
-        
-        Destroy(gameObject);
-    }
-
-    // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
-    public void ReapEnemyTimer()
-    {
-        // Start ReapTimer Coroutine
-        StartCoroutine(ReapTimer());
-    }
-
-    // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
-    public void KillEnemy()
-    {
-        meleeAttack = false;
-        rangeAttack = false;
-        eRigidBody.constraints = RigidbodyConstraints.None;
-        eRigidBody.AddForce(-pushBackForce * rotationDamp * transform.forward, ForceMode.Impulse);
-        eRigidBody.velocity = Vector3.zero;
-        if(!isDead) _currentRoom.CurrentEnemyCount = _currentRoom.CurrentEnemyCount - 1;
-        isDead = true;
-        StartCoroutine(EnemyKilled());
-    }
-    
-    // ReapEnemy Destroys the Enemy Game Object and returns the type of Enemy and modifier boost
-
-    // Can only get a modifier boost if Enemy is waiting for reap, being in ReapEnemyState
-
-    public (string enemyType, int mod) ReapEnemy()
-    {
-        if (waitingForReap)
-        {
-            // If Enemy is ATTACK type, return "Attack" and modStat
-            if (entityStats.entityType == EntityStats.EntityType.ATTACK)
-            {
-                return ("Attack", entityStats.modStatBoost);
-            }
-            // Else if Enemy is DEFENSE type, return "Defense" and modStat
-            else if (entityStats.entityType == EntityStats.EntityType.DEFENSE)
-            {
-                return ("Defense", entityStats.modStatBoost);
-            }
-            // Else if Enemy is SPEED type, return "Speed" and modStat
-            else if (entityStats.entityType == EntityStats.EntityType.SPEED)
-            {
-                return ("Speed", entityStats.modStatBoost);
-            }
-            // Else, if Enemy is none of those types, return Health and modStat
-            else
-            {
-                return ("Health", entityStats.modStatBoost);
-            }
-        }
-        else
-        {
-            return ("Null", 0);
-        }
-    }
-
-    // Used to create Enemy Ranged Attack
-
-    public void RangedAttack()
-    {
-        // Offset is transform.forward
-        // Instantiate Spell
-        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward, Quaternion.identity);
-        // Get Reference to EnemySpell Component
-        EnemySpell spell = spellObj.GetComponent<EnemySpell>();
-        // Set direction and speed of spell
-        spell.FireSpell(transform.forward, entityStats.attackSpeed, entityStats.attack);
-        // Start Timer to wait for next Ranged Attack
-        StartCoroutine(RangeAttackTimer());
-    }
-
 
     #endregion
 }

@@ -15,13 +15,13 @@ MonoBehaviour:
   health: 100
   mp: 100
   attack: 10
-  rangedSpawn: 3
+  rangedSpawn: 1
   meleeSpawn: 2
   reapTime: 10
   defense: 0.65
   speed: 2
-  max_range: 25
-  chase_range: 10
-  attack_speed: 5
+  maxRange: 15
+  chaseRange: 5
+  attackSpeed: 5
   modStatBoost: 10
-  characterType: 2
+  entityType: 3

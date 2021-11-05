@@ -15,6 +15,11 @@ public class EnemyMovement : MonoBehaviour
     private void Start()
     {
         _enemy = GetComponent<Enemy>();
+        //_rigidbody = GetComponent<Rigidbody>();
+    }
+
+    private void Awake()
+    {
         _rigidbody = GetComponent<Rigidbody>();
     }
 

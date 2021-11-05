@@ -109,6 +109,7 @@ GameObject:
   - component: {fileID: 7026384392123272174}
   - component: {fileID: 7026384392123272169}
   - component: {fileID: 7026384392123272178}
+  - component: {fileID: -177584176554370674}
   m_Layer: 6
   m_Name: DefenseEnemy
   m_TagString: Enemy
@@ -223,16 +224,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: e42d008e5d9607f4aafc1dbe88673ab4, type: 2}
+  _movement: {fileID: 0}
+  _combat: {fileID: 0}
   target: {fileID: 0}
   enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
   pushBackForce: 4
   meleeAttack: 1
   rangeAttack: 1
   rotationDamp: 0.75
-  colorChange: 0.5
   canReap: 0
   waitingForReap: 0
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
   _currentRoom: {fileID: 0}
   isDead: 0
+--- !u!114 &-177584176554370674
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7026384392123272168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219368dff9c77814abd4b816982dc1eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
+  rotationDamp: 0.5
+  pushBackForce: 15
+  deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
+  reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}

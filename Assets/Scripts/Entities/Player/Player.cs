@@ -27,6 +27,11 @@ public class Player : Entity
 
     public GameEvent playerDeathEvent;
 
+    protected override void Awake()
+    {
+        base.Awake();
+    }
+
     public void Start()
     {
         canDash = true;

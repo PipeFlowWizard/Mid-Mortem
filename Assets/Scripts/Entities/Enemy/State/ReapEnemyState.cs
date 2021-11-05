@@ -15,8 +15,8 @@ public class ReapEnemyState : State
     public override void OnStateEnter()
     {
         enemy.Movement.StopEnemy();
-        enemy.waitingForReap = true;
-        enemy.ReapEnemyTimer();
+        enemy.Combat.waitingForReap = true;
+        enemy.Combat.ReapEnemyTimer();
     }
 
     // RangedEnemyState can perform different actions based on distance to Enemy and health

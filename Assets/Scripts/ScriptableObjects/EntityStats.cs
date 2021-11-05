@@ -13,8 +13,8 @@ public class EntityStats : ScriptableObject
     public int health = 100;                                        // Base health of Entities is 100
     public int mp = 100;                                            // Base mp of Entities is 100
     public int attack = 10;                                         // Base attack of Entity is 10
-    public int rangedSpawn = 3;                                     // Base time between Enemy ranged attacks is 3 seconds
-    public int meleeSpawn = 2;                                      // Base time between Enemy melee attacks is 2 seconds
+    public int rangedSpawn = 3;                                     // Base time between Enemy ranged attacks is 3 seconds  --> time between attacks
+    public int meleeSpawn = 2;                                      // Base time between Enemy melee attacks is 2 seconds   --> time between attacks
     public int reapTime = 10;                                       // Player has 10 seconds to Reap Enemy
     public float defense = 0.75f;                                   // Base defense of Entity is Entity takes 75% of damage
     public float speed = 3.0f;                                      // Base speed of Entity is 3.0

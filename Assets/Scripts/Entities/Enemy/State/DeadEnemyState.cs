@@ -13,7 +13,7 @@ public class DeadEnemyState : State
     // OnStateEnter call the KillEnemy function
     public override void OnStateEnter()
     {
-        enemy.KillEnemy();
+        enemy.Combat.KillEnemy();
     }
 
     // Killed Enemy doesn't do anything on Action

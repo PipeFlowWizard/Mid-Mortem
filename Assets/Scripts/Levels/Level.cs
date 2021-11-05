@@ -38,7 +38,7 @@ public class Level : MonoBehaviour
     {
         var rand = Random.Range(0, 2);
         var enemy = Spawn(position, data.Spawnables[rand]);
-        enemy.GetComponent<Enemy>()._currentRoom = currentroom;
+        enemy.GetComponent<Enemy>().CurrentRoom = currentroom;
     }
 
     public void SpawnBoss(Vector3 position, Room currentroom)
