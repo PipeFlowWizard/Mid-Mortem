@@ -42,12 +42,12 @@ public class RangedEnemyState : State
             enemy.SetState(new ReapEnemyState(enemy));
         }
         // If target of enemy is null or distance > max_range, then set Enemy State to IdleEnemyState
-        else if(enemy.target == null || distance >= enemy.characterStats.max_range)
+        else if(enemy.target == null || distance >= enemy.entityStats.maxRange)
         {
             enemy.SetState(new IdleEnemyState(enemy));
         }
         // If distance to enemy is less than or equal to chase_range, then Enemy State is MeleeEnemyState
-        else if(distance <= enemy.characterStats.chase_range)
+        else if(distance <= enemy.entityStats.chaseRange)
         {
             enemy.SetState(new MeleeEnemyState(enemy));
         }

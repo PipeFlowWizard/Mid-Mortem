@@ -31,12 +31,12 @@ public class IdleBossState : State
             // Get boss distance from Player
             float distance = GetPlayerDistance();
             // If ditance is less than max_range and greater than chase_range, set boss state to RangedBossState
-            if (distance < boss.characterStats.max_range && distance > boss.characterStats.chase_range)
+            if (distance < boss.entityStats.maxRange && distance > boss.entityStats.chaseRange)
             {
                 boss.SetState(new RangedBossState(boss));
             }
             // Else if distance is less than chase_range, them set boss State to MeleeBossState
-            else if (distance <= boss.characterStats.chase_range)
+            else if (distance <= boss.entityStats.chaseRange)
             {
                 boss.SetState(new MeleeBossState(boss));
             }

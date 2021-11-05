@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SpellCaster))]
 [RequireComponent(typeof(WeaponController))]
-public class Player : Damageable
+public class Player : Entity
 {
     [SerializeField] private PlayerController playerController;
     [SerializeField] private Rigidbody rb;
@@ -65,7 +65,7 @@ public class Player : Damageable
 
     public void OnRangedInput()
     {
-       spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward, characterStats.attack);
+       spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward, entityStats.attack);
     }
     
     public void OnRangedChargeInput()
@@ -77,7 +77,7 @@ public class Player : Damageable
         base.TakeDamage(amount);
         
         // Player ded
-        if (GetHealth() <= 0)
+        if (CurrentHealth <= 0)
         {
             Die();
         }

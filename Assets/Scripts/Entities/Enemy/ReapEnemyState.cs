@@ -35,17 +35,17 @@ public class ReapEnemyState : State
             // Get Player distance
             float distance = GetPlayerDistance();
             // If target of enemy is null or distance > max_range, then set Enemy State to IdleEnemyState
-            if (enemy.target == null || distance >= enemy.characterStats.max_range)
+            if (enemy.target == null || distance >= enemy.entityStats.maxRange)
             {
                 enemy.SetState(new IdleEnemyState(enemy));
             }
             // If distance to enemy is greater than chase_range but still less then max_range, then Enemy State is RangedEnemyState
-            else if (distance > enemy.characterStats.chase_range)
+            else if (distance > enemy.entityStats.chaseRange)
             {
                 enemy.SetState(new RangedEnemyState(enemy));
             }
             // If distance to enemy is less than or equal to chase_range, then Enemy State is MeleeEnemyState
-            else if (distance <= enemy.characterStats.chase_range)
+            else if (distance <= enemy.entityStats.chaseRange)
             {
                 enemy.SetState(new MeleeEnemyState(enemy));
             }

@@ -34,17 +34,17 @@ public class ReapBossState : State
             // Get Player distance
             float distance = GetPlayerDistance();
             // If target of Boss is null or distance > max_range, then set Boss State to IdleBossState
-            if (boss.target == null || distance >= boss.characterStats.max_range)
+            if (boss.target == null || distance >= boss.entityStats.maxRange)
             {
                 boss.SetState(new IdleBossState(boss));
             }
             // If distance to Boss is greater than chase_range but still less then max_range, then Boss State is RangedBossState
-            else if (distance > boss.characterStats.chase_range)
+            else if (distance > boss.entityStats.chaseRange)
             {
                 boss.SetState(new RangedBossState(boss));
             }
             // If distance to Boss is less than or equal to chase_range, then Boss State is MeleeBossState
-            else if (distance <= boss.characterStats.chase_range)
+            else if (distance <= boss.entityStats.chaseRange)
             {
                 boss.SetState(new MeleeBossState(boss));
             }
