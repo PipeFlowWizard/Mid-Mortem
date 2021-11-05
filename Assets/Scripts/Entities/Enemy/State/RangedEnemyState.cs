@@ -15,13 +15,13 @@ public class RangedEnemyState : State
     // On Entering this State, Enemy Stops moving then turns
     public override void OnStateEnter()
     {
-        enemy.StopEnemy();
+        enemy.Movement.StopEnemy();
     }
 
     // On Exiting this State, rangeAttack is set to false
     public override void OnStateExit()
     {
-        enemy.rangeAttack = false;
+        enemy.Combat.rangeAttack = false;
     }
 
     // RangedEnemyState can perform different actions based on distance to Enemy and health
@@ -55,13 +55,13 @@ public class RangedEnemyState : State
         else
         {
             // Turn enemy toward Player
-            enemy.TurnEnemy();
+            enemy.Movement.TurnEnemy();
             // If attack is true, then can call RangeAttack and Start Coroutine AttackTimer
             // to wait 3 seconds before next ranged attack
-            if (enemy.rangeAttack)
+            if (enemy.Combat.rangeAttack)
             {
-                enemy.rangeAttack = false;
-                enemy.RangedAttack();
+                enemy.Combat.rangeAttack = false;
+                enemy.Combat.RangedAttack();
             }
         }
     }

@@ -41,10 +41,10 @@ public class MeleeEnemyState : State
         else
         {
             // MeleeEnemyState attacks Player at intervals
-            enemy.TurnEnemy();
+            enemy.Movement.TurnEnemy();
             if (enemy.meleeAttack)
             {
-                enemy.MoveEnemy();
+                enemy.Movement.MoveEnemy();
             }
         }
     }

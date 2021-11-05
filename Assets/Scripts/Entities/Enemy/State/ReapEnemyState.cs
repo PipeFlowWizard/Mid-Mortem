@@ -14,16 +14,16 @@ public class ReapEnemyState : State
     // On Entering this State, Enemy should stop moving
     public override void OnStateEnter()
     {
-        enemy.StopEnemy();
-        enemy.waitingForReap = true;
-        enemy.ReapEnemyTimer();
+        enemy.Movement.StopEnemy();
+        enemy.Combat.waitingForReap = true;
+        enemy.Combat.ReapEnemyTimer();
     }
 
     // RangedEnemyState can perform different actions based on distance to Enemy and health
     public override void Action()
     {
         // If canReap is true, then Enemy does nothing and faces enemy
-        enemy.TurnEnemy();
+        enemy.Movement.TurnEnemy();
         // If Enemy health is 0, then Enemy State is DeadEnemyState
         // CurrentHealthState returns 3 when health is 0
         if (enemy.CurrentHealthState() == 3)

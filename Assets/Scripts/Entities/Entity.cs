@@ -16,14 +16,11 @@ public abstract class Entity : MonoBehaviour, IDamageable
 
     // Reference to stats of Character
     private int _currentHealth;
-    private int mp;
-
 
     // Get Base Health and MP of Character
-    private void Awake()
+    protected virtual void Awake()
     {
         _currentHealth = entityStats.health;
-        mp = entityStats.mp;
     }
 
     public int CurrentHealth

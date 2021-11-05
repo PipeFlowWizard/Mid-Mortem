@@ -51,7 +51,7 @@ public class IdleEnemyState : State
     // OnStateEnter Stop Enemy Movement
     public override void OnStateEnter()
     {
-        enemy.StopEnemy();
+        enemy.Movement.StopEnemy();
     }
 
     // GetPlayerDistance returns distance to Player object
