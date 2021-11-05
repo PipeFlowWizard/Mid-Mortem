@@ -169,7 +169,6 @@ public class Room : MonoBehaviour
     {
         //TODO: Make this spawn enemies and items instead of a generic gameobject
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
-        Debug.Log("SEIRR");
         _level.SpawnEnemy(point,this);
         currentEnemyCount++;
     }

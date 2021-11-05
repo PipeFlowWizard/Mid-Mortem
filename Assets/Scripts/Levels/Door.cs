@@ -6,7 +6,7 @@ public class Door : MonoBehaviour
 {
    
     public Room adjacent1, adjacent2;
-    bool isOpen = false;
+    public bool isOpen = false;
     
     // Start is called before the first frame update
     void Start()
@@ -16,8 +16,10 @@ public class Door : MonoBehaviour
 
     public bool openDoor()
     {
+        Debug.Log("Door open?");
         if (!isOpen)
         {
+            Debug.Log("Door was closed");
             //can change to sliding animation later
             gameObject.SetActive(false);
             //init room adjacent1
@@ -31,7 +33,8 @@ public class Door : MonoBehaviour
                     adjacent1.SpawnBossInRoomRandom();
                 }
             }
-            if (!adjacent2.isCleared)
+            //init room adjacent2
+            else if (!adjacent2.isCleared)
             {
                 for(int i = 0; i < 2; i++)
                     adjacent2.SpawnEnemyInRoomRandom();
@@ -41,7 +44,6 @@ public class Door : MonoBehaviour
                 }
             }
 
-            //init room adjacent2
             isOpen = true;
         }
 
