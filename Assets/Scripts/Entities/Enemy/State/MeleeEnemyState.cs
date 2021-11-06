@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeleeEnemyState : State
 {
+    
     // MeleeEnemyState takes an Enenmy Object in constructor
     public MeleeEnemyState(Enemy enemy) : base(enemy)
     {
@@ -40,12 +41,12 @@ public class MeleeEnemyState : State
         // Else
         else
         {
-            // MeleeEnemyState attacks Player at intervals
+            /*// MeleeEnemyState attacks Player at intervals
             enemy.Movement.TurnEnemy();
             if (enemy.meleeAttack)
             {
                 enemy.Movement.MoveEnemy();
-            }
+            }*/
         }
     }
 

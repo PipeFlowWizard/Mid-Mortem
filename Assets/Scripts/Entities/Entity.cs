@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 // All Enemies and Players inherit from Entity Class
-public abstract class Entity : MonoBehaviour, IDamageable
+public abstract class Entity : MonoBehaviour
 {
     // Reference to EntityStats 
     public EntityStats entityStats;
@@ -27,6 +27,11 @@ public abstract class Entity : MonoBehaviour, IDamageable
     {
         get => _currentHealth;
         set => _currentHealth = value;
+    }
+
+    public float PercentHealth
+    {
+        get => _currentHealth / entityStats.health;
     }
 
     // TakeDamage subtracts passed amount from _currentHealth

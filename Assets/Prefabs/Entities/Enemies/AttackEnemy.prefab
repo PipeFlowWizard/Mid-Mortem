@@ -110,6 +110,7 @@ GameObject:
   - component: {fileID: 8103064924768368068}
   - component: {fileID: 8103064924768368095}
   - component: {fileID: 7505473047719119343}
+  - component: {fileID: -4203143262308669359}
   m_Layer: 6
   m_Name: AttackEnemy
   m_TagString: Enemy
@@ -227,17 +228,9 @@ MonoBehaviour:
   _movement: {fileID: 0}
   _combat: {fileID: 0}
   target: {fileID: 0}
-  enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
-  pushBackForce: 4
-  meleeAttack: 1
-  rangeAttack: 1
-  rotationDamp: 0.75
   canReap: 0
-  waitingForReap: 0
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
-  _currentRoom: {fileID: 0}
-  isDead: 0
 --- !u!114 &7505473047719119343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,8 +243,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 219368dff9c77814abd4b816982dc1eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rangeAttack: 1
+  waitingForReap: 0
   enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
   rotationDamp: 0.5
   pushBackForce: 15
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
+--- !u!114 &-4203143262308669359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103064924768368069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f66c6b2eb54c3d4b889eab3acbceab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -126,15 +126,7 @@ public class EnemyCombat : MonoBehaviour
 
 
     // Destroy Enemy after 3 seconds
-    public IEnumerator EnemyKilled()
-    {
-        
-        deathEvent.Raise();
-        // After 3 seconds, destroy Enemy Game Object
-        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn);
-        
-        Destroy(gameObject);
-    }
+   
 
     // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
     public void ReapEnemyTimer()
@@ -146,12 +138,16 @@ public class EnemyCombat : MonoBehaviour
     // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
     public void KillEnemy()
     {
+        deathEvent.Raise();
         meleeAttack = false;
         rangeAttack = false;
         _rigidbody.constraints = RigidbodyConstraints.None;
         _rigidbody.AddForce(-pushBackForce * rotationDamp * transform.forward, ForceMode.Impulse);
         _rigidbody.velocity = Vector3.zero;
-        if(!isDead) _enemy.CurrentRoom.CurrentEnemyCount = _enemy.CurrentRoom.CurrentEnemyCount - 1;
+        if(_enemy.CurrentRoom)
+        {
+            if (!isDead) _enemy.CurrentRoom.CurrentEnemyCount = _enemy.CurrentRoom.CurrentEnemyCount - 1;
+        }
         isDead = true;
         Destroy(gameObject,3);
     }
