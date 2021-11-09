@@ -15,17 +15,17 @@ public class EnemyVFX : MonoBehaviour
     void Start()
     {
         _enemy = GetComponent<Enemy>();
-        _material = GetComponent<MeshRenderer>().material;
+        _material = GetComponentInChildren<MeshRenderer>().material;
         enemyColor = _material.color;
     }
 
     private void FixedUpdate()
     {
-        // Get Health of Enemy to determine color
-        SetEnemyHealthState();
+        /*// Get Health of Enemy to determine color
+        SetEnemyHealthState();*/
     }
 
-    private void SetEnemyHealthState()
+    public void SetEnemyHealthState()
     {
         // If health is less than 50 but greater than 25, the Enemy turns yellow
         // Call CurrentHealthState

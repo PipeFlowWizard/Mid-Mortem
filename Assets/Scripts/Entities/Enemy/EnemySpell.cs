@@ -28,12 +28,7 @@ public class EnemySpell : MonoBehaviour
         // EnemySpell lasts for 15 seconds
         StartCoroutine(EnemySpellLifetime());
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     // When EnemySpell collides with PLAYER, it deals damage, else it is destroyed
     private void OnTriggerEnter(Collider col)
@@ -46,8 +41,14 @@ public class EnemySpell : MonoBehaviour
             player.TakeDamage(attackPower);
         }
         // Else, Start Coroutine to destroy EnemySpell after 15 seconds
+        else if (col.CompareTag("Enemy"))
+        {
+            Debug.Log("enemy spell hit enemy");
+            return;
+        }
         else
         {
+            Debug.Log(col.tag);
             Destroy(gameObject);
         }
     }

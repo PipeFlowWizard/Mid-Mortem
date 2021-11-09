@@ -20,8 +20,8 @@ MonoBehaviour:
   reapTime: 5
   defense: 0.85
   speed: 3
-  max_range: 50
-  chase_range: 7
-  attack_speed: 5
+  maxRange: 50
+  chaseRange: 5
+  attackSpeed: 5
   modStatBoost: 10
-  characterType: 0
+  entityType: 3

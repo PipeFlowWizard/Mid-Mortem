@@ -10,6 +10,7 @@ TagManager:
   - Level
   - Boss
   - PlayerSpell
+  - EnemySpell
   layers:
   - Default
   - TransparentFX

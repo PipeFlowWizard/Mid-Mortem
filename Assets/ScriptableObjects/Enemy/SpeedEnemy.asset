@@ -19,9 +19,9 @@ MonoBehaviour:
   meleeSpawn: 2
   reapTime: 10
   defense: 0.75
-  speed: 5
-  maxRange: 15
-  chaseRange: 5
+  speed: 10
+  maxRange: 30
+  chaseRange: 25
   attackSpeed: 5
   modStatBoost: 10
   entityType: 3
