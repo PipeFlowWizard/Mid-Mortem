@@ -42,11 +42,12 @@ public class HUD : MonoBehaviour
         playerHealth = Player.GetComponent<Entity>();
 
         //SOUL Stuff
+        /*
         numQueue = 0;
         souls = new GameObject[3];
         for (int i = 0; i < 3; i++)
             souls[i] = transform.Find("Soul " + (i + 1).ToString()).gameObject;
-
+        */
         //MANA Stuff
         InitializeSouls();  //From UIEventManagerShowcase
     }
@@ -58,12 +59,13 @@ public class HUD : MonoBehaviour
         UpdateHpUI();
 
         //Souls Stuff
+        /*
         for (int i = 0; i < souls.Length; i++)
             if (i < numQueue)
                 souls[i].transform.Find("Outer Ring").transform.Find("Dot").GetComponent<Image>().enabled = true;
             else
                 souls[i].transform.Find("Outer Ring").transform.Find("Dot").GetComponent<Image>().enabled = false;
-
+        */
         //Mana Stuff
 
     }
@@ -118,6 +120,7 @@ public class HUD : MonoBehaviour
     }
     public void OnSoulCountUpdate()
     {
+        //print("OnSoulCountUpdate()");
         soulText.text = soulCounter.runTimeValue.ToString();
         float ratio = soulCounter.runTimeValue / 100f;
         soulFill.fillAmount = ratio;
@@ -125,18 +128,21 @@ public class HUD : MonoBehaviour
 
     public void OnPaused()
     {
+        //print("OnPause()");
         pauseUI.SetActive(true);
         StartCoroutine(TurnOffUI(bossReapUI));
     }
 
     public void OnNormalEnemyReap()
     {
+        //print("OnNormalEnemyReap()");
         normalReapUI.SetActive(true);
         StartCoroutine(TurnOffUI(normalReapUI));
     }
 
     public void OnBossEnemyReap()
     {
+        //print("OnBossEnemyReap()");
         bossReapUI.SetActive(true);
         StartCoroutine(TurnOffUI(bossReapUI));
     }
@@ -148,6 +154,7 @@ public class HUD : MonoBehaviour
     }
     public void OnDiedEvent()
     {
+        //print("OnDiedEvent()");
         dedUI.SetActive(true);
         dedUI.GetComponent<Burning>().SetBurning(true);
 
