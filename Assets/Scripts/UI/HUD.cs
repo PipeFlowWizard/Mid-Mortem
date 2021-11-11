@@ -2,69 +2,154 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HUD : MonoBehaviour
 {
-    [SerializeField] private float hp = 100;
-    [SerializeField] private float maxHp = 100;
+    // All HP References
+    [SerializeField] private float hp;
+    [SerializeField] private GameObject Player;
+    [SerializeField] private float maxHp;
     [SerializeField] private Image hpFill;
-    [SerializeField] private GameObject sadBorder;
-    [SerializeField] private GameObject happyBorder;
-    [SerializeField] private GameObject medBorder;
-    [SerializeField] private GameObject deadBorder;
-    [SerializeField] private Transform Player; // Get Player HP from Player Transform
+    
+    public Sprite happySprite;
+    public Sprite medSprite;
+    public Sprite sadSprite;
+    public Sprite deadSprite;
+
+    private Entity playerHealth;
+
+    [SerializeField] private Image image;
+
+    private float medThreshold = 0.6f;
+    private float sadThreshold = 0.3f;
+
+    // Soul Stuff
+    private int numQueue;
+    private GameObject[] souls;
+
+    //Mana Stuff
+
 
     // Testing: 
     private float dmgCounter = 0f;
     private float dmgTime = 1f;
 
+    private void Start()
+    {
+        //HP Stuff
+        
+        playerHealth = Player.GetComponent<Entity>();
+
+        //SOUL Stuff
+        numQueue = 0;
+        souls = new GameObject[3];
+        for (int i = 0; i < 3; i++)
+            souls[i] = transform.Find("Soul " + (i + 1).ToString()).gameObject;
+
+        //MANA Stuff
+        InitializeSouls();  //From UIEventManagerShowcase
+    }
+
     // Update is called once per frame
     void Update()
     {
-        dmgCounter += Time.deltaTime;
-        if (dmgCounter > dmgTime)
-        {
-            hp -= 15f;
-            dmgCounter = 0;
-        }
-        UpdateHP();
-        hpFill.fillAmount = hp / maxHp;
+        //HP Stuff
+        UpdateHpUI();
+
+        //Souls Stuff
+        for (int i = 0; i < souls.Length; i++)
+            if (i < numQueue)
+                souls[i].transform.Find("Outer Ring").transform.Find("Dot").GetComponent<Image>().enabled = true;
+            else
+                souls[i].transform.Find("Outer Ring").transform.Find("Dot").GetComponent<Image>().enabled = false;
+
+        //Mana Stuff
 
     }
-    private void UpdateHP()
+
+    public void UpdateQueue(int value)
     {
+        numQueue += value;
 
+        if (numQueue > 3)
+            numQueue = 3;
+        else if (numQueue < 0)
+            numQueue = 0;
+    }
+
+    public void UpdateHP(float value)
+    {
+        hp += value;
+        if (hp > maxHp)
+            hp = maxHp;
+        else if (hp < 0)
+            hp = 0;
+    }
+
+    public void UpdateHpUI()
+    {
+        hp = playerHealth.CurrentHealth;
         float ratio = hp / maxHp;
+        hpFill.fillAmount = ratio;
 
-        if (ratio > 0.65f)
-        {
-            sadBorder.gameObject.SetActive(false);
-            happyBorder.gameObject.SetActive(true);
-            medBorder.gameObject.SetActive(false);
-            deadBorder.gameObject.SetActive(false);
-
-        }
-        else if (ratio < 0.33 && ratio > 0)
-        {
-            sadBorder.gameObject.SetActive(true);
-            happyBorder.gameObject.SetActive(false);
-            medBorder.gameObject.SetActive(false);
-            deadBorder.gameObject.SetActive(false);
-        }
-        else if (ratio <= 0)
-        {
-            sadBorder.gameObject.SetActive(false);
-            happyBorder.gameObject.SetActive(false);
-            medBorder.gameObject.SetActive(false);
-            deadBorder.gameObject.SetActive(true);
-        }
+        if (ratio > medThreshold)
+            image.sprite = happySprite;
+        else if (ratio > sadThreshold)
+            image.sprite = medSprite;
+        else if (ratio > 0)
+            image.sprite = sadSprite;
         else
-        {
-            sadBorder.gameObject.SetActive(false);
-            happyBorder.gameObject.SetActive(false);
-            medBorder.gameObject.SetActive(true);
-            deadBorder.gameObject.SetActive(false);
-        }
+            image.sprite = deadSprite;
+    }
+
+    //IMPORTING UIEVENTMANAGER SHOWCASE
+    [SerializeField] private TextMeshProUGUI soulText;
+    [SerializeField] private FloatValue soulCounter;
+    [SerializeField] private GameObject dedUI;
+    [SerializeField] private GameObject normalReapUI;
+    [SerializeField] private GameObject bossReapUI;
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private Image soulFill;
+
+    private void InitializeSouls()
+    {
+        soulText.text = soulCounter.initialValue.ToString();
+    }
+    public void OnSoulCountUpdate()
+    {
+        soulText.text = soulCounter.runTimeValue.ToString();
+        float ratio = soulCounter.runTimeValue / 100f;
+        soulFill.fillAmount = ratio;
+    }
+
+    public void OnPaused()
+    {
+        pauseUI.SetActive(true);
+        StartCoroutine(TurnOffUI(bossReapUI));
+    }
+
+    public void OnNormalEnemyReap()
+    {
+        normalReapUI.SetActive(true);
+        StartCoroutine(TurnOffUI(normalReapUI));
+    }
+
+    public void OnBossEnemyReap()
+    {
+        bossReapUI.SetActive(true);
+        StartCoroutine(TurnOffUI(bossReapUI));
+    }
+
+    private IEnumerator TurnOffUI(GameObject ui)
+    {
+        yield return new WaitForSeconds(2);
+        ui.SetActive(false);
+    }
+    public void OnDiedEvent()
+    {
+        dedUI.SetActive(true);
+        dedUI.GetComponent<Burning>().SetBurning(true);
 
     }
 }
