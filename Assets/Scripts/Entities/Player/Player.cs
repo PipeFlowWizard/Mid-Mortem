@@ -7,14 +7,18 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerController))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(SpellCaster))]
-[RequireComponent(typeof(WeaponController))]
+//[RequireComponent(typeof(WeaponController))]
 public class Player : Entity
 {
+    
     [SerializeField] private PlayerController playerController;
+    //Combat
     [SerializeField] private SpellCaster spellCaster;
-    [SerializeField] private WeaponController weaponController;
-    [SerializeField] private Ability currentAbility;
+   // [SerializeField] private WeaponController weaponController;
+   [SerializeField] private Ability currentAbility;
     [SerializeField] private Transform shootOut;
+    
+    //VFX
     [SerializeField] private Material reaperMaterial;
     
     private Rigidbody _rigidbody;
@@ -44,7 +48,8 @@ public class Player : Entity
         // Change back state
         // ...
     }
-    
+
+    #region Combat
 
     private void MeleeAttack()
     {
@@ -66,12 +71,14 @@ public class Player : Entity
 
     public void OnRangedInput()
     {
-       spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward, entityStats.attack);
+        spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward, entityStats.attack);
     }
     
     public void OnRangedChargeInput()
     {
     }
+
+    #endregion
 
     public override void TakeDamage(int amount)
     {
@@ -90,7 +97,7 @@ public class Player : Entity
         // Make sure reaper is back to origin color (just in case)
         reaperMaterial.color = Color.black;
     }
-
+    #region VFX
     private IEnumerator DamageFlash()
     {
         for (int i = 0; i < 5; i++)
@@ -103,7 +110,7 @@ public class Player : Entity
         }
 
     }
-
+#endregion
     protected override void Die()
     {
         // HUD and Game manager can listen to this event
