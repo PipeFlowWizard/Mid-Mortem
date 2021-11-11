@@ -36,7 +36,7 @@ public class PauseMenu : MonoBehaviour
 
     public void pauseGame()
     {
-        player.GetComponent<PlayerController>().enabled ^= true;
+        player.GetComponent<PlayerMovement>().enabled ^= true;
         input.SetActive(!input.activeSelf);
         Time.timeScale = (Time.timeScale == 1.0f ? 0.0f : 1.0f);
         gameObject.SetActive(!gameObject.activeSelf);
