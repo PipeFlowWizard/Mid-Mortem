@@ -111,7 +111,7 @@ public class EnemyCombat : MonoBehaviour
     
     public void RangedAttack()
     {
-        Debug.Log(transform.position);
+        // Debug.Log(transform.position);
         // Offset is transform.forward
         GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward + transform.up, Quaternion.identity);
         EnemySpell spell = spellObj.GetComponent<EnemySpell>();

@@ -14,14 +14,14 @@ public class Player : Entity
     [SerializeField] private PlayerController playerController;
     //Combat
     [SerializeField] private SpellCaster spellCaster;
-   // [SerializeField] private WeaponController weaponController;
-   [SerializeField] private Ability currentAbility;
+    // [SerializeField] private WeaponController weaponController;
+    [SerializeField] private Ability currentAbility;
     [SerializeField] private Transform shootOut;
     
     //VFX
     [SerializeField] private Material reaperMaterial;
     
-    private Rigidbody _rigidbody;
+    [SerializeField] Rigidbody _rigidbody;
     
     public PlayerController PlayerController => playerController;
     public Ability CurrentAbility => currentAbility;
