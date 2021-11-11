@@ -24,7 +24,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        print(video.frame);
+       
         if (video.frame > 52)
         {
             showInfo();
