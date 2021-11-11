@@ -20,7 +20,6 @@ public class Player : Entity
     
     //VFX
     [SerializeField] private Material reaperMaterial;
-    
     private Rigidbody _rigidbody;
     
     public PlayerController PlayerController => playerController;
@@ -34,6 +33,7 @@ public class Player : Entity
 
     public void Start()
     {
+        _rigidbody = GetComponent<Rigidbody>();
         canDash = true;
     }
 
