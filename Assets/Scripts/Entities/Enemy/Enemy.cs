@@ -11,6 +11,7 @@ public class Enemy : Entity
 {
     // Fields
     private State currentState; // Current State of Enemy
+    
     private EnemyMovement _movement;
     private EnemyCombat _combat;
     [SerializeField] private IdleEnemyState _idleEnemyState;

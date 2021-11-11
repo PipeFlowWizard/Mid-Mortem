@@ -13,7 +13,12 @@ public class EnemyMovement : MonoBehaviour
     private Enemy _enemy;
     [SerializeField] private float rotationDamp = 0.5f;     // Rotational Dampening so rotation is gradual
     [SerializeField] private float pushBackForce = 15.0f;   // Push Enemy back after attacking Player with melee
-    public bool meleeAttack = true;  
+    public bool meleeAttack = true;
+
+    public Rigidbody Rigidbody
+    {
+        get => _rigidbody;
+    }
 
     private void Start()
     {

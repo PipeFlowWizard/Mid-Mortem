@@ -68,4 +68,10 @@ public abstract class Entity : MonoBehaviour
             return 3;
         }
     }
+
+    protected virtual void Die()
+    {
+        // unsubscribe from all events -> die
+        Destroy(gameObject);
+    }
 }

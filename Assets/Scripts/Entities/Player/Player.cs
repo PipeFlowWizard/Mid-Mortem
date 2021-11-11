@@ -11,26 +11,22 @@ using UnityEngine;
 public class Player : Entity
 {
     [SerializeField] private PlayerController playerController;
-    [SerializeField] private Rigidbody rb;
     [SerializeField] private SpellCaster spellCaster;
     [SerializeField] private WeaponController weaponController;
     [SerializeField] private Ability currentAbility;
     [SerializeField] private Transform shootOut;
-
     [SerializeField] private Material reaperMaterial;
+    
+    private Rigidbody _rigidbody;
+    
     public PlayerController PlayerController => playerController;
     public Ability CurrentAbility => currentAbility;
-    public Rigidbody Rigidbody => rb;
     public SpellCaster SpellCaster => spellCaster;
 
     [HideInInspector] public bool canDash; 
 
     public GameEvent playerDeathEvent;
-
-    protected override void Awake()
-    {
-        base.Awake();
-    }
+    
 
     public void Start()
     {
@@ -42,8 +38,8 @@ public class Player : Entity
     {
         // Change state
         //...
-        currentAbility.SoulAbility(rb.position, playerController.mesh.transform.forward,
-            playerController.anim, rb);
+        currentAbility.SoulAbility(_rigidbody.position, playerController.mesh.transform.forward,
+            playerController.anim, _rigidbody);
         yield return new WaitForSeconds(abilityDuration);
         // Change back state
         // ...
@@ -108,11 +104,11 @@ public class Player : Entity
 
     }
 
-    private void Die()
+    protected override void Die()
     {
         // HUD and Game manager can listen to this event
         playerDeathEvent.Raise();
-        Destroy(gameObject);
+        base.Die();
     }
     
 
