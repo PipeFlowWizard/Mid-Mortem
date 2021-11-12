@@ -599,8 +599,10 @@ GameObject:
   - component: {fileID: 5980914422587083454}
   - component: {fileID: 6037823677423622052}
   - component: {fileID: 5980914422587083448}
-  - component: {fileID: 5980914422587083452}
+  - component: {fileID: 8028468390444591852}
+  - component: {fileID: 6761072464038866005}
   - component: {fileID: 1931186646170366967}
+  - component: {fileID: 5980914422587083452}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -637,11 +639,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: a38c625f5588f62438e5b29080545302, type: 2}
-  playerController: {fileID: 5980914422587083454}
-  spellCaster: {fileID: 5980914422587083448}
-  weaponController: {fileID: 6037823677423622052}
   currentAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
-  shootOut: {fileID: 6037823677484136832}
   reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   canDash: 0
   playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
@@ -661,7 +659,6 @@ MonoBehaviour:
   moveSpeed: 40
   rotationSpeed: 720
   dashCd: 0.5
-  anim: {fileID: 6037823677362757639}
   mesh: {fileID: 5980914422613970973}
   mouseEnabled: 1
 --- !u!114 &6037823677423622052
@@ -692,6 +689,49 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spell: {fileID: 1340668513475526878, guid: 1837cb9a7ee96b746b67f2ab7ea75817, type: 3}
   spellCD: 100
+--- !u!114 &8028468390444591852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980914422587083455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5952b38688b5433419b504a607cea6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spell: {fileID: 1340668513475526878, guid: 1837cb9a7ee96b746b67f2ab7ea75817, type: 3}
+  spellCD: 100
+  shootOut: {fileID: 6037823677484136832}
+  anim: {fileID: 6037823677362757639}
+--- !u!114 &6761072464038866005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980914422587083455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 274e073b96cec9043951acfec31d4373, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _player: {fileID: 0}
+--- !u!136 &1931186646170366967
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980914422587083455}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.63, z: 0}
 --- !u!54 &5980914422587083452
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -708,20 +748,6 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 3
---- !u!136 &1931186646170366967
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5980914422587083455}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 1.5
-  m_Direction: 1
-  m_Center: {x: 0, y: 0.63, z: 0}
 --- !u!1 &5980914422613970973
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +902,7 @@ BoxCollider:
   m_GameObject: {fileID: 6037823677193222507}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 1.9396154, y: 1.5882964, z: 1.394864}
   m_Center: {x: 0.013332069, y: 0.2941482, z: 0.19743198}

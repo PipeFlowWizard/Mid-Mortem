@@ -13,5 +13,6 @@ public class Ability : ScriptableObject
     public FloatValue playerSoulCount;
     public GameEvent playerAbilityUsedEvent;
     
-    public virtual void SoulAbility(Vector3 position, Vector3 forward, Animator anim = null, Rigidbody rb = null) {}
+    
+    public virtual void SoulAbility(Vector3 position, Vector3 direction, Animator anim = null, Rigidbody rb = null) {}
 }

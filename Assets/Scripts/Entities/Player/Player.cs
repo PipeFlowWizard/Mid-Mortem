@@ -4,37 +4,44 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerVFX))]
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(SpellCaster))]
 //[RequireComponent(typeof(WeaponController))]
 public class Player : Entity
 {
-    
-    [SerializeField] private PlayerController playerController;
+    // Movements
+    private PlayerMovement playerMovement;
+    private Rigidbody _rigidbody;
     //Combat
-    [SerializeField] private SpellCaster spellCaster;
-    // [SerializeField] private WeaponController weaponController;
+    private PlayerCombat playerCombat;
     [SerializeField] private Ability currentAbility;
-    [SerializeField] private Transform shootOut;
     
     //VFX
     [SerializeField] private Material reaperMaterial;
+    private PlayerVFX playerVFX;
     
-    [SerializeField] Rigidbody _rigidbody;
-    
-    public PlayerController PlayerController => playerController;
+    // Properties
+    public PlayerMovement Movement => playerMovement;
     public Ability CurrentAbility => currentAbility;
-    public SpellCaster SpellCaster => spellCaster;
+    public PlayerCombat Combat => playerCombat;
+    public PlayerVFX Vfx => playerVFX;
 
-    [HideInInspector] public bool canDash; 
 
+    [Header("Events")]
     public GameEvent playerDeathEvent;
-    
+
+    public Rigidbody Rigidbody => _rigidbody;
+
 
     public void Start()
     {
-        canDash = true;
+        _rigidbody = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerCombat = GetComponent<PlayerCombat>();
+        playerVFX = GetComponent<PlayerVFX>();
     }
 
 
@@ -42,44 +49,14 @@ public class Player : Entity
     {
         // Change state
         //...
-        currentAbility.SoulAbility(_rigidbody.position, playerController.mesh.transform.forward,
-            playerController.anim, _rigidbody);
+        currentAbility.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
+            Combat.anim, _rigidbody);
         yield return new WaitForSeconds(abilityDuration);
         // Change back state
         // ...
     }
 
-    #region Combat
-
-    private void MeleeAttack()
-    {
-        playerController.anim.Play("MeleeAttack");
-    }
     
-    private void ChargedMeleeAttack()
-    {
-    }
-    public void OnMeleeInput()
-    {
-        MeleeAttack();
-    }
-
-    public void OnMeleeChargeInput()
-    {
-        ChargedMeleeAttack();
-    }
-
-    public void OnRangedInput()
-    {
-        spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward, entityStats.attack);
-    }
-    
-    public void OnRangedChargeInput()
-    {
-    }
-
-    #endregion
-
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
