@@ -1529,6 +1529,7 @@ MonoBehaviour:
   sadSprite: {fileID: 21300000, guid: 393ff24a4f75c5c418f28296963b31a6, type: 3}
   deadSprite: {fileID: 21300000, guid: 08a3058d4f23f4c47bc3969c8903c278, type: 3}
   image: {fileID: 8336610532754382936}
+  togglePauseEvent: {fileID: 11400000, guid: 0ce9de26810d1e5418a9b0a7925944ad, type: 2}
   soulText: {fileID: 0}
   soulCounter: {fileID: 11400000, guid: ea5f9415dcdef0c4d80d3d5495518b35, type: 2}
   dedUI: {fileID: 3553473824637762308}

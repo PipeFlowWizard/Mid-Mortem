@@ -34,6 +34,9 @@ public class HUD : MonoBehaviour
     // Testing: 
     private float dmgCounter = 0f;
     private float dmgTime = 1f;
+    private bool _isPaused = false;
+
+    public GameEvent togglePauseEvent;
 
     private void Start()
     {
@@ -126,12 +129,34 @@ public class HUD : MonoBehaviour
         soulFill.fillAmount = ratio;
     }
 
-    public void OnPaused()
+    // TODO: FIX THIS
+    // For some reason, we have to toggle pause twice before the pauseUI gets active
+    private void Resume()
     {
-        //print("OnPause()");
-        pauseUI.SetActive(true);
-        StartCoroutine(TurnOffUI(bossReapUI));
+        _isPaused = false;
+        pauseUI.SetActive(false);
+        Time.timeScale = 1;
     }
+    private void Pause()
+    {
+        _isPaused = true;
+        pauseUI.SetActive(true);
+        Time.timeScale = 0;
+    }
+
+    public void OnPauseInput()
+    {
+        togglePauseEvent.Raise();
+        if (_isPaused)
+        {
+            Resume();
+        }
+        else
+        {
+            Pause();
+        }
+    }
+    
 
     public void OnNormalEnemyReap()
     {

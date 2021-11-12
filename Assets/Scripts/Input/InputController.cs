@@ -31,6 +31,8 @@ public class InputController : MonoBehaviour
     public HealthInputEvent healthInputEvent;
     public SoulQueueInputEvent soulQueueInputEvent;
 
+    private bool _isPaused = false;
+
     private void Awake()
     {
         _controls = new Controls();
@@ -68,8 +70,35 @@ public class InputController : MonoBehaviour
         _controls.Gameplay.Disable();
         _controls.Action.Disable();
         _controls.Debug.Disable();
+        _controls.UI.Disable();
     }
 
+    private void DisableForPause()
+    {
+        _isPaused = true;
+        _controls.Gameplay.Disable();
+        _controls.Action.Disable();
+    }
+
+    private void EnableForPause()
+    {
+        _isPaused = false;
+        _controls.Gameplay.Enable();
+        _controls.Action.Enable();
+    }
+
+    public void ToggleActionMap()
+    {
+        if (_isPaused)
+        {
+            EnableForPause();
+        }
+        else
+        {
+            DisableForPause();
+        }
+    }
+    
     private void OnMovePerformed(InputAction.CallbackContext ctx)
     {
         Vector2 moveInput = ctx.ReadValue<Vector2>();
