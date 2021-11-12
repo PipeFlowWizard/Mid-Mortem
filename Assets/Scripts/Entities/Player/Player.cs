@@ -42,6 +42,9 @@ public class Player : Entity
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
         playerVFX = GetComponent<PlayerVFX>();
+        
+        //TODO: move in vfx
+        reaperMaterial.color = Color.black;
     }
 
 

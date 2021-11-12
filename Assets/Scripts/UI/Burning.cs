@@ -22,7 +22,7 @@ public class Burning : MonoBehaviour
         if (isDissolving)
         {
             fade += Time.deltaTime;
-            print(fade);
+            // print(fade);
             if(fade >=1f)
             {
                 fade = 1f;

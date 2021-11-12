@@ -5,14 +5,11 @@ using UnityEngine.Video;
 
 public class PauseMenu : MonoBehaviour
 {
-    public GameObject player;
-    public GameObject input;
     [SerializeField] GameObject videoPlayer;
     private VideoPlayer video;
 
     void Start()
     {
-        gameObject.SetActive(false);
         video = videoPlayer.GetComponent<VideoPlayer>();
     }
 
@@ -24,7 +21,7 @@ public class PauseMenu : MonoBehaviour
 
     private void Update()
     {
-        print(video.frame);
+       
         if (video.frame > 52)
         {
             showInfo();
@@ -34,19 +31,12 @@ public class PauseMenu : MonoBehaviour
 
     }
 
-    public void pauseGame()
-    {
-        player.GetComponent<PlayerMovement>().enabled ^= true;
-        input.SetActive(!input.activeSelf);
-        Time.timeScale = (Time.timeScale == 1.0f ? 0.0f : 1.0f);
-        gameObject.SetActive(!gameObject.activeSelf);
-    }
 
     void showInfo()
     {
-        print("In Coroutine");
+        // print("In Coroutine");
         gameObject.transform.GetChild(4).gameObject.SetActive(true);
-        print("Done Coroutine");
+        // print("Done Coroutine");
     }
 
     public void options()
