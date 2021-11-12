@@ -12,7 +12,7 @@ public class EnemyCombat : MonoBehaviour
     public bool waitingForReap;
     private bool isDead = false;
 
-    private Rigidbody _rigidbody;
+    [SerializeField] private Rigidbody _rigidbody;
 
     [SerializeField] private GameObject enemySpell;         // Reference to EnemySpell GameObject
     [SerializeField] private float rotationDamp = 0.5f;
@@ -26,14 +26,14 @@ public class EnemyCombat : MonoBehaviour
     private void Start()
     {
         _enemy = GetComponent<Enemy>();
-        deathEvent = _enemy.deathEvent;
-        reapedEvent = _enemy.reapedEvent;
-
+        deathEvent = _enemy.DeathEvent;
+        reapedEvent = _enemy.ReapedEvent;
+        _rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        
     }
     
     private void OnCollisionExit(Collision col)
@@ -55,7 +55,74 @@ public class EnemyCombat : MonoBehaviour
             _enemy.Movement.StopEnemy();
         }
     }
-    private void OnTriggerEnter(Collider other)
+
+
+    public IEnumerator RangeAttackTimer()
+    {
+        // Every 3 seconds set launch to true
+        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn);
+        rangeAttack = true;
+    }
+
+
+    // Timer between attacks for Enemy
+
+    public IEnumerator MeleeAttackTimer()
+    {
+        // Every 3 seconds set launch to true
+        yield return new WaitForSeconds(_enemy.entityStats.meleeSpawn);
+        meleeAttack = true;
+    }
+
+
+    // Make Enemy wait 10 seconds in Reaped State
+    public IEnumerator ReapTimer()
+    {
+        // After 10 seconds, Enemy can no longer be reaped and returns to previous state
+        yield return new WaitForSeconds(_enemy.entityStats.reapTime);
+        canReap = false;
+        waitingForReap = false;
+    }
+
+
+    // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
+    public void ReapEnemyTimer()
+    {
+        // Start ReapTimer Coroutine
+        StartCoroutine(ReapTimer());
+    }
+
+    // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
+    public void KillEnemy()
+    {
+        deathEvent.Raise();
+        meleeAttack = false;
+        rangeAttack = false;
+        _rigidbody.constraints = RigidbodyConstraints.None;
+        _rigidbody.AddForce(-pushBackForce * rotationDamp * transform.forward, ForceMode.Impulse);
+        _rigidbody.velocity = Vector3.zero;
+        if(_enemy.CurrentRoom)
+        {
+            if (!isDead) _enemy.CurrentRoom.CurrentEnemyCount = _enemy.CurrentRoom.CurrentEnemyCount - 1;
+        }
+        isDead = true;
+        Destroy(gameObject,3);
+    }
+    
+    public void RangedAttack()
+    {
+        // Offset is transform.forward
+        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward + transform.up, Quaternion.identity);
+        EnemySpell spell = spellObj.GetComponent<EnemySpell>();
+        // Set direction and speed of spell
+        
+        spell.FireSpell(transform.forward, _enemy.entityStats.attackSpeed, _enemy.entityStats.attack);
+        // Start Timer to wait for next Ranged Attack
+        StartCoroutine(RangeAttackTimer());
+    }
+
+    // Already handled by the weapons and spells
+    /*private void OnTriggerEnter(Collider other)
     {
         
         // Combat 
@@ -68,7 +135,7 @@ public class EnemyCombat : MonoBehaviour
             // TODO: Add in Reap Animation and adding modifier 
             if (waitingForReap)
             {
-                Debug.Log("I T S  R E A P I N'  T I M E");
+                //Debug.Log("I T S  R E A P I N'  T I M E");
                 reapedEvent.Raise();
                 _enemy.Movement.StopEnemy();
                 KillEnemy();
@@ -93,86 +160,5 @@ public class EnemyCombat : MonoBehaviour
                 _enemy.TakeDamage(player.entityStats.attack);
             }
         }
-    }
-    
-    
-    public IEnumerator RangeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn);
-        rangeAttack = true;
-    }
-
-
-    // Timer between attacks for Enemy
-
-    public IEnumerator MeleeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(_enemy.entityStats.meleeSpawn);
-        meleeAttack = true;
-    }
-
-    
-
-    // Make Enemy wait 10 seconds in Reaped State
-    public IEnumerator ReapTimer()
-    {
-        // After 10 seconds, Enemy can no longer be reaped and returns to previous state
-        yield return new WaitForSeconds(_enemy.entityStats.reapTime);
-        canReap = false;
-        waitingForReap = false;
-    }
-
-
-    // Destroy Enemy after 3 seconds
-    public IEnumerator EnemyKilled()
-    {
-        
-        deathEvent.Raise();
-        // After 3 seconds, destroy Enemy Game Object
-        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn);
-        
-        Destroy(gameObject);
-    }
-
-    // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
-    public void ReapEnemyTimer()
-    {
-        // Start ReapTimer Coroutine
-        StartCoroutine(ReapTimer());
-    }
-
-    // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
-    public void KillEnemy()
-    {
-        meleeAttack = false;
-        rangeAttack = false;
-        _rigidbody.constraints = RigidbodyConstraints.None;
-        _rigidbody.AddForce(-pushBackForce * rotationDamp * transform.forward, ForceMode.Impulse);
-        _rigidbody.velocity = Vector3.zero;
-        if(!isDead) _enemy.CurrentRoom.CurrentEnemyCount = _enemy.CurrentRoom.CurrentEnemyCount - 1;
-        isDead = true;
-        Destroy(gameObject,3);
-    }
-    
-    // ReapEnemy Destroys the Enemy Game Object and returns the type of Enemy and modifier boost
-
-    // Can only get a modifier boost if Enemy is waiting for reap, being in ReapEnemyState
-    
-
-    // Used to create Enemy Ranged Attack
-
-    public void RangedAttack()
-    {
-        // Offset is transform.forward
-        // Instantiate Spell
-        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward, Quaternion.identity);
-        // Get Reference to EnemySpell Component
-        EnemySpell spell = spellObj.GetComponent<EnemySpell>();
-        // Set direction and speed of spell
-        spell.FireSpell(transform.forward, _enemy.entityStats.attackSpeed, _enemy.entityStats.attack);
-        // Start Timer to wait for next Ranged Attack
-        StartCoroutine(RangeAttackTimer());
-    }
+    }*/
 }

@@ -9,11 +9,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2462764753854447211}
+  - component: {fileID: 7255100261022526914}
   - component: {fileID: 4885871827017067315}
   - component: {fileID: 175565260203189868}
   - component: {fileID: 7401946214674320646}
   - component: {fileID: 4244123155154827929}
-  - component: {fileID: 7255100261022526914}
   m_Layer: 7
   m_Name: EnemySpell
   m_TagString: Untagged
@@ -35,6 +35,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7255100261022526914
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8588160654426122015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d1f4eac6afaf774d8a40848e82fc7df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lifeTime: 15
 --- !u!33 &4885871827017067315
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -113,16 +126,3 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &7255100261022526914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8588160654426122015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d1f4eac6afaf774d8a40848e82fc7df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lifeTime: 15

@@ -14,6 +14,7 @@ public class ReapEnemyState : State
     // On Entering this State, Enemy should stop moving
     public override void OnStateEnter()
     {
+        Debug.Log("Enter Reap State");
         enemy.Movement.StopEnemy();
         enemy.Combat.waitingForReap = true;
         enemy.Combat.ReapEnemyTimer();

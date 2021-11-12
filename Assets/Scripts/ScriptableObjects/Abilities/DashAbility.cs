@@ -7,7 +7,7 @@ public class DashAbility : Ability
 {
     [SerializeField] private float dashForce;
     
-    public override void SoulAbility(Vector3 position, Vector3 forward, Animator anim = null, Rigidbody rb = null)
+    public override void SoulAbility(Vector3 position, Vector3 direction, Animator anim = null, Rigidbody rb = null)
     {
         if (playerSoulCount.runTimeValue < soulCost) return;
         
@@ -18,7 +18,7 @@ public class DashAbility : Ability
         if (rb)
         {
             rb.velocity = Vector3.zero;
-            rb.AddForce(forward.normalized * dashForce, ForceMode.VelocityChange );
+            rb.AddForce(direction.normalized * dashForce, ForceMode.VelocityChange );
         }
     }
 }

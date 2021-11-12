@@ -4,37 +4,47 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[RequireComponent(typeof(PlayerMovement))]
+[RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerVFX))]
 [RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(SpellCaster))]
-[RequireComponent(typeof(WeaponController))]
+//[RequireComponent(typeof(WeaponController))]
 public class Player : Entity
 {
-    [SerializeField] private PlayerController playerController;
-    [SerializeField] private Rigidbody rb;
-    [SerializeField] private SpellCaster spellCaster;
-    [SerializeField] private WeaponController weaponController;
+    // Movements
+    private PlayerMovement playerMovement;
+    private Rigidbody _rigidbody;
+    //Combat
+    private PlayerCombat playerCombat;
     [SerializeField] private Ability currentAbility;
-    [SerializeField] private Transform shootOut;
-
+    
+    //VFX
     [SerializeField] private Material reaperMaterial;
-    public PlayerController PlayerController => playerController;
+    private PlayerVFX playerVFX;
+    
+    // Properties
+    public PlayerMovement Movement => playerMovement;
     public Ability CurrentAbility => currentAbility;
-    public Rigidbody Rigidbody => rb;
-    public SpellCaster SpellCaster => spellCaster;
+    public PlayerCombat Combat => playerCombat;
+    public PlayerVFX Vfx => playerVFX;
 
-    [HideInInspector] public bool canDash; 
 
+    [Header("Events")]
     public GameEvent playerDeathEvent;
 
-    protected override void Awake()
-    {
-        base.Awake();
-    }
+    public Rigidbody Rigidbody => _rigidbody;
+
 
     public void Start()
     {
-        canDash = true;
+        _rigidbody = GetComponent<Rigidbody>();
+        playerMovement = GetComponent<PlayerMovement>();
+        playerCombat = GetComponent<PlayerCombat>();
+        playerVFX = GetComponent<PlayerVFX>();
+        
+        //TODO: move in vfx
+        reaperMaterial.color = Color.black;
     }
 
 
@@ -42,41 +52,14 @@ public class Player : Entity
     {
         // Change state
         //...
-        currentAbility.SoulAbility(rb.position, playerController.mesh.transform.forward,
-            playerController.anim, rb);
+        currentAbility.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
+            Combat.anim, _rigidbody);
         yield return new WaitForSeconds(abilityDuration);
         // Change back state
         // ...
     }
+
     
-
-    private void MeleeAttack()
-    {
-        playerController.anim.Play("MeleeAttack");
-    }
-    
-    private void ChargedMeleeAttack()
-    {
-    }
-    public void OnMeleeInput()
-    {
-        MeleeAttack();
-    }
-
-    public void OnMeleeChargeInput()
-    {
-        ChargedMeleeAttack();
-    }
-
-    public void OnRangedInput()
-    {
-       spellCaster.Cast(shootOut.position, playerController.mesh.transform.forward, entityStats.attack);
-    }
-    
-    public void OnRangedChargeInput()
-    {
-    }
-
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
@@ -94,7 +77,7 @@ public class Player : Entity
         // Make sure reaper is back to origin color (just in case)
         reaperMaterial.color = Color.black;
     }
-
+    #region VFX
     private IEnumerator DamageFlash()
     {
         for (int i = 0; i < 5; i++)
@@ -107,12 +90,12 @@ public class Player : Entity
         }
 
     }
-
-    private void Die()
+#endregion
+    protected override void Die()
     {
         // HUD and Game manager can listen to this event
         playerDeathEvent.Raise();
-        Destroy(gameObject);
+        base.Die();
     }
     
 

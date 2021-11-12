@@ -18,6 +18,7 @@ public class Spell : MonoBehaviour
     private void Start()
     {
         _spawnTime = Time.time;
+        Destroy(gameObject,lifetime);
     }
 
     // I'll call this myself, as opposed to Start()
@@ -27,16 +28,6 @@ public class Spell : MonoBehaviour
         damage = attack;
     }
 
-    private void Update()
-    {
-        if (Time.time > _spawnTime + lifetime)
-        {
-            if (gameObject)
-            {
-                Destroy(gameObject);
-            }
-        }
-    }
 
 
     private void OnTriggerEnter(Collider other)
@@ -44,18 +35,19 @@ public class Spell : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             // Damage
-            Debug.Log("Enemy hit");
-            other.GetComponent<Enemy>().TakeDamage(damage);
+            // Debug.Log("Enemy hit");
+            other.GetComponentInParent<Enemy>().TakeDamage(damage);
+            other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
             Destroy(gameObject);
         }
 
-        if (other.CompareTag("Boss"))
+        /*if (other.CompareTag("Boss"))
         {
             // Damage
             Debug.Log("Boss hit");
-            other.GetComponent<Boss>().TakeDamage(damage);
+            other.GetComponentInParent()<Boss>().TakeDamage(damage);
             Destroy(gameObject);
-        }
+        }*/
 
         if (gameObject && !other.CompareTag("Player") && !other.CompareTag("Ground"))
         {
