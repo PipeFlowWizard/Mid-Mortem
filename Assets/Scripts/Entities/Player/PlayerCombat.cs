@@ -31,7 +31,7 @@ public class PlayerCombat : MonoBehaviour
     
     public void MeleeAttack()
     {
-        Debug.Log("Melee Attempt");
+        // Debug.Log("Melee Attempt");
         anim.Play("MeleeAttack");
     }
     

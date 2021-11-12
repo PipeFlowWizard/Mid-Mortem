@@ -35,7 +35,7 @@ public class Spell : MonoBehaviour
         if (other.CompareTag("Enemy"))
         {
             // Damage
-            Debug.Log("Enemy hit");
+            // Debug.Log("Enemy hit");
             other.GetComponentInParent<Enemy>().TakeDamage(damage);
             other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
             Destroy(gameObject);

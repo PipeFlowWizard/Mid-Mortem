@@ -13,7 +13,6 @@ public class HurtBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("triggered scythe");
         if (other.CompareTag("Enemy"))
         {
             var enemy = other.GetComponentInParent<Enemy>();

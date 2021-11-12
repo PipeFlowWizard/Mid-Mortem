@@ -597,12 +597,12 @@ GameObject:
   - component: {fileID: 5980914422587083453}
   - component: {fileID: 5980914422587083449}
   - component: {fileID: 5980914422587083454}
-  - component: {fileID: 6037823677423622052}
   - component: {fileID: 5980914422587083448}
   - component: {fileID: 8028468390444591852}
   - component: {fileID: 6761072464038866005}
   - component: {fileID: 1931186646170366967}
   - component: {fileID: 5980914422587083452}
+  - component: {fileID: 2510757653830015796}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -641,7 +641,6 @@ MonoBehaviour:
   entityStats: {fileID: 11400000, guid: a38c625f5588f62438e5b29080545302, type: 2}
   currentAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
-  canDash: 0
   playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
 --- !u!114 &5980914422587083454
 MonoBehaviour:
@@ -661,20 +660,6 @@ MonoBehaviour:
   dashCd: 0.5
   mesh: {fileID: 5980914422613970973}
   mouseEnabled: 1
---- !u!114 &6037823677423622052
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5980914422587083455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 38e6575bc1096284b91730c8e116af58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weaponHold: {fileID: 6037823678831599203}
-  defaultWeapon: {fileID: 0}
 --- !u!114 &5980914422587083448
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -717,7 +702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 274e073b96cec9043951acfec31d4373, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
+  _player: {fileID: 5980914422587083449}
 --- !u!136 &1931186646170366967
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -748,6 +733,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 3
+--- !u!114 &2510757653830015796
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980914422587083455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c5ae8e282c10cb4e80ad0e9bba6f2f9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5980914422613970973
 GameObject:
   m_ObjectHideFlags: 0
@@ -870,7 +867,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6037823677193222804
 Transform:
   m_ObjectHideFlags: 0
@@ -902,7 +899,7 @@ BoxCollider:
   m_GameObject: {fileID: 6037823677193222507}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.9396154, y: 1.5882964, z: 1.394864}
   m_Center: {x: 0.013332069, y: 0.2941482, z: 0.19743198}
