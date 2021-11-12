@@ -639,7 +639,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: a38c625f5588f62438e5b29080545302, type: 2}
-  currentAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
+  currentAbility: {fileID: 11400000, guid: c4dea079bcc656841a94e07206244cde, type: 2}
+  dashAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
 --- !u!114 &5980914422587083454

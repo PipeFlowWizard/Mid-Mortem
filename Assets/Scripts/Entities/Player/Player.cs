@@ -18,6 +18,7 @@ public class Player : Entity
     //Combat
     private PlayerCombat playerCombat;
     [SerializeField] private Ability currentAbility;
+    [SerializeField] private Ability dashAbility;
     
     //VFX
     [SerializeField] private Material reaperMaterial;
@@ -26,6 +27,7 @@ public class Player : Entity
     // Properties
     public PlayerMovement Movement => playerMovement;
     public Ability CurrentAbility => currentAbility;
+    public Ability DashAbility => dashAbility;
     public PlayerCombat Combat => playerCombat;
     public PlayerVFX Vfx => playerVFX;
 
@@ -59,6 +61,16 @@ public class Player : Entity
         // ...
     }
 
+    public IEnumerator AbilityCo(float abilityDuration, Ability ability)
+    {
+        // Change state
+        //...
+        ability.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
+            Combat.anim, _rigidbody);
+        yield return new WaitForSeconds(abilityDuration);
+        // Change back state
+        // ...
+    }
     
     public override void TakeDamage(int amount)
     {
