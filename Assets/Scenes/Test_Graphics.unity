@@ -302,7 +302,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a64505d2ebcb17341916feecd8947255, type: 3}
---- !u!43 &371753825
+--- !u!43 &715701659
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1636,7 +1636,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1024996326}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnDashInput
         m_Mode: 1
         m_Arguments:
@@ -2056,11 +2056,11 @@ PrefabInstance:
     - target: {fileID: 6884636123139306116, guid: 69889b245cc89234aacb438a5e485385, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 371753825}
+      objectReference: {fileID: 715701659}
     - target: {fileID: 6884636123139306119, guid: 69889b245cc89234aacb438a5e485385, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 371753825}
+      objectReference: {fileID: 715701659}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 69889b245cc89234aacb438a5e485385, type: 3}
 --- !u!1001 &1920921090

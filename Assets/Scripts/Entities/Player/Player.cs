@@ -7,36 +7,41 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerCombat))]
 [RequireComponent(typeof(PlayerController))]
+[RequireComponent(typeof(PlayerVFX))]
 [RequireComponent(typeof(Rigidbody))]
 //[RequireComponent(typeof(WeaponController))]
 public class Player : Entity
 {
     // Movements
     private PlayerMovement playerMovement;
+    private Rigidbody _rigidbody;
     //Combat
     private PlayerCombat playerCombat;
-    // [SerializeField] private WeaponController weaponController;
-   [SerializeField] private Ability currentAbility;
-   //VFX
-    [SerializeField] private Material reaperMaterial;
-    private Rigidbody _rigidbody;
+    [SerializeField] private Ability currentAbility;
     
+    //VFX
+    [SerializeField] private Material reaperMaterial;
+    private PlayerVFX playerVFX;
+    
+    // Properties
     public PlayerMovement Movement => playerMovement;
     public Ability CurrentAbility => currentAbility;
+    public PlayerCombat Combat => playerCombat;
+    public PlayerVFX Vfx => playerVFX;
 
-    [HideInInspector] public bool canDash = true; 
 
+    [Header("Events")]
     public GameEvent playerDeathEvent;
 
-    public PlayerCombat PlayerCombat => playerCombat;
+    public Rigidbody Rigidbody => _rigidbody;
 
-    public PlayerCombat Combat => playerCombat;
 
     public void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
+        playerVFX = GetComponent<PlayerVFX>();
     }
 
 
@@ -51,10 +56,7 @@ public class Player : Entity
         // ...
     }
 
-    #region Combat
-
-    #endregion
-
+    
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);

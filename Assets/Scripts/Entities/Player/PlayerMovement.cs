@@ -8,12 +8,11 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private Player player;
-    
     [SerializeField] private float moveSpeed = 20.0f;
     [SerializeField] private float rotationSpeed = 360.0f;
     [SerializeField] private float dashCd = .5f;
 
-    private Rigidbody _rigidbody;
+    private bool canDash = true;
     private Camera _cam;
     public GameObject mesh;
 
@@ -33,8 +32,8 @@ public class PlayerMovement : MonoBehaviour
     private void Start()
     {
         _cam = Camera.main;
-        _rigidbody = GetComponent<Rigidbody>();
         _lastDashTime = Time.time;
+        player = GetComponent<Player>();
         // anim = mesh.GetComponent<Animator>();
     }
 
@@ -69,7 +68,7 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyVelocity()
     {
         
-        _rigidbody.AddForce(_velocity -_rigidbody.velocity,ForceMode.Acceleration);
+        player.Rigidbody.AddForce(_velocity - player.Rigidbody.velocity,ForceMode.Acceleration);
     }
     
 
@@ -125,7 +124,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnDashInput()
     {
         // Check for dash cooldown
-        if (player.CurrentAbility && Time.time > _lastDashTime + dashCd && player.canDash)
+        if (player.CurrentAbility && Time.time > _lastDashTime + dashCd && canDash)
         {
             _lastDashTime = Time.time;
             StartCoroutine(player.AbilityCo(player.CurrentAbility.duration));
