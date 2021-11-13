@@ -15,7 +15,12 @@ public abstract class Entity : MonoBehaviour
 
 
     // Reference to stats of Character
+    private int _maxHealth;
     private int _currentHealth;
+    private int _currentSouls;
+    private int _currentAttack;
+    private float _currentSpeed;
+    private float _currentDefense;
     private bool _isInvincible;
 
     public bool IsInvincible => _isInvincible;
@@ -23,13 +28,48 @@ public abstract class Entity : MonoBehaviour
     // Get Base Health and MP of Character
     protected virtual void Awake()
     {
-        _currentHealth = entityStats.health;
+        _maxHealth = entityStats.health;
+        _currentHealth = _maxHealth;
+        _currentSouls = entityStats.mp;     // TODO: Change mp to souls
+        _currentAttack = entityStats.attack;
+        _currentSpeed = entityStats.speed;
+        _currentDefense = entityStats.defense;
+    }
+
+    public int MaxHealth
+    {
+        get => _maxHealth;
+        set => _maxHealth = value;
     }
 
     public int CurrentHealth
     {
         get => _currentHealth;
         set => _currentHealth = value;
+    }
+
+    public int CurrentSouls
+    {
+        get => _currentSouls;
+        set => _currentSouls = value;
+    }
+
+    public int CurrentAttack
+    {
+        get => _currentAttack;
+        set => _currentAttack = value;
+    }
+
+    public float CurrentSpeed
+    {
+        get => _currentSpeed;
+        set => _currentSpeed = value;
+    }
+
+    public float CurrentDefense
+    {
+        get => _currentDefense;
+        set => _currentDefense = value;
     }
 
     public void ToggleInvincibility()

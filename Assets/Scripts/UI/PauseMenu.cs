@@ -10,6 +10,7 @@ public class PauseMenu : MonoBehaviour
 
     void Start()
     {
+        gameObject.SetActive(false);
         video = videoPlayer.GetComponent<VideoPlayer>();
     }
 
