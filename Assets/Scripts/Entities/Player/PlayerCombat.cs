@@ -42,6 +42,10 @@ public class PlayerCombat : MonoBehaviour
             StartCoroutine(_player.AbilityCo(_player.CurrentAbility.duration));
         } 
     }
+
+    public void ChargedRangedAttack()
+    {
+    }
     
     
 }

@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     
     public void OnRangedChargeInput()
     {
+        _player.Combat.ChargedRangedAttack();
     }
 
 }

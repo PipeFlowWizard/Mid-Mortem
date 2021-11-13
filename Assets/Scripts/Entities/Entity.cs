@@ -16,6 +16,9 @@ public abstract class Entity : MonoBehaviour
 
     // Reference to stats of Character
     private int _currentHealth;
+    private bool _isInvincible;
+
+    public bool IsInvincible => _isInvincible;
 
     // Get Base Health and MP of Character
     protected virtual void Awake()
@@ -29,6 +32,12 @@ public abstract class Entity : MonoBehaviour
         set => _currentHealth = value;
     }
 
+    public void ToggleInvincibility()
+    {
+        _isInvincible = !_isInvincible;
+        Debug.Log(_isInvincible ? "Invincibility Active" : "Invincibility Off");
+    }
+    
     public float PercentHealth
     {
         get => _currentHealth / entityStats.health;
@@ -38,6 +47,7 @@ public abstract class Entity : MonoBehaviour
     // Passed value is also multiplied by current defense of character
     public virtual void TakeDamage(int amount)
     {
+        if (_isInvincible) return;
         if (_currentHealth > 0)
         {
             _currentHealth -= (int)(entityStats.defense * amount);

@@ -57,6 +57,8 @@ public class Player : Entity
         currentAbility.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
             Combat.anim, _rigidbody);
         yield return new WaitForSeconds(abilityDuration);
+        // For invinsibility ability
+        if(IsInvincible) ToggleInvincibility();
         // Change back state
         // ...
     }
@@ -68,6 +70,8 @@ public class Player : Entity
         ability.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
             Combat.anim, _rigidbody);
         yield return new WaitForSeconds(abilityDuration);
+        // For invinsibility ability
+        if(IsInvincible) ToggleInvincibility();
         // Change back state
         // ...
     }
@@ -75,6 +79,7 @@ public class Player : Entity
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
+        if (IsInvincible) return;
         
         // Player ded
         if (CurrentHealth <= 0)
