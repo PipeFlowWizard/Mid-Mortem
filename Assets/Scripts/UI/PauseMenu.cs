@@ -5,7 +5,10 @@ using UnityEngine.Video;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] GameObject videoPlayer;
+    [SerializeField] private GameObject videoPlayer;
+    [SerializeField] private GameObject soulInfo;
+    [SerializeField] private GameObject actionsInfo;
+    [SerializeField] private GameObject playerStatsInfo;
     private VideoPlayer video;
 
     void Start()
@@ -17,27 +20,33 @@ public class PauseMenu : MonoBehaviour
     private void Awake()
     {
         // Doesn't Show UI Elements of the Pause Menu
-        gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        soulInfo.SetActive(false);
+        actionsInfo.SetActive(false);
+        playerStatsInfo.SetActive(false);
     }
 
     private void Update()
     {
-       
-        if (video.frame > 52)
+        if (video.frame > 100)
+        //if (video.frame > 52)
         {
             showInfo();
         }
         else
-            gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        {
+            soulInfo.SetActive(false);
+            actionsInfo.SetActive(false);
+            playerStatsInfo.SetActive(false);
+        }
 
     }
 
 
     void showInfo()
     {
-        // print("In Coroutine");
-        gameObject.transform.GetChild(4).gameObject.SetActive(true);
-        // print("Done Coroutine");
+        soulInfo.SetActive(true);
+        actionsInfo.SetActive(true);
+        playerStatsInfo.SetActive(true);
     }
 
     public void options()
