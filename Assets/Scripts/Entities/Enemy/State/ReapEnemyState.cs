@@ -16,7 +16,7 @@ public class ReapEnemyState : State
     {
         Debug.Log("Enter Reap State");
         enemy.Movement.StopEnemy();
-        enemy.Combat.waitingForReap = true;
+        enemy.waitingForReap = true;
         enemy.Combat.ReapEnemyTimer();
     }
 
@@ -24,38 +24,6 @@ public class ReapEnemyState : State
     public override void Action()
     {
         // If canReap is true, then Enemy does nothing and faces enemy
-        enemy.Movement.TurnEnemy();
-        // If Enemy health is 0, then Enemy State is DeadEnemyState
-        // CurrentHealthState returns 3 when health is 0
-        if (enemy.CurrentHealthState() == 3)
-        {
-            enemy.SetState(new DeadEnemyState(enemy));
-        }
-        else if (!enemy.canReap)
-        {
-            // Get Player distance
-            float distance = GetPlayerDistance();
-            // If target of enemy is null or distance > max_range, then set Enemy State to IdleEnemyState
-            if (enemy.target == null || distance >= enemy.entityStats.maxRange)
-            {
-                enemy.SetState(new IdleEnemyState(enemy));
-            }
-            // If distance to enemy is greater than chase_range but still less then max_range, then Enemy State is RangedEnemyState
-            else if (distance > enemy.entityStats.chaseRange)
-            {
-                enemy.SetState(new RangedEnemyState(enemy));
-            }
-            // If distance to enemy is less than or equal to chase_range, then Enemy State is MeleeEnemyState
-            else if (distance <= enemy.entityStats.chaseRange)
-            {
-                enemy.SetState(new MeleeEnemyState(enemy));
-            }
-        }
-    }
-
-    // GetPlayerDistance returns distance to Player object
-    private float GetPlayerDistance()
-    {
-        return Vector3.Distance(enemy.transform.position, enemy.target.position);
+        enemy.Movement.TurnEnemy(enemy.target.position);
     }
 }

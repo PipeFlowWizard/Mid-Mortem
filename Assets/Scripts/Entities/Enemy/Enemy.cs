@@ -11,15 +11,20 @@ public class Enemy : Entity
 {
     // Fields
     private State currentState; // Current State of Enemy
+    private EnemyStateController stateController; // State Controller of Enemy
+    public bool isBossEnemy; // Is Enemy a Boss or Not
     
     private EnemyMovement _movement;
     private EnemyCombat _combat;
     [SerializeField] private IdleEnemyState _idleEnemyState;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] 
     private Room _currentRoom;
     
     public Transform target; // Enemy target (Player)
-    public bool canReap = true; // Enemy is now weakend enough and can be reaped
+    public bool canReap = true; // Enemy can still be Reaped if health drops to below 25%
+    public bool waitingForReap = false; // Enemy waits for 10 seconds giving Player chance to Reap
+    public bool isDead = false; // Enemy has been killed
 
     [Header("Events")]
     [SerializeField] private GameEvent deathEvent;
@@ -43,18 +48,15 @@ public class Enemy : Entity
         _movement = GetComponent<EnemyMovement>();
         _combat = GetComponent<EnemyCombat>();
         GetPlayer();
-        SetState(new IdleEnemyState(this));
+        stateController = new EnemyStateController(this);
     }
 
 
     // Why is this in fixed update?
     void FixedUpdate()
     {
-        // Call Action() for currentState 
-        if (target)
-        {
-            currentState.Action();
-        }
+        stateController.UpdateEnemyState();
+        currentState.Action();
     }
 
     private void OnDrawGizmos()
@@ -95,6 +97,21 @@ public class Enemy : Entity
         if (currentState != null)
         {
             currentState.OnStateEnter();
+        }
+    }
+
+    // Override TakeDamage for when Enemy is in near invincible state
+    public override void TakeDamage(int amount)
+    {
+        // If isInvincible is true, reduce amount by damageReduction
+        if (_combat.isInvincible)
+        {
+            base.TakeDamage((int)(amount / _combat.damageReduction));
+        }
+        // Else, take damage normally
+        else
+        {
+            base.TakeDamage(amount);
         }
     }
 }

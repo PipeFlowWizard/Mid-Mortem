@@ -27,48 +27,56 @@ public class RangedEnemyState : State
     // RangedEnemyState can perform different actions based on distance to Enemy and health
     public override void Action()
     {
-        // Get Player distance
-        float distance = GetPlayerDistance();
-        // If Enemy health is 0, then Enemy State is DeadEnemyState
-        // CurrentHealthState returns 3 when health is 0
-        if(enemy.CurrentHealthState() == 3)
+        // Turn enemy toward Player
+        enemy.Movement.TurnEnemy(enemy.target.position);
+        // If attack is true, then can call RangeAttack and Start Coroutine AttackTimer
+        // to wait 3 seconds before next ranged attack
+        if (enemy.Combat.rangeAttack)
         {
-            enemy.SetState(new DeadEnemyState(enemy));
-        }
-        // If Enemy health is 25% or below and canReap , then Enemy State is ReapEnemyState
-        // CurrentHealthState returns 2 when enemy health is below or equal to 25% of original
-        else if(enemy.CurrentHealthState() == 2 && enemy.canReap)
-        {
-            enemy.SetState(new ReapEnemyState(enemy));
-        }
-        // If target of enemy is null or distance > max_range, then set Enemy State to IdleEnemyState
-        else if(enemy.target == null || distance >= enemy.entityStats.maxRange)
-        {
-            enemy.SetState(new IdleEnemyState(enemy));
-        }
-        // If distance to enemy is less than or equal to chase_range, then Enemy State is MeleeEnemyState
-        else if(distance <= enemy.entityStats.chaseRange)
-        {
-            enemy.SetState(new MeleeEnemyState(enemy));
-        }
-        // Else
-        else
-        {
-            // Turn enemy toward Player
-            enemy.Movement.TurnEnemy();
-            // If attack is true, then can call RangeAttack and Start Coroutine AttackTimer
-            // to wait 3 seconds before next ranged attack
-            if (enemy.Combat.rangeAttack)
+            // Get randomNumber to detemrine if special attack used
+            int randomNumber = UnityEngine.Random.Range(1, 101);
+            // If Enemy is Boss, then it can use Boss Attacks
+            if (enemy.isBossEnemy)
             {
-                enemy.Combat.rangeAttack = false;
-                enemy.Combat.RangedAttack();
+                // If randomNumber is between 1 & 5 and Enemy is SPEED, then use MeteorFall attack
+                if (randomNumber >= 1 && randomNumber <= 5 && enemy.entityStats.entityType == EntityStats.EntityType.SPEED)
+                {
+                    enemy.Combat.rangeAttack = false;
+                    enemy.Combat.MeteorFall();
+                }
+                // If randomNumber is between 6 and 10 and Enemy is DEFENSE, then fire HeatSeeker
+                if (randomNumber >= 6 && randomNumber <= 10 && enemy.entityStats.entityType == EntityStats.EntityType.DEFENSE)
+                {
+                    enemy.Combat.rangeAttack = false;
+                    enemy.Combat.HeatSeeker();
+                }
+                // Else, just normal Ranged Attack
+                else
+                {
+                    enemy.Combat.rangeAttack = false;
+                    enemy.Combat.RangedAttack();
+                }
+            }
+            // If Enemy is normal enemy, it can use abilities
+            else
+            {
+                // If randomNumber is between 1 & 5 and Enemy is DEFENSE, then use Invincible
+                if (randomNumber >= 1 && randomNumber <= 5 && enemy.entityStats.entityType == EntityStats.EntityType.DEFENSE)
+                {
+                    enemy.Combat.Invincible();
+                }
+                // If randomNumber is between 6 and 10 and Enemy is ATTACK, then fire TripleRangedAttack
+                if (randomNumber >= 6 && randomNumber <= 10 && enemy.entityStats.entityType == EntityStats.EntityType.ATTACK)
+                {
+                    enemy.Combat.rangeAttack = false;
+                    enemy.Combat.TripleRangedAttack();
+                }
+                else
+                {
+                    enemy.Combat.rangeAttack = false;
+                    enemy.Combat.RangedAttack();
+                }
             }
         }
-    }
-
-    // GetPlayerDistance returns distance to Player object
-    private float GetPlayerDistance()
-    {
-        return Vector3.Distance(enemy.transform.position, enemy.target.position);
     }
 }
