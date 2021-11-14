@@ -29,6 +29,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject enemyReapedUI;
     [SerializeField] private GameObject BossReapedUI;
     [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject hurtUI;
 
     private void InitializeStats()
     {
@@ -46,6 +47,7 @@ public class UI : MonoBehaviour
             case "Health":
                 statTextHealth.text = "Health: " + playerStats.CurrentHealth.ToString();
                 GetComponentInChildren<HpBar>().UpdateHP();
+                hurtUI.SetActive(true);
                 break;
 
             case "Souls":
