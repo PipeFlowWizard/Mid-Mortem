@@ -819,6 +819,7 @@ MonoBehaviour:
   floor: {fileID: 5438335544988459809}
   topDoorPref: {fileID: 4770137698056704282, guid: dd5853b2bb8789c4fa201267473cb959, type: 3}
   rightDoorPref: {fileID: 2743397537880758615, guid: 92f3ecf84272b4a46ba0b6f8ddb1fc00, type: 3}
+  teleporter: {fileID: 8562774460282216927, guid: 51e79346734a41241b9b1fe0f6c279ff, type: 3}
   blue: {fileID: 2100000, guid: a2c40f8d37326894c92075fd2274dcd3, type: 2}
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
@@ -835,12 +836,13 @@ MonoBehaviour:
   spawnArea: {x: 8, y: 8}
   spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
   doors: []
-  currentEnemyCount: 0
-  isCleared: 0
   botDoorRef: {fileID: 0}
   topDoorRef: {fileID: 0}
   rightDoorRef: {fileID: 0}
   leftDoorRef: {fileID: 0}
+  tp: {fileID: 0}
+  currentEnemyCount: 0
+  isCleared: 0
 --- !u!1 &8553453414258236280
 GameObject:
   m_ObjectHideFlags: 0

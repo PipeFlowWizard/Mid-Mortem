@@ -9,7 +9,7 @@ public class Level : MonoBehaviour
     
     public LevelData data;
     public List<Room> Rooms;
-    
+    public Level nextLevel;
     
     
     
@@ -32,6 +32,28 @@ public class Level : MonoBehaviour
     {
         var spawned = Instantiate(gameObject, position, quaternion.identity);
         return spawned;
+    }
+
+    internal void setNextLevel(Level level)
+    {
+        nextLevel = level;
+        //set teleporter location of level
+        Room startRoom = null;
+        foreach (var room in nextLevel.Rooms)
+        {
+            if (room.startSelf)
+            {
+                startRoom = room;
+            }
+        }
+        foreach (var room in this.Rooms)
+        {
+            if (room.bossRoomSelf)
+            {
+                room.tp.setDestination(startRoom);
+            }
+        }
+        
     }
 
     public void SpawnEnemy(Vector3 position, Room currentroom)

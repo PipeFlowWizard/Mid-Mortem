@@ -7,37 +7,44 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject player;
 
-    private Level _level;
-    
+    private List<Level> _levels;
+    public enum biomes { forest, desert, snow };
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindWithTag("Player");
         //TODO: Generate Level, spawn entities and set defaults
-            // Step 1
-            // Create level
-            GetComponent<LevelCreation>().createLevel();
-            _level = FindObjectOfType<Level>();
-            //  Initialize fields to defaults
-            // Step 2
-            // 
-            // Step 3
-            // Spawn obstacles in all rooms
-            // Step 4
-            // Spawn enemies in next rooms
-            
+        // Step 1
+        // Create level
+        List<Level> temp = new List<Level>();
+        _levels = new List<Level>();
+            temp.Add(GetComponent<LevelCreation>().createLevel(biomes.desert));
+            temp.Add(GetComponent<LevelCreation>().createLevel(biomes.forest));
+            temp.Add(GetComponent<LevelCreation>().createLevel(biomes.snow));
 
-            foreach (var room in  _level.Rooms)
+        for(int i = 0; i < temp.Count; i++)
+        {
+            int random = Random.Range(0, temp.Count);
+            _levels.Add(temp[random]);
+            temp.RemoveAt(random);
+        }
+
+        _levels[0].setNextLevel(_levels[1]);
+        _levels[1].setNextLevel(_levels[2]);
+
+
+            foreach (var room in  _levels[0].Rooms)
             {
                 if (room.startSelf)
                 {
                     player.transform.position = room.transform.position + Vector3.up;
-                    for (int i = 0; i < 4; i++ )
+                //first room is pAcifist    
+                //for (int i = 0; i < 4; i++ )
                         room.SpawnEnemyInRoomRandom();
                 }
             }
-
+            
             
     }
 

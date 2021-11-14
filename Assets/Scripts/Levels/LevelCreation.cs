@@ -6,6 +6,8 @@ using UnityEngine;
 
 public class LevelCreation : MonoBehaviour
 {
+    
+    
     private int baseConstantRatio = 10;
     
     public GameObject roomPrefab;
@@ -20,11 +22,14 @@ public class LevelCreation : MonoBehaviour
     GameObject[,] placedGrid;
     private List<GameObject> levelRooms;
     private GameObject currentLevel;
-        
-   
-    public void createLevel(int keys=1, int roomSize=10, int gridN=4, int gridM=4)
+    private Room nextStart;
+    private GameManager.biomes theBiome;
+
+
+    public Level createLevel(GameManager.biomes currentBiome,int keys = 1, int roomSize = 10, int gridN = 4, int gridM = 4 )
     {
         //guarantee there is a key
+        theBiome = currentBiome;
        //return list
         pathToVictory();
         placedGrid = new GameObject[gridN, gridM];
@@ -99,6 +104,7 @@ public class LevelCreation : MonoBehaviour
             levelRoom.SetLevel(level);
         }
         level.transform.localScale = new Vector3(5,5,5);
+        return level;
     }
     private void addKey(int nbKeys)
     {
@@ -219,6 +225,6 @@ public class LevelCreation : MonoBehaviour
     public void GenerateLevel()
     {
         DestroyImmediate(currentLevel);
-        createLevel();
+        createLevel(GameManager.biomes.desert);
     }
 }
