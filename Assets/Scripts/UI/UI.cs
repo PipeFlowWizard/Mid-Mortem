@@ -79,13 +79,15 @@ public class UI : MonoBehaviour
     private void Resume()
     {
         _isPaused = false;
-        pauseUI.SetActive(false);
+        pauseUI.GetComponent<PauseMenu>().resume();
+        //pauseUI.SetActive(false);
         Time.timeScale = 1;
     }
     private void Pause()
     {
         _isPaused = true;
         pauseUI.SetActive(true);
+        pauseUI.GetComponent<PauseMenu>().playVideo();
         Time.timeScale = 0;
     }
 

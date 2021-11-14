@@ -11,47 +11,33 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private GameObject playerStatsInfo;
     private VideoPlayer video;
 
-    void Start()
-    {
-        gameObject.SetActive(false);
-        video = videoPlayer.GetComponent<VideoPlayer>();
-    }
-
     private void Awake()
     {
-        // Doesn't Show UI Elements of the Pause Menu
-        soulInfo.SetActive(false);
-        actionsInfo.SetActive(false);
-        playerStatsInfo.SetActive(false);
+        showInfo(false);
+
+        video = videoPlayer.GetComponent<VideoPlayer>();
+
+        gameObject.SetActive(false);
     }
 
-    private void Update()
+    public void playVideo()
     {
-        if (video.frame > 100)
-        //if (video.frame > 52)
-        {
-            showInfo();
-        }
-        else
-        {
-            soulInfo.SetActive(false);
-            actionsInfo.SetActive(false);
-            playerStatsInfo.SetActive(false);
-        }
-
+        showInfo(false);
+        videoPlayer.SetActive(true);
     }
 
-
-    void showInfo()
+    public void showInfo(bool status)
     {
-        soulInfo.SetActive(true);
-        actionsInfo.SetActive(true);
-        playerStatsInfo.SetActive(true);
+        soulInfo.SetActive(status);
+        actionsInfo.SetActive(status);
+        playerStatsInfo.SetActive(status);
     }
 
-    public void options()
+    public void resume()
     {
-
+        showInfo(false);
+        video.Pause();
+        gameObject.SetActive(false);
     }
 
     public void quit()
