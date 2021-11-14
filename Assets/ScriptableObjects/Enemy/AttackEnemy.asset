@@ -24,4 +24,4 @@ MonoBehaviour:
   chaseRange: 20
   attackSpeed: 5
   modStatBoost: 10
-  entityType: 3
+  entityType: 0
