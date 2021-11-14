@@ -10,7 +10,7 @@ public class Level : MonoBehaviour
     public LevelData data;
     public List<Room> Rooms;
     public Level nextLevel;
-    
+    public GameManager.biomes biome;
     
     
     
@@ -68,5 +68,10 @@ public class Level : MonoBehaviour
         
         var enemy = Spawn(position, data.Spawnables[3]);
         // enemy.GetComponent<Enemy>()._currentRoom = currentroom;
+    }
+
+    internal void setBiome(GameManager.biomes theBiome)
+    {
+        biome = theBiome;
     }
 }

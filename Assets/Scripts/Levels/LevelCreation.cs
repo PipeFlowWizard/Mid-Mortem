@@ -30,6 +30,7 @@ public class LevelCreation : MonoBehaviour
     {
         //guarantee there is a key
         theBiome = currentBiome;
+        
        //return list
         pathToVictory();
         placedGrid = new GameObject[gridN, gridM];
@@ -97,7 +98,8 @@ public class LevelCreation : MonoBehaviour
             }
         }
         addKey(keys);
-        
+        level.setBiome(theBiome);
+        level.name = theBiome.ToString();
         level.Rooms = rooms;
         foreach (var levelRoom in rooms)
         { 

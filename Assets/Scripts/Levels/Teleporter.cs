@@ -7,6 +7,7 @@ public class Teleporter : MonoBehaviour
 {
 
     private int roomNum;
+    [SerializeField]
     private Room destination;
     private void Start()
     {
