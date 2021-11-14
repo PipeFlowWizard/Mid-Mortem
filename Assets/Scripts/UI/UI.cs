@@ -25,9 +25,9 @@ public class UI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI statTextSpeed;
     [SerializeField] private TextMeshProUGUI statTextDefense;
 
-    [SerializeField] private GameObject dedUI;
-    [SerializeField] private GameObject normalReapUI;
-    [SerializeField] private GameObject bossReapUI;
+    [SerializeField] private GameObject playerDeathUI;
+    [SerializeField] private GameObject enemyReapedUI;
+    [SerializeField] private GameObject BossReapedUI;
     [SerializeField] private GameObject pauseUI;
 
     private void InitializeStats()
@@ -103,32 +103,31 @@ public class UI : MonoBehaviour
             Pause();
         }
     }
-    
-
-    public void OnNormalEnemyReap()
+    public void OnPlayerDeath()
     {
-        //print("OnNormalEnemyReap()");
-        normalReapUI.SetActive(true);
-        StartCoroutine(TurnOffUI(normalReapUI));
+        //print("OnDiedEvent()");
+        playerDeathUI.SetActive(true);
+        playerDeathUI.GetComponent<Burning>().SetBurning(true);
+
     }
 
-    public void OnBossEnemyReap()
+    public void OnEnemyReaped()
+    {
+        //print("OnNormalEnemyReap()");
+        enemyReapedUI.SetActive(true);
+        StartCoroutine(TurnOffUI(enemyReapedUI));
+    }
+
+    public void OnBossReaped()
     {
         //print("OnBossEnemyReap()");
-        bossReapUI.SetActive(true);
-        StartCoroutine(TurnOffUI(bossReapUI));
+        BossReapedUI.SetActive(true);
+        StartCoroutine(TurnOffUI(BossReapedUI));
     }
 
     private IEnumerator TurnOffUI(GameObject ui)
     {
         yield return new WaitForSeconds(2);
         ui.SetActive(false);
-    }
-    public void OnDiedEvent()
-    {
-        //print("OnDiedEvent()");
-        dedUI.SetActive(true);
-        dedUI.GetComponent<Burning>().SetBurning(true);
-
     }
 }
