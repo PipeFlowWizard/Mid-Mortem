@@ -56,7 +56,12 @@ public class GameManager : MonoBehaviour
                 player.transform.position = room.transform.position + Vector3.up;
                 //first room is pAcifist    
                 //for (int i = 0; i < 4; i++ )
+                
                 room.SpawnEnemyInRoomRandom();
+
+                //try to access this enemy and make it weak
+                //introduce reaping mechanic
+                
             }
         }
 
