@@ -29,6 +29,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject enemyReapedUI;
     [SerializeField] private GameObject BossReapedUI;
     [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject hurtUI;
 
     private void InitializeStats()
@@ -105,6 +106,19 @@ public class UI : MonoBehaviour
             Pause();
         }
     }
+
+    public void goToOptions()
+    {
+        pauseUI.SetActive(false);
+        optionsUI.SetActive(true);
+    }
+
+    public void returnToPause()
+    {
+        pauseUI.SetActive(true);
+        optionsUI.SetActive(false);
+    }
+
     public void OnPlayerDeath()
     {
         //print("OnDiedEvent()");
