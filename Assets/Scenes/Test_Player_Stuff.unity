@@ -342,6 +342,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8103064924768368069, guid: 5f5be3f3fb48e0e4896481f84a411844, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5f5be3f3fb48e0e4896481f84a411844, type: 3}
 --- !u!1 &228943669
@@ -405,6 +409,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &698311049 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5980914422587083454, guid: 69889b245cc89234aacb438a5e485385, type: 3}
+  m_PrefabInstance: {fileID: 1881178663}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be45176fb3b4924786749315050b926, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &852297713
 GameObject:
   m_ObjectHideFlags: 0
@@ -733,8 +748,8 @@ MonoBehaviour:
   moveInputEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 698311049}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnMoveInput
         m_Mode: 0
         m_Arguments:
@@ -748,8 +763,8 @@ MonoBehaviour:
   lookInputEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 698311049}
+        m_TargetAssemblyTypeName: PlayerMovement, Assembly-CSharp
         m_MethodName: OnLookInput
         m_Mode: 0
         m_Arguments:
@@ -974,6 +989,10 @@ PrefabInstance:
     - target: {fileID: 6094749961544445503, guid: 1c421ce63599b51459cec3f9d3ae43e2, type: 3}
       propertyPath: m_Name
       value: Boss
+      objectReference: {fileID: 0}
+    - target: {fileID: 6094749961544445503, guid: 1c421ce63599b51459cec3f9d3ae43e2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9164933453342219741, guid: 1c421ce63599b51459cec3f9d3ae43e2, type: 3}
       propertyPath: m_RootOrder
@@ -1215,6 +1234,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SpeedEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8865078033898853835, guid: 3867cb4568d36ea4190f4d27d6b8c355, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8865078033898853838, guid: 3867cb4568d36ea4190f4d27d6b8c355, type: 3}
       propertyPath: m_RootOrder
       value: 12
@@ -1315,6 +1338,10 @@ PrefabInstance:
     - target: {fileID: 6760714835930763654, guid: 1824d2f4194c6e4479097737f94bc3cd, type: 3}
       propertyPath: m_Name
       value: DefenseEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6760714835930763654, guid: 1824d2f4194c6e4479097737f94bc3cd, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1824d2f4194c6e4479097737f94bc3cd, type: 3}
