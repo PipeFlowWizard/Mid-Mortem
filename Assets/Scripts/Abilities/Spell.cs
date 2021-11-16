@@ -11,6 +11,7 @@ public class Spell : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private float lifetime = 10.0f;
     [SerializeField] private Rigidbody rb;
+    [SerializeField] private GameObject _particleSystem;
 
     private float _spawnTime;
 
@@ -38,6 +39,8 @@ public class Spell : MonoBehaviour
             // Debug.Log("Enemy hit");
             other.GetComponentInParent<Enemy>().TakeDamage(damage);
             other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
+            var particles = Instantiate(_particleSystem, other.transform);
+            Destroy(particles,1);
             Destroy(gameObject);
         }
 

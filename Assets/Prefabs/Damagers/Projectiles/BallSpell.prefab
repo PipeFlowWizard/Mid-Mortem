@@ -239,6 +239,7 @@ MonoBehaviour:
   damage: 5
   lifetime: 10
   rb: {fileID: 821808695887977081}
+  _particleSystem: {fileID: 7460072084560464480, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
 --- !u!135 &3068373504469153410
 SphereCollider:
   m_ObjectHideFlags: 0
