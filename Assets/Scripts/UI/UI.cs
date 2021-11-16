@@ -7,6 +7,7 @@ using TMPro;
 public class UI : MonoBehaviour
 {
     public GameObject player;
+    public FloatValue soulCounter;
     private Entity playerStats;
 
     public GameEvent togglePauseEvent;
@@ -35,7 +36,8 @@ public class UI : MonoBehaviour
     private void InitializeStats()
     {
         statTextHealth.text = "Health: " + playerStats.CurrentHealth.ToString();
-        statTextSouls.text = "Souls: " + playerStats.CurrentSouls.ToString();
+        // statTextSouls.text = "Souls: " + playerStats.CurrentSouls.ToString();
+        statTextSouls.text = soulCounter.initialValue.ToString();
         statTextAttack.text = "Attack: " + playerStats.CurrentAttack.ToString();
         statTextSpeed.text = "Speed: " + playerStats.CurrentSpeed.ToString();
         statTextDefense.text = "Defense: " + playerStats.CurrentDefense.ToString();
@@ -51,9 +53,9 @@ public class UI : MonoBehaviour
                 hurtUI.SetActive(true);
                 break;
 
-            case "Souls":
-                statTextSouls.text = "Souls: " + playerStats.CurrentSouls.ToString();
-                break;
+            // case "Souls":
+            //     statTextSouls.text = "Souls: " + playerStats.CurrentSouls.ToString();
+            //     break;
 
             case "Attack":
                 statTextAttack.text = "Attack: " + playerStats.CurrentAttack.ToString();
@@ -69,12 +71,13 @@ public class UI : MonoBehaviour
         }
     }
 
+    // Souls are separate from Stats, for now they're represented by the skull in Pause Menu
     public void OnSoulCountUpdate()
     {
         ////print("OnSoulCountUpdate()");
-        //soulText.text = soulCounter.runTimeValue.ToString();
-        //float ratio = soulCounter.runTimeValue / 100f;
-        //soulFill.fillAmount = ratio;
+        statTextSouls.text = soulCounter.runTimeValue.ToString();
+        // float ratio = soulCounter.runTimeValue / 100f;
+        // soulFill.fillAmount = ratio;
     }
 
     // TODO: FIX THIS
