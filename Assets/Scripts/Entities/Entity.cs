@@ -30,7 +30,7 @@ public abstract class Entity : MonoBehaviour
     {
         _maxHealth = entityStats.health;
         _currentHealth = _maxHealth;
-        _currentSouls = entityStats.mp;     // TODO: Change mp to souls
+        // _currentSouls = entityStats.mp;     // TODO: Change mp to souls
         _currentAttack = entityStats.attack;
         _currentSpeed = entityStats.speed;
         _currentDefense = entityStats.defense;

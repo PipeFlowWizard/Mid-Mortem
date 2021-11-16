@@ -260,8 +260,8 @@ MonoBehaviour:
   _rigidbody: {fileID: 0}
   target: {fileID: 0}
   canReap: 1
-  deathEvent: {fileID: 0}
-  reapedEvent: {fileID: 0}
+  deathEvent: {fileID: 11400000, guid: c0a5637356d603d4b9cb84288e63e8d0, type: 2}
+  reapedEvent: {fileID: 11400000, guid: abd6d6ba86947c949be861407e7d1dab, type: 2}
 --- !u!114 &3682714940229730772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f66c6b2eb54c3d4b889eab3acbceab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _material: {fileID: 2100000, guid: 3f6260433d2a298459c7ba47fa122084, type: 2}
 --- !u!54 &6094749961544445442
 Rigidbody:
   m_ObjectHideFlags: 0

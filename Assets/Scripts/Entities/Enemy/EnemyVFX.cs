@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class EnemyVFX : MonoBehaviour
 {
+    [SerializeField] private Material _material;
 
-    private Material _material; // Reference to Enemy Material
+    // private Material _material; // Reference to Enemy Material
     private Color enemyColor; // Original Enemy Color
     private bool flash;
     private Enemy _enemy;
@@ -15,7 +16,8 @@ public class EnemyVFX : MonoBehaviour
     void Start()
     {
         _enemy = GetComponent<Enemy>();
-        _material = GetComponentInChildren<MeshRenderer>().material;
+        if(!_material)
+            _material = GetComponentInChildren<MeshRenderer>().material;
         enemyColor = _material.color;
     }
 
