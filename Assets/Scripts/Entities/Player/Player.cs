@@ -34,6 +34,7 @@ public class Player : Entity
 
     [Header("Events")]
     public GameEvent playerDeathEvent;
+    public GameEvent playerHurtEvent;
 
     public Rigidbody Rigidbody => _rigidbody;
 
@@ -80,7 +81,8 @@ public class Player : Entity
     {
         base.TakeDamage(amount);
         if (IsInvincible) return;
-        
+        playerHurtEvent.Raise();
+
         // Player ded
         if (CurrentHealth <= 0)
         {
