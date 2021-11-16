@@ -9,8 +9,8 @@ public class Level : MonoBehaviour
     
     public LevelData data;
     public List<Room> Rooms;
-    
-    
+    public Level nextLevel;
+    public GameManager.biomes biome;
     
     
     
@@ -34,6 +34,28 @@ public class Level : MonoBehaviour
         return spawned;
     }
 
+    internal void setNextLevel(Level level)
+    {
+        nextLevel = level;
+        //set teleporter location of level
+        Room startRoom = null;
+        foreach (var room in nextLevel.Rooms)
+        {
+            if (room.startSelf)
+            {
+                startRoom = room;
+            }
+        }
+        foreach (var room in this.Rooms)
+        {
+            if (room.bossRoomSelf)
+            {
+                room.tp.setDestination(startRoom);
+            }
+        }
+        
+    }
+
     public void SpawnEnemy(Vector3 position, Room currentroom)
     {
         var rand = Random.Range(0, 2);
@@ -46,5 +68,10 @@ public class Level : MonoBehaviour
         
         var enemy = Spawn(position, data.Spawnables[3]);
         // enemy.GetComponent<Enemy>()._currentRoom = currentroom;
+    }
+
+    internal void setBiome(GameManager.biomes theBiome)
+    {
+        biome = theBiome;
     }
 }
