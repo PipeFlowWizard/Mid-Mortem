@@ -37,6 +37,14 @@ public class PlayerCombat : MonoBehaviour
     
     public void ChargedMeleeAttack()
     {
+        if (_player.CurrentAbility)
+        {
+            StartCoroutine(_player.AbilityCo(_player.CurrentAbility.duration));
+        } 
+    }
+
+    public void ChargedRangedAttack()
+    {
     }
     
     

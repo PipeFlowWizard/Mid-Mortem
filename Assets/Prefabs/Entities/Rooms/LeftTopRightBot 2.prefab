@@ -815,6 +815,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  botWallPref: {fileID: 0}
+  topWallPref: {fileID: 0}
+  rightWallPref: {fileID: 0}
+  leftWallPref: {fileID: 0}
+  floor: {fileID: 0}
+  topDoorPref: {fileID: 0}
+  rightDoorPref: {fileID: 0}
+  teleporter: {fileID: 0}
+  blue: {fileID: 2100000, guid: a2c40f8d37326894c92075fd2274dcd3, type: 2}
+  green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
+  pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
+  stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
   botDoor: 0
   topDoor: 0
   rightDoor: 0
@@ -823,22 +835,17 @@ MonoBehaviour:
   keyRoomSelf: 0
   startSelf: 0
   enemySelf: 0
-  bot: {fileID: 0}
-  top: {fileID: 0}
-  right: {fileID: 0}
-  left: {fileID: 0}
-  floor: {fileID: 0}
-  blue: {fileID: 2100000, guid: a2c40f8d37326894c92075fd2274dcd3, type: 2}
-  green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
-  pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
-  stone: {fileID: 2100000, guid: 282f8a5f7fedc82409a5560a1c08c539, type: 2}
-  x: 0
-  z: 0
-  xWalls: []
-  zWalls: []
   _level: {fileID: 0}
   spawnArea: {x: 0, y: 0}
-  spawnAreaColor: {r: 1, g: 0, b: 1, a: 1}
+  spawnAreaColor: {r: 1, g: 0, b: 1, a: 0.25}
+  doors: []
+  botDoorRef: {fileID: 0}
+  topDoorRef: {fileID: 0}
+  rightDoorRef: {fileID: 0}
+  leftDoorRef: {fileID: 0}
+  tp: {fileID: 0}
+  currentEnemyCount: 0
+  isCleared: 0
 --- !u!1 &6564884708891448050
 GameObject:
   m_ObjectHideFlags: 0

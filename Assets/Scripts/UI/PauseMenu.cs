@@ -5,43 +5,39 @@ using UnityEngine.Video;
 
 public class PauseMenu : MonoBehaviour
 {
-    [SerializeField] GameObject videoPlayer;
+    [SerializeField] private GameObject videoPlayer;
+    [SerializeField] private GameObject soulInfo;
+    [SerializeField] private GameObject actionsInfo;
+    [SerializeField] private GameObject playerStatsInfo;
     private VideoPlayer video;
-
-    void Start()
-    {
-        video = videoPlayer.GetComponent<VideoPlayer>();
-    }
 
     private void Awake()
     {
-        // Doesn't Show UI Elements of the Pause Menu
-        gameObject.transform.GetChild(4).gameObject.SetActive(false);
+        showInfo(false);
+
+        video = videoPlayer.GetComponent<VideoPlayer>();
+
+        gameObject.SetActive(false);
     }
 
-    private void Update()
+    public void playVideo()
     {
-       
-        if (video.frame > 52)
-        {
-            showInfo();
-        }
-        else
-            gameObject.transform.GetChild(4).gameObject.SetActive(false);
-
+        showInfo(false);
+        videoPlayer.SetActive(true);
     }
 
-
-    void showInfo()
+    public void showInfo(bool status)
     {
-        // print("In Coroutine");
-        gameObject.transform.GetChild(4).gameObject.SetActive(true);
-        // print("Done Coroutine");
+        soulInfo.SetActive(status);
+        actionsInfo.SetActive(status);
+        playerStatsInfo.SetActive(status);
     }
 
-    public void options()
+    public void resume()
     {
-
+        showInfo(false);
+        video.Pause();
+        gameObject.SetActive(false);
     }
 
     public void quit()

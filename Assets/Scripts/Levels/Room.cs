@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref;
+    [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref,teleporter;
     [SerializeField]  private Material blue, green, pink, stone;
    
     
@@ -19,6 +19,9 @@ public class Room : MonoBehaviour
     public Color spawnAreaColor = Color.magenta;
     [SerializeField]
     private List<Door> doors;
+    public Door botDoorRef, topDoorRef, rightDoorRef, leftDoorRef;
+    public Teleporter tp;
+
     public int currentEnemyCount = 0;
     public bool isCleared = false;
     public int CurrentEnemyCount
@@ -32,6 +35,10 @@ public class Room : MonoBehaviour
                 isCleared = true;
                 //call event
                 Debug.Log("OpenDoors");
+                if (bossRoomSelf)
+                {
+                    tp.gameObject.SetActive(true);
+                }
                 foreach (var door in doors)
                 {
                     door.openDoor();
@@ -40,7 +47,7 @@ public class Room : MonoBehaviour
         }
     }
 
-    public Door botDoorRef, topDoorRef, rightDoorRef, leftDoorRef;
+    
     /// <summary>
     /// Sets room parameters
     /// </summary>
@@ -48,6 +55,7 @@ public class Room : MonoBehaviour
     public GameObject createRoom(Vector3 pos, int type, int rightType, int topType, float ratio = 0.33f, bool leftWall = false, bool botWall=false)
 
     {
+        tp = null;
         botDoorRef = null;
         topDoorRef = null;
         rightDoorRef = null;
@@ -108,6 +116,10 @@ public class Room : MonoBehaviour
         else if (bossRoomSelf)
         {
             floor.GetComponent<MeshRenderer>().material = green;
+
+            tp = InstantiateTp(teleporter);
+            tp.gameObject.SetActive(false);
+            
         }
         if (keyRoomSelf)
         {
@@ -189,6 +201,14 @@ public class Room : MonoBehaviour
         Door theDoor = door.GetComponent<Door>();
         doors.Add(theDoor);
         return theDoor;
+    }
+    private Teleporter InstantiateTp(GameObject prefab)
+    {
+        GameObject tp;
+        tp = Instantiate<GameObject>(prefab, transform);
+        tp.transform.SetParent(this.transform);
+        Teleporter theTp = tp.GetComponent<Teleporter>();
+        return theTp;
     }
     private void InstantiateWall(GameObject prefab)
     {

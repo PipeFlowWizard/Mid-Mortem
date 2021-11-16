@@ -358,6 +358,72 @@ Transform:
   m_Father: {fileID: 5980914422613971041}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4786726917407142315
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6082739139468072432}
+  - component: {fileID: 3020640366748697559}
+  - component: {fileID: 6049662549180466194}
+  - component: {fileID: 4951939368658615397}
+  m_Layer: 0
+  m_Name: AOEHurtBox
+  m_TagString: PlayerHurtBox
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6082739139468072432
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786726917407142315}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.000000074506, y: 0, z: 0}
+  m_LocalScale: {x: 5.6108174, y: 5.6108174, z: 5.6108174}
+  m_Children: []
+  m_Father: {fileID: 6037823678831599203}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &3020640366748697559
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786726917407142315}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &6049662549180466194
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786726917407142315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd20e18990d198c4faa0f0a0a90411a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!135 &4951939368658615397
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4786726917407142315}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4852694659308731474
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,7 +663,6 @@ GameObject:
   - component: {fileID: 5980914422587083453}
   - component: {fileID: 5980914422587083449}
   - component: {fileID: 5980914422587083454}
-  - component: {fileID: 5980914422587083448}
   - component: {fileID: 8028468390444591852}
   - component: {fileID: 6761072464038866005}
   - component: {fileID: 1931186646170366967}
@@ -639,7 +704,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: a38c625f5588f62438e5b29080545302, type: 2}
-  currentAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
+  currentAbility: {fileID: 11400000, guid: c4dea079bcc656841a94e07206244cde, type: 2}
+  dashAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
 --- !u!114 &5980914422587083454
@@ -660,20 +726,6 @@ MonoBehaviour:
   dashCd: 0.5
   mesh: {fileID: 5980914422613970973}
   mouseEnabled: 1
---- !u!114 &5980914422587083448
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5980914422587083455}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b15c9764effc58f4481e4dfc098c1ea2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spell: {fileID: 1340668513475526878, guid: 1837cb9a7ee96b746b67f2ab7ea75817, type: 3}
-  spellCD: 100
 --- !u!114 &8028468390444591852
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -687,7 +739,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spell: {fileID: 1340668513475526878, guid: 1837cb9a7ee96b746b67f2ab7ea75817, type: 3}
-  spellCD: 100
+  spellCD: 500
   shootOut: {fileID: 6037823677484136832}
   anim: {fileID: 6037823677362757639}
 --- !u!114 &6761072464038866005
@@ -976,6 +1028,7 @@ Transform:
   - {fileID: 6923126618212901173}
   - {fileID: 1392491163818735534}
   - {fileID: 6037823677193222804}
+  - {fileID: 6082739139468072432}
   m_Father: {fileID: 5980914422613971041}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

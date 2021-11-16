@@ -18,6 +18,7 @@ public class Player : Entity
     //Combat
     private PlayerCombat playerCombat;
     [SerializeField] private Ability currentAbility;
+    [SerializeField] private Ability dashAbility;
     
     //VFX
     [SerializeField] private Material reaperMaterial;
@@ -26,12 +27,14 @@ public class Player : Entity
     // Properties
     public PlayerMovement Movement => playerMovement;
     public Ability CurrentAbility => currentAbility;
+    public Ability DashAbility => dashAbility;
     public PlayerCombat Combat => playerCombat;
     public PlayerVFX Vfx => playerVFX;
 
 
     [Header("Events")]
     public GameEvent playerDeathEvent;
+    public GameEvent playerHurtEvent;
 
     public Rigidbody Rigidbody => _rigidbody;
 
@@ -55,15 +58,31 @@ public class Player : Entity
         currentAbility.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
             Combat.anim, _rigidbody);
         yield return new WaitForSeconds(abilityDuration);
+        // For invinsibility ability
+        if(IsInvincible) ToggleInvincibility();
         // Change back state
         // ...
     }
 
+    public IEnumerator AbilityCo(float abilityDuration, Ability ability)
+    {
+        // Change state
+        //...
+        ability.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
+            Combat.anim, _rigidbody);
+        yield return new WaitForSeconds(abilityDuration);
+        // For invinsibility ability
+        if(IsInvincible) ToggleInvincibility();
+        // Change back state
+        // ...
+    }
     
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        
+        if (IsInvincible) return;
+        playerHurtEvent.Raise();
+
         // Player ded
         if (CurrentHealth <= 0)
         {
