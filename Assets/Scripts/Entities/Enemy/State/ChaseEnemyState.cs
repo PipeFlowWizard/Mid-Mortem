@@ -19,13 +19,13 @@ public class ChaseEnemyState : State
         {
             // Get randomNumber to detemrine if special ability used
             int randomNumber = UnityEngine.Random.Range(1, 1001);
+            enemy.Movement.TurnEnemy(enemy.target.position);
             // If randomNumber is between 2 and 4 then Enemy can try and Dash to Player, if Enemy is SPEED
-            if ((randomNumber >= 2 && randomNumber <= 4 && enemy.entityStats.entityType == EntityStats.EntityType.SPEED && !enemy.isBossEnemy) || enemy.Movement.isDashing)
+            if ((randomNumber >= 1 && randomNumber <= 3 && enemy.entityStats.entityType == EntityStats.EntityType.SPEED && !enemy.isBossEnemy) || enemy.Movement.isDashing)
             {
                 enemy.Movement.TestDash(enemy.target.position);
             }
             // MeleeEnemyState attacks Player at intervals
-            enemy.Movement.TurnEnemy(enemy.target.position);
             enemy.Movement.MoveEnemy(enemy.target.position);
         }
     }

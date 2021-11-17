@@ -37,11 +37,11 @@ public class MeteorFallAttack : MonoBehaviour
         {
             var player = col.gameObject.GetComponent<Player>();
             player.TakeDamage(damage);
-            Destroy(this);
+            Destroy(gameObject);
         }
         else
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }

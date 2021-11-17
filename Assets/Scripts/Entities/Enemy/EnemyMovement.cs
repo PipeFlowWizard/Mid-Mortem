@@ -185,8 +185,7 @@ public class EnemyMovement : MonoBehaviour
         // Check that Player has a direct path to Enemy
         RaycastHit player;
         // If ray hits Player, then Enemy increases in speed to dash
-        Physics.Raycast(transform.position, transform.forward, out player, Mathf.Infinity);
-        if (player.collider.tag == "Player")
+        if (Physics.Raycast(transform.position, transform.forward, out player, Mathf.Infinity) && player.collider.CompareTag("Player"))
         {
             // If Dash just started, set isDashin to true and increase speed
             if (!isDashing)
@@ -195,10 +194,22 @@ public class EnemyMovement : MonoBehaviour
                 isDashing = true;
                 // Move Enemy toward Player using SetDestination, with dashingBoost
                 _navMeshAgent.speed = dashBoost * _enemy.entityStats.speed;
+                StartCoroutine(StopDashing());
             }
         }
         // Else, enemy doesn't dash
         else
+        {
+            isDashing = false;
+            _navMeshAgent.speed = _enemy.entityStats.speed;
+        }
+    }
+
+    // Turns off Enemy Dash Speed after a while if Enemy hasn't collided with Player
+    private IEnumerator StopDashing()
+    {
+        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn + 2);
+        if (isDashing)
         {
             isDashing = false;
             _navMeshAgent.speed = _enemy.entityStats.speed;
@@ -213,6 +224,7 @@ public class EnemyMovement : MonoBehaviour
         isMoving = false;
         // Set Destination to current position
         _navMeshAgent.enabled = false;
+        _rigidbody.velocity = Vector3.zero;
     }
     
     private void OnCollisionEnter(Collision col)
@@ -226,6 +238,7 @@ public class EnemyMovement : MonoBehaviour
             if (isDashing)
             {
                 isDashing = false;
+                _navMeshAgent.speed = _enemy.entityStats.speed;
             }
             _navMeshAgent.enabled = false;
             _rigidbody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);

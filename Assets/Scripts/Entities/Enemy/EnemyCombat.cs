@@ -186,9 +186,9 @@ public class EnemyCombat : MonoBehaviour
     {
         GameObject meteor = Instantiate(meteorFallObject, _enemy.target.position, Quaternion.identity);
         MeteorFallAttack meteorAttack = meteor.GetComponent<MeteorFallAttack>();
-        meteorAttack.MeteorCrash();
         // Start Timer to wait for next Ranged Attack
         StartCoroutine(RangeAttackTimer());
+        meteorAttack.MeteorCrash();
     }
 
     // HeatSeeker Instantiates a HeatSeeker object that chases after Player
