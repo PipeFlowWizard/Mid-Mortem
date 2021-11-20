@@ -10,7 +10,7 @@ using UnityEngine;
 public class Enemy : Entity
 {
     // Fields
-    private State currentState; // Current State of Enemy
+    [SerializeField] private State currentState; // Current State of Enemy
     private EnemyStateController stateController; // State Controller of Enemy
     public bool isBossEnemy; // Is Enemy a Boss or Not
     

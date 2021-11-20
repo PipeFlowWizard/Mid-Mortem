@@ -23,10 +23,9 @@ public class ChaseEnemyState : State
             // If randomNumber is between 2 and 4 then Enemy can try and Dash to Player, if Enemy is SPEED
             if ((randomNumber >= 1 && randomNumber <= 3 && enemy.entityStats.entityType == EntityStats.EntityType.SPEED && !enemy.isBossEnemy) || enemy.Movement.isDashing)
             {
-                enemy.Movement.TestDash(enemy.target.position);
+               enemy.Movement.TestDash(enemy.target.position);
             }
-            // MeleeEnemyState attacks Player at intervals
-            enemy.Movement.MoveEnemy(enemy.target.position);
+            // MeleeEnemyState attacks Player at intervalsenemy.Movement.MoveEnemy(enemy.target.position);
         }
     }
 }
