@@ -205,6 +205,7 @@ GameObject:
   - component: {fileID: 4454959827981460501}
   - component: {fileID: 1137221348838083318}
   - component: {fileID: 8103064924768368068}
+  - component: {fileID: 527717767}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -240,10 +241,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a19430e8e541cdb4397fe338bd43ca3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityStats: {fileID: 11400000, guid: 1de8243940ce95f489eec5e3f8221d3f, type: 2}
+  entityStats: {fileID: 11400000, guid: b7d19445e9b1da64bbb019cb2b478e2b, type: 2}
+  isBossEnemy: 0
   _rigidbody: {fileID: 0}
+  _currentRoom: {fileID: 0}
   target: {fileID: 0}
-  canReap: 0
+  canReap: 1
+  waitingForReap: 0
+  isDead: 0
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
 --- !u!114 &7505473047719119343
@@ -259,9 +264,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeAttack: 1
-  waitingForReap: 0
+  meleeAttack: 1
   _rigidbody: {fileID: 0}
   enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
+  tripleAttackOffset: 2
+  invincibleTime: 3
+  isInvincible: 0
+  invincibleSize: 1.5
+  damageReduction: 4
+  meteorFallObject: {fileID: 1511467521296544908, guid: a6e75a0f81bb4eb4c93a770425d81221, type: 3}
+  heatSeekerObject: {fileID: 6991017682539234195, guid: 52e6ea0e2d74e924dae0da0148349ce5, type: 3}
   rotationDamp: 0.5
   pushBackForce: 15
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
@@ -278,6 +290,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee42901210433842b768f5dd493860f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _navMeshAgent: {fileID: 0}
+  patrolPointSet: 0
+  patrolPointRange: 10
+  runAwayDistance: 5
+  suicide: 0
+  isDashing: 0
+  dashBoost: 0
   isMoving: 0
   rotationDamp: 0.5
   pushBackForce: 15
@@ -310,3 +329,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!195 &527717767
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103064924768368069}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 3.5
+  m_Acceleration: 8
+  avoidancePriority: 50
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4

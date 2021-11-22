@@ -42,7 +42,8 @@ public class EnemyCombat : MonoBehaviour
     {
         
     }
-    
+    //Collision with enemy shouldn't cause damage. There should be a function that "puts out" a hit box
+    // that is called during a melee state
     private void OnCollisionExit(Collision col)
     {
         //Combat

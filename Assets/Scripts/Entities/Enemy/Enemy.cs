@@ -18,8 +18,7 @@ public class Enemy : Entity
     private EnemyCombat _combat;
     [SerializeField] private IdleEnemyState _idleEnemyState;
     [SerializeField] private Rigidbody _rigidbody;
-    [SerializeField] 
-    private Room _currentRoom;
+    [SerializeField] private Room _currentRoom;
     
     public Transform target; // Enemy target (Player)
     public bool canReap = true; // Enemy can still be Reaped if health drops to below 25%

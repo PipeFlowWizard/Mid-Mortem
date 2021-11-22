@@ -175,7 +175,7 @@ public class EnemyStateController
         else if(enemyState == EnemyState.RUN)
         {
             // If Player no longer in scene or outside chaseRange, switch to IDLE
-            if(enemy.target == null || GetPlayerDistance() > enemy.entityStats.chaseRange + enemy.Movement.runAwayDistance)
+            if(enemy.target == null || GetPlayerDistance() > enemy.entityStats.chaseRange) //+ enemy.Movement.runAwayDistance)
             {
                 enemy.SetState(new IdleEnemyState(enemy));
                 enemyState = EnemyState.IDLE;

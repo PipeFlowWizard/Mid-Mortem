@@ -12,48 +12,51 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody _rigidbody;                           // Reference to RigidBody of Enemy
 
     public NavMeshAgent _navMeshAgent;                     // Reference to NavMeshAgent
-    private LayerMask groundLayer;                          // Reference to Ground LayerMask
+    public LayerMask groundLayer;                          // Reference to Ground LayerMask
     
-    private Vector3 patrolPoint;                            // Point Enemy is moving towards while Patrolling
+    //private Vector3 patrolPoint;                            // Point Enemy is moving towards while Patrolling
     public bool patrolPointSet;                             // Determines if Patrol Point is set for Enemy
     public float patrolPointRange;                          // Range in which Enemy patrols around
 
-    private Vector3 runAwayPoint;                           // Point Enemy is moving towards while running away from Player
-    private bool runAwayPointSet;                           // Determines if RunAway point is set
-    public float runAwayDistance;                           // How far away from chaseRange enemy should be
+    
+    //public float runAwayDistance;                           // How far away from chaseRange enemy should be
     public bool suicide;                                    // If Enemy is going to perform a suicide run
 
     public bool isDashing;                                  // When Enemy is dashing after Player
     [SerializeField] private float dashBoost;               // Dash Boost when Enemy is Dashin
 
-    public bool isMoving;                                   // Bool to determine if Player is moving
     private Enemy _enemy;
     [SerializeField] private float rotationDamp = 0.5f;     // Rotational Dampening so rotation is gradual
     [SerializeField] private float pushBackForce = 15.0f;   // Push Enemy back after attacking Player with melee
     public bool meleeAttack = true;
 
-    public Rigidbody Rigidbody
-    {
-        get => _rigidbody;
-    }
+    public Vector3 desiredLocation;
+
+    public Rigidbody Rigidbody => _rigidbody;
 
     private void Start()
     {
+        desiredLocation = transform.position;
         _enemy = GetComponent<Enemy>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
         _navMeshAgent.speed = _enemy.entityStats.speed;
-        //_rigidbody = GetComponent<Rigidbody>();
     }
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-        patrolPointSet = false;
-        runAwayPointSet = false;
+       // patrolPointSet = false;
+        //runAwayPointSet = false;
         isDashing = false;
         groundLayer = LayerMask.GetMask("Ground");
     }
 
+    private void FixedUpdate()
+    {
+        
+    }
+
+    /*#region Patrol
     // Function for Enemy patrolling
     public void PatrolEnemy()
     {
@@ -93,6 +96,8 @@ public class EnemyMovement : MonoBehaviour
             patrolPointSet = true;
         }
     }
+    
+    #endregion*/
 
     // Rotate Enemy toward Player
 
@@ -122,62 +127,11 @@ public class EnemyMovement : MonoBehaviour
         // Enemy can only move if it is Not Dead and Not Waiting For Reap
         if (!_enemy.isDead && !_enemy.waitingForReap)
         {
-            // Set isMoving to true
-            isMoving = true;
             // Move Enemy toward Player using SetDestination
             _navMeshAgent.SetDestination(destination);
         }
     }
-
-    // RunAway Moves Enemy away from Player
-    public void RunAway()
-    {
-        // If Run Away Point not set, then search for a RunAwayPoint
-        if (!runAwayPointSet)
-        {
-            SearchRunAwayPoint();
-        }
-
-        // If runAwayPointSet is now true, then use NavMeshAgent to move towards runAwayPoint
-        if (runAwayPointSet && !_enemy.isDead && !_enemy.waitingForReap)
-        {
-            TurnEnemy(runAwayPoint);
-            _navMeshAgent.SetDestination(runAwayPoint);
-        }
-        // Get distance to runAwayPoint
-        Vector3 distanceToPatrolPoint = transform.position - runAwayPoint;
-        // Once the runAwayPoint is reached, runAwayPointSet is false
-        if (distanceToPatrolPoint.magnitude < 0.5f)
-        {
-            runAwayPointSet = false;
-        }
-    }
-
-    // Function to check for a Run Away Point
-    public void SearchRunAwayPoint()
-    {
-        // Get Distance between Enemy and Player
-        float distance = Vector3.Distance(transform.position, _enemy.target.position);
-        // Get difference of maxRange and Enemy-Player distance
-        float difference = (_enemy.entityStats.chaseRange + runAwayDistance) - distance;
-        // Get vector pointing towards Player
-        Vector3 direction = -1 * (_enemy.target.position - transform.position);
-        direction.y = 0;
-        direction = direction.normalized;
-        // Set new RunAwayPoint away from Enemy
-        runAwayPoint = transform.position + (direction * difference);
-        // If runAwayPoint still on ground then runAwayPointSet is true
-        if (Physics.Raycast(runAwayPoint + Vector3.up, Vector3.down, 3.0f, groundLayer))
-        {
-            // If it is, then patrolPointSet is true
-            runAwayPointSet = true;
-        }
-        // Else, Enemy performs suicide run to Player
-        else
-        {
-            suicide = true;
-        }
-    }
+    
 
     // Enemy makes a suicide dash towards Player
     public void TestDash(Vector3 destination)
@@ -217,17 +171,18 @@ public class EnemyMovement : MonoBehaviour
     }
 
     // Stop Enemy Movement
-
     public void StopEnemy()
     {
-        // Set isMoving to false
-        isMoving = false;
         // Set Destination to current position
         _navMeshAgent.enabled = false;
         _rigidbody.velocity = Vector3.zero;
     }
     
-    private void OnCollisionEnter(Collision col)
+    // Wrong place for this type of logic -> this has to do with dealing damage, so it should
+    // be done within EnemyCombat or during a combative state, not movement
+    // Just like with the player, the enemy hit box should not be damaging the player.
+    // Enemies should "put out" a hitbox via a function that can be called by melee states
+    /*private void OnCollisionEnter(Collision col)
     {
         //Movement
         
@@ -263,5 +218,5 @@ public class EnemyMovement : MonoBehaviour
         {
             patrolPointSet = false;
         }
-    }
+    }*/
 }

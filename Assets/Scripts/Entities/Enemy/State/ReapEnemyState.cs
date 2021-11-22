@@ -26,4 +26,10 @@ public class ReapEnemyState : State
         // If canReap is true, then Enemy does nothing and faces enemy
         enemy.Movement.TurnEnemy(enemy.target.position);
     }
+    
+
+    public override void OnStateExit()
+    {
+        base.OnStateExit();
+    }
 }

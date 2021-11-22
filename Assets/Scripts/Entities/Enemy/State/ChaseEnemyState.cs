@@ -25,7 +25,19 @@ public class ChaseEnemyState : State
             {
                enemy.Movement.TestDash(enemy.target.position);
             }
-            // MeleeEnemyState attacks Player at intervalsenemy.Movement.MoveEnemy(enemy.target.position);
+            // MeleeEnemyState attacks Player at intervals
+            enemy.Movement.MoveEnemy(enemy.target.position);
+            
         }
+    }
+
+    public override void OnStateEnter()
+    {
+        base.OnStateEnter();
+    }
+
+    public override void OnStateExit()
+    {
+        base.OnStateExit();
     }
 }

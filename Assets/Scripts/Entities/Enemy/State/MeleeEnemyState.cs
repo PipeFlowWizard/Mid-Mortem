@@ -53,4 +53,14 @@ public class MeleeEnemyState : State
     {
         return Vector3.Distance(enemy.transform.position, enemy.target.position);
     }
+    
+    public override void OnStateEnter()
+    {
+        base.OnStateEnter();
+    }
+
+    public override void OnStateExit()
+    {
+        base.OnStateExit();
+    }
 }
