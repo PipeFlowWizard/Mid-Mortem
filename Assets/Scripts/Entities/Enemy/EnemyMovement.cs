@@ -13,13 +13,7 @@ public class EnemyMovement : MonoBehaviour
 
     public NavMeshAgent _navMeshAgent;                     // Reference to NavMeshAgent
     public LayerMask groundLayer;                          // Reference to Ground LayerMask
-    
-    //private Vector3 patrolPoint;                            // Point Enemy is moving towards while Patrolling
-    public bool patrolPointSet;                             // Determines if Patrol Point is set for Enemy
-    public float patrolPointRange;                          // Range in which Enemy patrols around
 
-    
-    //public float runAwayDistance;                           // How far away from chaseRange enemy should be
     public bool suicide;                                    // If Enemy is going to perform a suicide run
 
     public bool isDashing;                                  // When Enemy is dashing after Player
@@ -27,8 +21,6 @@ public class EnemyMovement : MonoBehaviour
 
     private Enemy _enemy;
     [SerializeField] private float rotationDamp = 0.5f;     // Rotational Dampening so rotation is gradual
-    [SerializeField] private float pushBackForce = 15.0f;   // Push Enemy back after attacking Player with melee
-    public bool meleeAttack = true;
 
     public Vector3 desiredLocation;
 
@@ -45,62 +37,11 @@ public class EnemyMovement : MonoBehaviour
 
     private void Awake()
     {
-       // patrolPointSet = false;
-        //runAwayPointSet = false;
         isDashing = false;
         groundLayer = LayerMask.GetMask("Ground");
     }
 
-    private void FixedUpdate()
-    {
-        
-    }
-
-    /*#region Patrol
-    // Function for Enemy patrolling
-    public void PatrolEnemy()
-    {
-        // If Patrol Point not set, then search for a patrol point
-        if (!patrolPointSet)
-        {
-            SearchPatrolPoint();
-        }
-
-        // If patrolPointSet is now true, then use NavMeshAgent to move towards patrolPoint
-        if (patrolPointSet && !_enemy.isDead && !_enemy.waitingForReap)
-        {
-            TurnEnemy(patrolPoint);
-            _navMeshAgent.SetDestination(patrolPoint);
-        }
-        // Get distance to patrolPoint
-        Vector3 distanceToPatrolPoint = transform.position - patrolPoint;
-        // Once the patrolPoint is reached, patrolPointSet is false
-        if(distanceToPatrolPoint.magnitude < 0.5f)
-        {
-            patrolPointSet = false;
-        }
-    }
-
-    // Function to check for a Patrol Point
-    public void SearchPatrolPoint()
-    {
-        // Calculate random patrol point in patrolPointRange
-        float randomZ = Random.Range(-patrolPointRange, patrolPointRange);
-        float randomX = Random.Range(-patrolPointRange, patrolPointRange);
-        // Set new Patrol Point
-        patrolPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-        // Check that patrolPoint still on ground
-        if (Physics.Raycast(patrolPoint + Vector3.up, Vector3.down, 3.0f, groundLayer))
-        {
-            // If it is, then patrolPointSet is true
-            patrolPointSet = true;
-        }
-    }
-    
-    #endregion*/
-
     // Rotate Enemy toward Player
-
     public void TurnEnemy(Vector3 destination)
     {
         // Enemy can only turn if it is Not Dead and Not Waiting For Reap
@@ -121,7 +62,6 @@ public class EnemyMovement : MonoBehaviour
     }
 
     // Move Enemy toward Player
-
     public void MoveEnemy(Vector3 destination)
     {
         // Enemy can only move if it is Not Dead and Not Waiting For Reap
@@ -162,7 +102,7 @@ public class EnemyMovement : MonoBehaviour
     // Turns off Enemy Dash Speed after a while if Enemy hasn't collided with Player
     private IEnumerator StopDashing()
     {
-        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn + 2);
+        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn + 7);
         if (isDashing)
         {
             isDashing = false;
@@ -177,46 +117,4 @@ public class EnemyMovement : MonoBehaviour
         _navMeshAgent.enabled = false;
         _rigidbody.velocity = Vector3.zero;
     }
-    
-    // Wrong place for this type of logic -> this has to do with dealing damage, so it should
-    // be done within EnemyCombat or during a combative state, not movement
-    // Just like with the player, the enemy hit box should not be damaging the player.
-    // Enemies should "put out" a hitbox via a function that can be called by melee states
-    /*private void OnCollisionEnter(Collision col)
-    {
-        //Movement
-        
-        // If collide with a Player, they take damage and then they move back
-        if (col.transform.CompareTag("Player"))
-        {
-            meleeAttack = false;
-            if (isDashing)
-            {
-                isDashing = false;
-                _navMeshAgent.speed = _enemy.entityStats.speed;
-            }
-            _navMeshAgent.enabled = false;
-            _rigidbody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
-        }
-        // If collide with another Enemy, then move to left or right
-        if (col.transform.CompareTag("Enemy"))
-        {
-            int index = Random.Range(1, 3);
-            if (index == 1)
-            {
-                // Move right
-                _rigidbody.AddForce(pushBackForce * transform.right, ForceMode.Impulse);
-            }
-            else
-            {
-                // Move left
-                _rigidbody.AddForce(-pushBackForce * transform.right, ForceMode.Impulse);
-            }
-        }
-        // Else, if collide with anything besides ground, patrolPointSet is set to false
-        else if(!col.transform.CompareTag("Ground"))
-        {
-            patrolPointSet = false;
-        }
-    }*/
 }

@@ -20,7 +20,6 @@ public class Enemy : Entity
     private EnemyVFX _enemyVfx;
     [SerializeField] private Ability _ability;
     
-    [SerializeField] private IdleEnemyState _idleEnemyState;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Room _currentRoom;
     

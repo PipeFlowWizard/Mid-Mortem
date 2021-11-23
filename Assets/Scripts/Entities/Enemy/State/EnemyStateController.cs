@@ -60,7 +60,7 @@ public class EnemyStateController
             // Boss Enemies can't chase after Player
             if ((randomNumber == 1 && enemy.entityStats.entityType == EntityStats.EntityType.ATTACK) || enemy.entityStats.entityType == EntityStats.EntityType.SPEED && !enemy.isBossEnemy)
             {
-                // If Player is in Scene (within chaseRange), and Enemy still has more than 25% health, it chases after Player
+                // If Player is in Scene (within maxRange), and Enemy still has more than 25% health, it chases after Player
                 if (GetPlayerDistance() <= enemy.entityStats.maxRange && enemy.CurrentHealthState() < 2)
                 {
                     enemy.SetState(new ChaseEnemyState(enemy));
@@ -126,13 +126,13 @@ public class EnemyStateController
                 enemy.SetState(new IdleEnemyState(enemy));
                 enemyState = EnemyState.IDLE;
             }
-            // If Enemy is boss and Player is within maxRange but not chaseRange, the Boss attacks from Range
-            // Melee attack if player is in range
+            // Melee attack if Player is right in front of Enemy (in range of 1)
             else if (GetPlayerDistance() < 1)
             {
                 enemy.SetState(new MeleeEnemyState(enemy));
                 enemyState = EnemyState.MELEE;
             }
+            // If Enemy is boss and Player is within maxRange but not chaseRange, the Boss attacks from Range
             else if (GetPlayerDistance() > enemy.entityStats.chaseRange && GetPlayerDistance() <= enemy.entityStats.maxRange && enemy.CurrentHealthState() < 2 && enemy.isBossEnemy)
             {
                 enemy.SetState(new RangedEnemyState(enemy));
@@ -182,7 +182,7 @@ public class EnemyStateController
         else if(enemyState == EnemyState.RUN)
         {
             // If Player no longer in scene or outside chaseRange, switch to IDLE
-            if(enemy.target == null || GetPlayerDistance() > enemy.entityStats.chaseRange) //+ enemy.Movement.runAwayDistance)
+            if(enemy.target == null || GetPlayerDistance() > enemy.entityStats.chaseRange)
             {
                 enemy.SetState(new IdleEnemyState(enemy));
                 enemyState = EnemyState.IDLE;
@@ -193,12 +193,28 @@ public class EnemyStateController
                 enemyState = EnemyState.CHASE;
             }
         }
+        // If Enemy is in MELEE state, can change to IDLE if Player no longer in scene or outside maxRange, or
+        // CHASE if Player is within maxRange but outside Melee Range of 1, or
+        // RUN if Enemy health falls below 25%
         else if (enemyState == EnemyState.MELEE)
         {
-            if (GetPlayerDistance() > 1)
+            // If Player is no longer in scene, or outside maxRange, then switch to IDLE
+            if(enemy.target == null || GetPlayerDistance() > enemy.entityStats.maxRange)
+            {
+                enemy.SetState(new IdleEnemyState(enemy));
+                enemyState = EnemyState.IDLE;
+            }
+            // If Player is outside Melee Range (1) but within maxRange, then switch to CHASE
+            else if (GetPlayerDistance() > 1 && GetPlayerDistance() <= enemy.entityStats.maxRange)
             {
                 enemy.SetState(new ChaseEnemyState(enemy));
                 enemyState = EnemyState.CHASE;
+            }
+            // Else, if Enemy has less than 25% health and Player in Scene (within Enemy chaseRange), it runs away from Player
+            else if (GetPlayerDistance() <= enemy.entityStats.chaseRange && enemy.CurrentHealthState() >= 2)
+            {
+                enemy.SetState(new RunEnemyState(enemy));
+                enemyState = EnemyState.RUN;
             }
         }
     }

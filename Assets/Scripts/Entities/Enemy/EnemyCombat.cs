@@ -37,32 +37,6 @@ public class EnemyCombat : MonoBehaviour
         reapedEvent = _enemy.ReapedEvent;
         _rigidbody = GetComponent<Rigidbody>();
     }
-
-    private void Awake()
-    {
-        
-    }
-    //Collision with enemy shouldn't cause damage. There should be a function that "puts out" a hit box
-    // that is called during a melee state
-    /*private void OnCollisionExit(Collision col)
-    {
-        //Combat
-        // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
-        if (col.transform.CompareTag("Player"))
-        {
-            // Debug.Log("Player collision");
-            var player = col.gameObject.GetComponent<Player>();
-            player.TakeDamage(_enemy.entityStats.attack);
-            _enemy.Movement.StopEnemy();
-            StartCoroutine(_enemy.Combat.MeleeAttackTimer());
-        }
-        // After Enemy collides with Another Enemy, they stop moving
-        if (col.transform.CompareTag("Enemy"))
-        {
-            _enemy.Movement.StopEnemy();
-            StartCoroutine(_enemy.Combat.MeleeAttackTimer());
-        }
-    }*/
     
     public IEnumerator RangeAttackTimer()
     {
@@ -70,17 +44,6 @@ public class EnemyCombat : MonoBehaviour
         yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn);
         rangeAttack = true;   
     }
-
-
-    // Timer between attacks for Enemy
-
-    public IEnumerator MeleeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(_enemy.entityStats.meleeSpawn);
-        _enemy.Movement._navMeshAgent.enabled = true;
-    }
-
 
     // Make Enemy wait 10 seconds in Reaped State
     public IEnumerator ReapTimer()
@@ -203,46 +166,4 @@ public class EnemyCombat : MonoBehaviour
         // Debug.Log("Melee Attempt");
         anim.Play("EnemyMelee");
     }
-
-
-    // Already handled by the weapons and spells
-    /*private void OnTriggerEnter(Collider other)
-    {
-        
-        // Combat 
-        // If Enemy is hit by Player Scythe, they take damage or can be reaped if waiting for Reap
-        if (other.CompareTag("PlayerHurtBox"))
-        {
-            var player = other.GetComponentInParent<Player>();
-
-            // If Enemy is waitingForReap, then they can call the ReapEnemy Function
-            // TODO: Add in Reap Animation and adding modifier 
-            if (waitingForReap)
-            {
-                //Debug.Log("I T S  R E A P I N'  T I M E");
-                reapedEvent.Raise();
-                _enemy.Movement.StopEnemy();
-                KillEnemy();
-            }
-            // Else, the Enemy just takes normal damage
-            else
-            {
-                if (player)
-                {
-                    _enemy.TakeDamage(player.entityStats.attack);
-                }
-
-            }
-        }
-
-        if (other.CompareTag("PlayerSpell"))
-        {
-            var player = other.GetComponentInParent<Player>();
-            
-            if (player)
-            {
-                _enemy.TakeDamage(player.entityStats.attack);
-            }
-        }
-    }*/
 }

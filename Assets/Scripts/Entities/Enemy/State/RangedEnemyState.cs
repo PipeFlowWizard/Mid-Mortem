@@ -22,6 +22,7 @@ public class RangedEnemyState : State
     public override void OnStateExit()
     {
         enemy.Combat.rangeAttack = false;
+        enemy.Movement._navMeshAgent.enabled = true;
     }
 
     // RangedEnemyState can perform different actions based on distance to Enemy and health
@@ -77,9 +78,6 @@ public class RangedEnemyState : State
                     enemy.Combat.RangedAttack();
                 }
             }
-            /*enemy.Combat.rangeAttack = false;
-            enemy.CastAbility();*/
-            
         }
     }
     

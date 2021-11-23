@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class IdleEnemyState : State
 {
-    private Vector3 patrolPoint = Vector3.zero;                            // Point Enemy is moving towards while Patrolling
-    public bool patrolPointSet = false;                             // Determines if Patrol Point is set for Enemy
-    public float patrolPointRange;                          // Range in which Enemy patrols around
+    private Vector3 patrolPoint = Vector3.zero; // Point Enemy is moving towards while Patrolling
+    public bool patrolPointSet = false;         // Determines if Patrol Point is set for Enemy
+    public float patrolPointRange;              // Range in which Enemy patrols around
     
     // IdleEnemyState takes an Enenmy Object in constructor
     public IdleEnemyState(Enemy enemy) : base(enemy)
     {
-
+        patrolPointRange = 10.0f;
+        patrolPointSet = false;
     }
 
     // Enemy performs no Action while in Idle state, except looking for Player
@@ -28,7 +29,7 @@ public class IdleEnemyState : State
     // OnStateEnter Stop Enemy Movement
     public override void OnStateExit()
     {
-        enemy.Movement.patrolPointSet = false;
+        base.OnStateExit();
     }
     
     public override void OnStateEnter()

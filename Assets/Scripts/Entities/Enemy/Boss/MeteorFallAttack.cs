@@ -11,7 +11,7 @@ public class MeteorFallAttack : MonoBehaviour
     public int damage;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         _rigidbody = GetComponent<Rigidbody>();
         

@@ -51,7 +51,7 @@ public class HeatSeekerAttack : MonoBehaviour
             // Get Quaternion to rotate towards Player
             Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
             // Rotate Enemy, use Slerp to make Rotation gradual
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotate, 1.0f);
+            transform.rotation = rotate;
         }
     }
 
@@ -59,7 +59,7 @@ public class HeatSeekerAttack : MonoBehaviour
     private void MoveSpell()
     {
         // Move Enemy in direction they are facing using RigidBody
-        _rigidbody.MovePosition(transform.position + transform.forward * speed * Time.deltaTime);
+        _rigidbody.MovePosition(transform.position + (transform.forward * speed) * Time.deltaTime);
     }
 
     // HeatSeeker attack only lasts for a certain amount of time
@@ -80,7 +80,7 @@ public class HeatSeekerAttack : MonoBehaviour
             print("Destroy");
             Destroy(gameObject);
         }
-        else
+        else if(!col.CompareTag("Enemy"))
         {
             Destroy(gameObject);
         }

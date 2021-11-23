@@ -41,7 +41,7 @@ public class EnemySpell : MonoBehaviour
             player.TakeDamage(attackPower);
         }
         // Else, Start Coroutine to destroy EnemySpell after 15 seconds
-        else if (col.CompareTag("Enemy"))
+        else if (col.CompareTag("Enemy") || col.CompareTag("PlayerHurtBox"))
         {
             // Debug.Log("enemy spell hit enemy");
             return;

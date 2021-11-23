@@ -7,12 +7,11 @@ public class RunEnemyState : State
     private Vector3 runAwayPoint;                           // Point Enemy is moving towards while running away from Player
     private bool runAwayPointSet;                           // Determines if RunAway point is set
     public float runAwayDistance;                           // How far away from chaseRange enemy should be
-    public bool suicide;                                    // If Enemy is going to perform a suicide run
     // IdleEnemyState takes an Enenmy Object in constructor
     
     public RunEnemyState(Enemy enemy) : base(enemy)
     {
-
+        runAwayDistance = 5.0f;
     }
 
     // Enemy runs away from Player
@@ -76,7 +75,7 @@ public class RunEnemyState : State
         // Else, Enemy performs suicide run to Player
         else
         {
-            suicide = true;
+            enemy.Movement.suicide = true;
         }
     }
 
