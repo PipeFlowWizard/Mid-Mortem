@@ -191,6 +191,83 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6372111953452568670
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1670178007358513508}
+  - component: {fileID: 7449518896610592756}
+  - component: {fileID: 3641242547279424359}
+  - component: {fileID: 8770511024635530214}
+  m_Layer: 0
+  m_Name: HurtBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1670178007358513508
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372111953452568670}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.993, z: 1.339}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8103064924768368064}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7449518896610592756
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372111953452568670}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3641242547279424359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372111953452568670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 835df0d5cc237864ebbd4ad2a81edec1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!95 &8770511024635530214
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372111953452568670}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &8103064924768368069
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +282,8 @@ GameObject:
   - component: {fileID: 4454959827981460501}
   - component: {fileID: 1137221348838083318}
   - component: {fileID: 8103064924768368068}
-  - component: {fileID: 527717767}
+  - component: {fileID: 1544366024940161049}
+  - component: {fileID: 427056298}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Enemy
@@ -226,6 +304,7 @@ Transform:
   m_Children:
   - {fileID: 536195526541832319}
   - {fileID: 8664746594691084552}
+  - {fileID: 1670178007358513508}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -243,6 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: b7d19445e9b1da64bbb019cb2b478e2b, type: 2}
   isBossEnemy: 0
+  _ability: {fileID: 11400000, guid: d5b9c1fc19553fd43865ec12816fd178, type: 2}
   _rigidbody: {fileID: 0}
   _currentRoom: {fileID: 0}
   target: {fileID: 0}
@@ -264,7 +344,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeAttack: 1
-  meleeAttack: 1
   _rigidbody: {fileID: 0}
   enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
   tripleAttackOffset: 2
@@ -278,6 +357,7 @@ MonoBehaviour:
   pushBackForce: 15
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
+  anim: {fileID: 1544366024940161049}
 --- !u!114 &4454959827981460501
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,16 +371,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   patrolPointSet: 0
   patrolPointRange: 10
-  runAwayDistance: 5
   suicide: 0
   isDashing: 0
   dashBoost: 0
-  isMoving: 0
   rotationDamp: 0.5
   pushBackForce: 15
   meleeAttack: 1
+  desiredLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &1137221348838083318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,14 +404,33 @@ Rigidbody:
   m_GameObject: {fileID: 8103064924768368069}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
---- !u!195 &527717767
+--- !u!95 &1544366024940161049
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8103064924768368069}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 6f5c4129f2aae7e4e8bbb2e71a604a66, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!195 &427056298
 NavMeshAgent:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,7 +439,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8103064924768368069}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 3
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50

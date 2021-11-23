@@ -15,7 +15,8 @@ public class EnemyStateController
         CHASE,
         RUN,
         REAP,
-        DEAD
+        DEAD,
+        MELEE
     };
     // Current State of Enemy
     private EnemyState enemyState;
@@ -126,6 +127,12 @@ public class EnemyStateController
                 enemyState = EnemyState.IDLE;
             }
             // If Enemy is boss and Player is within maxRange but not chaseRange, the Boss attacks from Range
+            // Melee attack if player is in range
+            else if (GetPlayerDistance() < 1)
+            {
+                enemy.SetState(new MeleeEnemyState(enemy));
+                enemyState = EnemyState.MELEE;
+            }
             else if (GetPlayerDistance() > enemy.entityStats.chaseRange && GetPlayerDistance() <= enemy.entityStats.maxRange && enemy.CurrentHealthState() < 2 && enemy.isBossEnemy)
             {
                 enemy.SetState(new RangedEnemyState(enemy));
@@ -181,6 +188,14 @@ public class EnemyStateController
                 enemyState = EnemyState.IDLE;
             }
             else if (enemy.Movement.suicide)
+            {
+                enemy.SetState(new ChaseEnemyState(enemy));
+                enemyState = EnemyState.CHASE;
+            }
+        }
+        else if (enemyState == EnemyState.MELEE)
+        {
+            if (GetPlayerDistance() > 1)
             {
                 enemy.SetState(new ChaseEnemyState(enemy));
                 enemyState = EnemyState.CHASE;

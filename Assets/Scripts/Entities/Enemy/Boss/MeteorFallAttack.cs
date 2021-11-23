@@ -14,6 +14,7 @@ public class MeteorFallAttack : MonoBehaviour
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody>();
+        
     }
 
     // Update is called once per frame
@@ -25,8 +26,9 @@ public class MeteorFallAttack : MonoBehaviour
     // MeteorCrash instantiates the Meteor above the passed position and drops it using gravity and speed
     public void MeteorCrash()
     {
-        this.transform.position += (Vector3.up * height);
+        transform.position += (Vector3.up * height);
         _rigidbody.velocity = (Vector3.down * speed);
+        
     }
 
     // When Meteor collides with object, it is destroyed and deals damage if Player

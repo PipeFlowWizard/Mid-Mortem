@@ -13,11 +13,11 @@ public class ChaseEnemyState : State
 
     // ChaseEnemyState can perform different actions based on distance to Enemy and health
     public override void Action()
-    {
+    { Debug.Log("Enemy Chases!");
         // If attack is true, then keep moving toward enemy
-        if (enemy.Combat.meleeAttack)
+        /*if (enemy.Combat.meleeAttack)
         {
-            // Get randomNumber to detemrine if special ability used
+            // Get randomNumber to detemine if special ability used
             int randomNumber = UnityEngine.Random.Range(1, 1001);
             enemy.Movement.TurnEnemy(enemy.target.position);
             // If randomNumber is between 2 and 4 then Enemy can try and Dash to Player, if Enemy is SPEED
@@ -28,7 +28,8 @@ public class ChaseEnemyState : State
             // MeleeEnemyState attacks Player at intervals
             enemy.Movement.MoveEnemy(enemy.target.position);
             
-        }
+        }*/
+        enemy.Movement.MoveEnemy(enemy.target.position);
     }
 
     public override void OnStateEnter()

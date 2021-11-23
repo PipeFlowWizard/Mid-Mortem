@@ -77,6 +77,9 @@ public class RangedEnemyState : State
                     enemy.Combat.RangedAttack();
                 }
             }
+            /*enemy.Combat.rangeAttack = false;
+            enemy.CastAbility();*/
+            
         }
     }
     

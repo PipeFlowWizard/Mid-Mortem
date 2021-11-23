@@ -5,62 +5,42 @@ using UnityEngine;
 public class MeleeEnemyState : State
 {
     
-    // MeleeEnemyState takes an Enenmy Object in constructor
+    // ChaseEnemyState takes an Enenmy Object in constructor
     public MeleeEnemyState(Enemy enemy) : base(enemy)
     {
 
     }
 
-    // MeleeEnemyState can perform different actions based on distance to Enemy and health
+    // ChaseEnemyState can perform different actions based on distance to Enemy and health
     public override void Action()
     {
-        // Get Player distance
-        float distance = GetPlayerDistance();
-        // If Enemy health is 0, then Enemy State is DeadEnemyState
-        // CurrentHealthState returns 3 when health is 0
-        if (enemy.CurrentHealthState() == 3)
+        Debug.Log("Enemy attacks!");
+        /*// If attack is true, then keep moving toward enemy
+        if (enemy.Combat.meleeAttack)
         {
-            enemy.SetState(new DeadEnemyState(enemy));
-        }
-        // If Enemy health is 25% or below and canReap , then Enemy State is ReapEnemyState
-        // CurrentHealthState returns 2 when enemy health is below or equal to 25% of original
-        else if (enemy.CurrentHealthState() == 2 && enemy.canReap)
-        {
-            enemy.SetState(new ReapEnemyState(enemy));
-        }
-        // If target of enemy is null or distance > max_range, then set Enemy State to IdleEnemyState
-        else if (enemy.target == null || distance >= enemy.entityStats.maxRange)
-        {
-            enemy.SetState(new IdleEnemyState(enemy));
-        }
-        // If distance to enemy is greater than chase_range, then Enemy State is RangedEnemyState
-        else if (distance > enemy.entityStats.chaseRange)
-        {
-            enemy.SetState(new RangedEnemyState(enemy));
-        }
-        // Else
-        else
-        {
+            // Get randomNumber to detemine if special ability used
+            int randomNumber = UnityEngine.Random.Range(1, 1001);
+            enemy.Movement.TurnEnemy(enemy.target.position);
+            // If randomNumber is between 2 and 4 then Enemy can try and Dash to Player, if Enemy is SPEED
+            if ((randomNumber >= 1 && randomNumber <= 3 && enemy.entityStats.entityType == EntityStats.EntityType.SPEED && !enemy.isBossEnemy) || enemy.Movement.isDashing)
+            {
+               enemy.Movement.TestDash(enemy.target.position);
+            }
             // MeleeEnemyState attacks Player at intervals
-            //enemy.Movement.TurnEnemy();
-            //enemy.Movement.MoveEnemy();
+            enemy.Movement.MoveEnemy(enemy.target.position);
             
-        }
+        }*/
     }
 
-    // GetPlayerDistance returns distance to Player object
-    private float GetPlayerDistance()
-    {
-        return Vector3.Distance(enemy.transform.position, enemy.target.position);
-    }
-    
     public override void OnStateEnter()
     {
         base.OnStateEnter();
+        enemy.VFX.ChangeColor();
     }
 
     public override void OnStateExit()
     {
         base.OnStateExit();
+        enemy.VFX.ChangeColor();
     }
 }

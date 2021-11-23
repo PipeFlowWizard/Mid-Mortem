@@ -7,6 +7,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
 [RequireComponent(typeof(EnemyCombat))]
+[RequireComponent(typeof(EnemyVFX))]
 public class Enemy : Entity
 {
     // Fields
@@ -16,6 +17,9 @@ public class Enemy : Entity
     
     private EnemyMovement _movement;
     private EnemyCombat _combat;
+    private EnemyVFX _enemyVfx;
+    [SerializeField] private Ability _ability;
+    
     [SerializeField] private IdleEnemyState _idleEnemyState;
     [SerializeField] private Rigidbody _rigidbody;
     [SerializeField] private Room _currentRoom;
@@ -34,6 +38,7 @@ public class Enemy : Entity
     public GameEvent ReapedEvent => reapedEvent;
     public EnemyMovement Movement => _movement;
     public EnemyCombat Combat => _combat;
+    public EnemyVFX VFX => _enemyVfx;
     public Room CurrentRoom
     {
         get => _currentRoom;
@@ -46,6 +51,7 @@ public class Enemy : Entity
         _rigidbody = GetComponent<Rigidbody>();
         _movement = GetComponent<EnemyMovement>();
         _combat = GetComponent<EnemyCombat>();
+        _enemyVfx = GetComponent<EnemyVFX>();
         GetPlayer();
         stateController = new EnemyStateController(this);
     }
@@ -112,5 +118,20 @@ public class Enemy : Entity
         {
             base.TakeDamage(amount);
         }
+    }
+
+    public void CastAbility()
+    {
+        _ability.SoulAbility(target.position, transform.forward,null, _rigidbody);
+        /*StartCoroutine(AbilityCo(_ability.duration));*/
+    }
+    public IEnumerator AbilityCo(float abilityDuration)
+    {
+        // Change state
+        //...
+        _ability.SoulAbility(target.position, transform.forward,null, _rigidbody);
+        yield return new WaitForSeconds(abilityDuration);
+        // Change back state
+        // ...
     }
 }

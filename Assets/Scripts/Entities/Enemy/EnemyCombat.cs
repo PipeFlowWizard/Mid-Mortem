@@ -7,7 +7,6 @@ public class EnemyCombat : MonoBehaviour
 {
     private Enemy _enemy;
     public bool rangeAttack = true;
-    public bool meleeAttack = true;
 
     [SerializeField] private Rigidbody _rigidbody;
 
@@ -28,7 +27,8 @@ public class EnemyCombat : MonoBehaviour
     [Header("Events")]
     public GameEvent deathEvent;
     public GameEvent reapedEvent;
-    
+
+    public Animator anim;
     
     private void Start()
     {
@@ -44,10 +44,9 @@ public class EnemyCombat : MonoBehaviour
     }
     //Collision with enemy shouldn't cause damage. There should be a function that "puts out" a hit box
     // that is called during a melee state
-    private void OnCollisionExit(Collision col)
+    /*private void OnCollisionExit(Collision col)
     {
         //Combat
-        
         // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
         if (col.transform.CompareTag("Player"))
         {
@@ -63,9 +62,8 @@ public class EnemyCombat : MonoBehaviour
             _enemy.Movement.StopEnemy();
             StartCoroutine(_enemy.Combat.MeleeAttackTimer());
         }
-    }
-
-
+    }*/
+    
     public IEnumerator RangeAttackTimer()
     {
         // Every 3 seconds set launch to true
@@ -80,7 +78,6 @@ public class EnemyCombat : MonoBehaviour
     {
         // Every 3 seconds set launch to true
         yield return new WaitForSeconds(_enemy.entityStats.meleeSpawn);
-        meleeAttack = true;
         _enemy.Movement._navMeshAgent.enabled = true;
     }
 
@@ -99,7 +96,7 @@ public class EnemyCombat : MonoBehaviour
     public IEnumerator InvincibleTimer()
     {
         yield return new WaitForSeconds(invincibleTime);
-        // Set isInvincible to false and Enemy back to original size
+        // Set isInvincible to false and Enemy back to original size    
         isInvincible = false;
         transform.localScale = Vector3.one;
     }
@@ -113,11 +110,11 @@ public class EnemyCombat : MonoBehaviour
     }
 
     // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
+    //TODO: move to Enemy.cs
     public void KillEnemy()
     {
         deathEvent.Raise();
         _enemy.isDead = true;
-        meleeAttack = false;
         rangeAttack = false;
         _rigidbody.constraints = RigidbodyConstraints.None;
         _enemy.Movement._navMeshAgent.enabled = false;
@@ -199,7 +196,13 @@ public class EnemyCombat : MonoBehaviour
         // Start Timer to wait for next Ranged Attack
         StartCoroutine(RangeAttackTimer());
     }
-
+    
+    public void MeleeAttack()
+    {
+        // TODO: enemy melee animation and hurtbox
+        // Debug.Log("Melee Attempt");
+        anim.Play("EnemyMelee");
+    }
 
 
     // Already handled by the weapons and spells
