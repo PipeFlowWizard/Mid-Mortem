@@ -21,7 +21,7 @@ MonoBehaviour:
   defense: 0.85
   speed: 3
   maxRange: 15
-  chaseRange: 30
+  chaseRange: 5
   attackSpeed: 5
   modStatBoost: 10
   entityType: 0
