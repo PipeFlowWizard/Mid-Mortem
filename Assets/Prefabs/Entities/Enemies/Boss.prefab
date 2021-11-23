@@ -259,6 +259,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: 8f9128b22a5604e478f5b13248658d0a, type: 2}
   isBossEnemy: 1
+  _ability: {fileID: 0}
   _rigidbody: {fileID: 0}
   _currentRoom: {fileID: 0}
   target: {fileID: 0}
@@ -280,16 +281,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _navMeshAgent: {fileID: 0}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
   patrolPointSet: 0
   patrolPointRange: 0
-  runAwayDistance: 0
   suicide: 0
   isDashing: 0
   dashBoost: 0
-  isMoving: 0
   rotationDamp: 0.5
-  pushBackForce: 15
+  pushBackForce: 0
   meleeAttack: 1
+  desiredLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &8694008844289626177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,7 +306,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeAttack: 1
-  meleeAttack: 1
   _rigidbody: {fileID: 0}
   enemySpell: {fileID: 1830672277127870288, guid: f102a52979dd055499e219a8cde878aa, type: 3}
   tripleAttackOffset: 0
@@ -314,9 +316,10 @@ MonoBehaviour:
   meteorFallObject: {fileID: 1511467521296544908, guid: a6e75a0f81bb4eb4c93a770425d81221, type: 3}
   heatSeekerObject: {fileID: 6991017682539234195, guid: 52e6ea0e2d74e924dae0da0148349ce5, type: 3}
   rotationDamp: 0.5
-  pushBackForce: 15
+  pushBackForce: 0
   deathEvent: {fileID: 0}
   reapedEvent: {fileID: 0}
+  anim: {fileID: 0}
 --- !u!114 &1178992160003290965
 MonoBehaviour:
   m_ObjectHideFlags: 0
