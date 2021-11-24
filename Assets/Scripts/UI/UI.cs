@@ -13,10 +13,12 @@ public class UI : MonoBehaviour
     public GameEvent togglePauseEvent;
 
     private bool _isPaused;
+    public Image soulFill;
 
     private void Start()
     {
         playerStats = player.GetComponent<Entity>();
+        
         InitializeStats();
     }
     
@@ -76,8 +78,8 @@ public class UI : MonoBehaviour
     {
         ////print("OnSoulCountUpdate()");
         statTextSouls.text = soulCounter.runTimeValue.ToString();
-        // float ratio = soulCounter.runTimeValue / 100f;
-        // soulFill.fillAmount = ratio;
+        float ratio = soulCounter.runTimeValue / 100f;
+        soulFill.fillAmount = ratio;
     }
 
     // TODO: FIX THIS
