@@ -97,7 +97,7 @@ public class LevelCreation : MonoBehaviour
 
             }
         }
-        addKey(keys);
+        
         level.setBiome(theBiome);
         level.name = theBiome.ToString();
         level.Rooms = rooms;
@@ -106,6 +106,7 @@ public class LevelCreation : MonoBehaviour
             levelRoom.SetLevel(level);
         }
         level.transform.localScale = new Vector3(5,5,5);
+        addKey(keys);
         return level;
     }
     private void addKey(int nbKeys)

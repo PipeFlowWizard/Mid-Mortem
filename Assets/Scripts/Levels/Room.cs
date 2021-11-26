@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Room : MonoBehaviour
 {
-    [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref,teleporter;
+    [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref,teleporter,puzzle;
     [SerializeField]  private Material blue, green, pink, stone;
    
     
@@ -133,6 +133,11 @@ public class Room : MonoBehaviour
     public void spawnKey() {
         floor.GetComponent<MeshRenderer>().material = pink;
         keyRoomSelf = true;
+        
+        GameObject puzz = Instantiate<GameObject>(puzzle);
+
+        puzz.transform.position = floor.transform.position;
+        puzz.transform.SetParent(transform);
     }
   
     
@@ -190,7 +195,7 @@ public class Room : MonoBehaviour
         //TODO: Make this spawn enemies and items instead of a generic gameobject
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
         Debug.Log("SEIRR");
-        _level.SpawnBoss(point,this);
+        StartCoroutine(_level.SpawnBoss(point,this));
         // currentEnemyCount++;
     }
   private Door InstantiateDoor(GameObject prefab)

@@ -21,30 +21,41 @@ public class Door : MonoBehaviour
         {
             Debug.Log("Door was closed");
             //can change to sliding animation later
-            gameObject.SetActive(false);
-            //init room adjacent1
-
-            if (!adjacent1.isCleared)
+            if ((adjacent1.bossRoomSelf || adjacent2.bossRoomSelf) && !GetComponentInParent<Level>().getKeyState())
             {
-                for(int i = 0; i < 2; i++)
-                    adjacent1.SpawnEnemyInRoomRandom();
-                if (adjacent1.bossRoomSelf)
-                {
-                    adjacent1.SpawnBossInRoomRandom();
-                }
+                GetComponentInParent<Level>().doorsAccessibleToBoss.Add(this);
+               
             }
-            //init room adjacent2
-            else if (!adjacent2.isCleared)
+            else
             {
-                for(int i = 0; i < 2; i++)
-                    adjacent2.SpawnEnemyInRoomRandom();
-                if (adjacent2.bossRoomSelf)
-                {
-                    adjacent2.SpawnBossInRoomRandom();
-                }
-            }
 
-            isOpen = true;
+                StartCoroutine(GetComponentInParent<Level>().DestroyDoor(this.gameObject));
+                
+                //init room adjacent1
+
+
+                if (!adjacent1.isCleared)
+                {
+                    for (int i = 0; i < 2; i++)
+                        adjacent1.SpawnEnemyInRoomRandom();
+                    if (adjacent1.bossRoomSelf)
+                    {
+                        adjacent1.SpawnBossInRoomRandom();
+                    }
+                }
+                //init room adjacent2
+                else if (!adjacent2.isCleared)
+                {
+                    for (int i = 0; i < 2; i++)
+                        adjacent2.SpawnEnemyInRoomRandom();
+                    if (adjacent2.bossRoomSelf)
+                    {
+                        adjacent2.SpawnBossInRoomRandom();
+                    }
+                }
+
+                isOpen = true;
+            }
         }
 
         return isOpen;
