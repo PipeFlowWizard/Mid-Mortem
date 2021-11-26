@@ -189,7 +189,15 @@ public class Room : MonoBehaviour
         _level.SpawnEnemy(point,this);
         currentEnemyCount++;
     }
-    
+    public void SpawnObstacleInRoomRandom()
+    {
+        //TODO: Make this spawn enemies and items instead of a generic gameobject
+
+        //check what type of biome first
+
+        Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        _level.SpawnObstacle(point, this);
+    }
     public void SpawnBossInRoomRandom()
     {
         //TODO: Make this spawn enemies and items instead of a generic gameobject

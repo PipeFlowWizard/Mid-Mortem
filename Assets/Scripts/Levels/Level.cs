@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
 {
-    
+    [SerializeField] List<GameObject> forestObstacles;
     public LevelData data;
     public List<Room> Rooms;
     public Level nextLevel;
@@ -88,7 +88,13 @@ public class Level : MonoBehaviour
         var enemy = Spawn(position, data.Spawnables[rand]);
         enemy.GetComponent<Enemy>().CurrentRoom = currentroom;
     }
-
+    public void SpawnObstacle(Vector3 position, Room currentroom)
+    {
+        var rand = Random.Range(0, data.ForestObstacles.Count);
+        var obstacle = Spawn(position, data.ForestObstacles[rand]);
+        obstacle.transform.SetParent(transform);
+        
+    }
     public IEnumerator SpawnBoss(Vector3 position, Room currentroom)
     {
         yield return new WaitForEndOfFrame();

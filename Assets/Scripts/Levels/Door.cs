@@ -30,14 +30,19 @@ public class Door : MonoBehaviour
             {
 
                 StartCoroutine(GetComponentInParent<Level>().DestroyDoor(this.gameObject));
-                
+
                 //init room adjacent1
 
 
                 if (!adjacent1.isCleared)
                 {
                     for (int i = 0; i < 2; i++)
+                    {
                         adjacent1.SpawnEnemyInRoomRandom();
+                        
+                    }
+
+
                     if (adjacent1.bossRoomSelf)
                     {
                         adjacent1.SpawnBossInRoomRandom();
@@ -46,11 +51,14 @@ public class Door : MonoBehaviour
                 //init room adjacent2
                 else if (!adjacent2.isCleared)
                 {
-                    for (int i = 0; i < 2; i++)
+                    for (int i = 0; i < 2; i++) { 
                         adjacent2.SpawnEnemyInRoomRandom();
+                        
+                    }
                     if (adjacent2.bossRoomSelf)
                     {
                         adjacent2.SpawnBossInRoomRandom();
+
                     }
                 }
 
