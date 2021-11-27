@@ -5,52 +5,29 @@ using UnityEngine;
 public class MeleeEnemyState : State
 {
     
-    // MeleeEnemyState takes an Enenmy Object in constructor
+    // ChaseEnemyState takes an Enenmy Object in constructor
     public MeleeEnemyState(Enemy enemy) : base(enemy)
     {
 
     }
 
-    // MeleeEnemyState can perform different actions based on distance to Enemy and health
+    // ChaseEnemyState can perform different actions based on distance to Enemy and health
     public override void Action()
     {
-        // Get Player distance
-        float distance = GetPlayerDistance();
-        // If Enemy health is 0, then Enemy State is DeadEnemyState
-        // CurrentHealthState returns 3 when health is 0
-        if (enemy.CurrentHealthState() == 3)
-        {
-            enemy.SetState(new DeadEnemyState(enemy));
-        }
-        // If Enemy health is 25% or below and canReap , then Enemy State is ReapEnemyState
-        // CurrentHealthState returns 2 when enemy health is below or equal to 25% of original
-        else if (enemy.CurrentHealthState() == 2 && enemy.canReap)
-        {
-            enemy.SetState(new ReapEnemyState(enemy));
-        }
-        // If target of enemy is null or distance > max_range, then set Enemy State to IdleEnemyState
-        else if (enemy.target == null || distance >= enemy.entityStats.maxRange)
-        {
-            enemy.SetState(new IdleEnemyState(enemy));
-        }
-        // If distance to enemy is greater than chase_range, then Enemy State is RangedEnemyState
-        else if (distance > enemy.entityStats.chaseRange)
-        {
-            enemy.SetState(new RangedEnemyState(enemy));
-        }
-        // Else
-        else
-        {
-            // MeleeEnemyState attacks Player at intervals
-            enemy.Movement.TurnEnemy();
-            enemy.Movement.MoveEnemy();
-            
-        }
+        // Melee Attack is handled by EnemyHurtBox.cs
+        enemy.VFX.MeleeAttack();
     }
 
-    // GetPlayerDistance returns distance to Player object
-    private float GetPlayerDistance()
+    public override void OnStateEnter()
     {
-        return Vector3.Distance(enemy.transform.position, enemy.target.position);
+        base.OnStateEnter();
+        enemy.VFX.ChangeColor();
+        enemy.VFX.MeleeAttack();
+    }
+
+    public override void OnStateExit()
+    {
+        base.OnStateExit();
+        enemy.VFX.ChangeColor();
     }
 }

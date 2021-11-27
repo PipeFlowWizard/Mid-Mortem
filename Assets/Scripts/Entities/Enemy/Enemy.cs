@@ -7,19 +7,26 @@ using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
 [RequireComponent(typeof(EnemyCombat))]
+[RequireComponent(typeof(EnemyVFX))]
 public class Enemy : Entity
 {
     // Fields
-    private State currentState; // Current State of Enemy
+    [SerializeField] private State currentState; // Current State of Enemy
+    private EnemyStateController stateController; // State Controller of Enemy
+    public bool isBossEnemy; // Is Enemy a Boss or Not
     
     private EnemyMovement _movement;
     private EnemyCombat _combat;
-    [SerializeField] private IdleEnemyState _idleEnemyState;
+    private EnemyVFX _enemyVfx;
+    [SerializeField] private Ability _ability;
+    
     [SerializeField] private Rigidbody _rigidbody;
-    private Room _currentRoom;
+    [SerializeField] private Room _currentRoom;
     
     public Transform target; // Enemy target (Player)
-    public bool canReap = true; // Enemy is now weakend enough and can be reaped
+    public bool canReap = true; // Enemy can still be Reaped if health drops to below 25%
+    public bool waitingForReap = false; // Enemy waits for 10 seconds giving Player chance to Reap
+    public bool isDead = false; // Enemy has been killed
 
     [Header("Events")]
     [SerializeField] private GameEvent deathEvent;
@@ -30,6 +37,7 @@ public class Enemy : Entity
     public GameEvent ReapedEvent => reapedEvent;
     public EnemyMovement Movement => _movement;
     public EnemyCombat Combat => _combat;
+    public EnemyVFX VFX => _enemyVfx;
     public Room CurrentRoom
     {
         get => _currentRoom;
@@ -42,19 +50,17 @@ public class Enemy : Entity
         _rigidbody = GetComponent<Rigidbody>();
         _movement = GetComponent<EnemyMovement>();
         _combat = GetComponent<EnemyCombat>();
+        _enemyVfx = GetComponent<EnemyVFX>();
         GetPlayer();
-        SetState(new IdleEnemyState(this));
+        stateController = new EnemyStateController(this);
     }
 
 
     // Why is this in fixed update?
     void FixedUpdate()
     {
-        // Call Action() for currentState 
-        if (target)
-        {
-            currentState.Action();
-        }
+        stateController.UpdateEnemyState();
+        currentState.Action();
     }
 
     private void OnDrawGizmos()
@@ -96,5 +102,35 @@ public class Enemy : Entity
         {
             currentState.OnStateEnter();
         }
+    }
+
+    // Override TakeDamage for when Enemy is in near invincible state
+    public override void TakeDamage(int amount)
+    {
+        // If isInvincible is true, reduce amount by damageReduction
+        if (_combat.isInvincible)
+        {
+            base.TakeDamage((int)(amount / _combat.damageReduction));
+        }
+        // Else, take damage normally
+        else
+        {
+            base.TakeDamage(amount);
+        }
+    }
+
+    public void CastAbility()
+    {
+        _ability.SoulAbility(target.position, transform.forward,null, _rigidbody);
+        /*StartCoroutine(AbilityCo(_ability.duration));*/
+    }
+    public IEnumerator AbilityCo(float abilityDuration)
+    {
+        // Change state
+        //...
+        _ability.SoulAbility(target.position, transform.forward,null, _rigidbody);
+        yield return new WaitForSeconds(abilityDuration);
+        // Change back state
+        // ...
     }
 }

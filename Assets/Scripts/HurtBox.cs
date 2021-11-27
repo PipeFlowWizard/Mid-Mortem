@@ -19,7 +19,7 @@ public class HurtBox : MonoBehaviour
             
             // If Enemy is waitingForReap, then they can call the ReapEnemy Function
             // TODO: Add in Reap Animation and adding modifier 
-            if (enemy.Combat.waitingForReap)
+            if (enemy.waitingForReap)
             {
                 Debug.Log("I T S  R E A P I N'  T I M E");
                 enemy.Combat.reapedEvent.Raise();

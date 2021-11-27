@@ -9,19 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2f7745270a5db146800b1117794309c, type: 3}
-  m_Name: DefenseEnemy
+  m_Script: {fileID: 11500000, guid: 136afb2cbaa4d7441ade774df8f00470, type: 3}
+  m_Name: MeteorFall
   m_EditorClassIdentifier: 
-  health: 100
-  mp: 100
-  attack: 10
-  rangedSpawn: 1
-  meleeSpawn: 2
-  reapTime: 10
-  defense: 0.65
-  speed: 2
-  maxRange: 15
-  chaseRange: 5
-  attackSpeed: 5
-  modStatBoost: 10
-  entityType: 2
+  soulCost: 0
+  duration: 0
+  playerSoulCount: {fileID: 0}
+  playerAbilityUsedEvent: {fileID: 0}
+  meteorFallObject: {fileID: 1511467521296544908, guid: a6e75a0f81bb4eb4c93a770425d81221, type: 3}

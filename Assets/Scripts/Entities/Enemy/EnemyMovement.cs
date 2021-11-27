@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(Enemy))]
@@ -9,85 +10,111 @@ public class EnemyMovement : MonoBehaviour
 {
     // Enemy Movement
     private Rigidbody _rigidbody;                           // Reference to RigidBody of Enemy
-    public bool isMoving;                                   // Bool to determine if Player is moving
+
+    public NavMeshAgent _navMeshAgent;                     // Reference to NavMeshAgent
+    public LayerMask groundLayer;                          // Reference to Ground LayerMask
+
+    public bool suicide;                                    // If Enemy is going to perform a suicide run
+
+    public bool isDashing;                                  // When Enemy is dashing after Player
+    [SerializeField] private float dashBoost;               // Dash Boost when Enemy is Dashin
+
     private Enemy _enemy;
     [SerializeField] private float rotationDamp = 0.5f;     // Rotational Dampening so rotation is gradual
-    [SerializeField] private float pushBackForce = 15.0f;   // Push Enemy back after attacking Player with melee
-    public bool meleeAttack = true;
 
-    public Rigidbody Rigidbody
-    {
-        get => _rigidbody;
-    }
+    public Vector3 desiredLocation;
+
+    public Rigidbody Rigidbody => _rigidbody;
 
     private void Start()
     {
+        desiredLocation = transform.position;
         _enemy = GetComponent<Enemy>();
-        //_rigidbody = GetComponent<Rigidbody>();
+        _rigidbody = GetComponent<Rigidbody>();
+        _navMeshAgent = GetComponent<NavMeshAgent>();
+        _navMeshAgent.speed = _enemy.entityStats.speed;
     }
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
+        isDashing = false;
+        groundLayer = LayerMask.GetMask("Ground");
     }
 
     // Rotate Enemy toward Player
-
-    public void TurnEnemy()
+    public void TurnEnemy(Vector3 destination)
     {
-        // Get vector pointing towards Player
-        Vector3 direction = _enemy.target.position - transform.position;
-        direction.y = 0;
-        // Get Quaternion to rotate towards Player
-        Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
-        // Rotate Enemy, use Slerp to make Rotation gradual
-        transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp);
+        // Enemy can only turn if it is Not Dead and Not Waiting For Reap
+        if (!_enemy.isDead)
+        {
+            // Get vector pointing towards Player
+            Vector3 direction = destination - transform.position;
+            direction.y = 0;
+            // Rotate Enemy is direction is not zero
+            if (direction != Vector3.zero)
+            {
+                // Get Quaternion to rotate towards Player
+                Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
+                // Rotate Enemy, use Slerp to make Rotation gradual
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp);
+            }
+        }
     }
 
     // Move Enemy toward Player
-
-    public void MoveEnemy()
+    public void MoveEnemy(Vector3 destination)
     {
-        // Set isMoving to true
-        isMoving = true;
-        // Move Enemy in direction they are facing using RigidBody
-        _rigidbody.MovePosition(transform.position + transform.forward * _enemy.entityStats.speed * Time.deltaTime);
+        // Enemy can only move if it is Not Dead and Not Waiting For Reap
+        if (!_enemy.isDead && !_enemy.waitingForReap)
+        {
+            // Move Enemy toward Player using SetDestination
+            _navMeshAgent.SetDestination(destination);
+        }
+    }
+    
+
+    // Enemy makes a suicide dash towards Player
+    public void TestDash(Vector3 destination)
+    {
+        // Check that Player has a direct path to Enemy
+        RaycastHit player;
+        // If ray hits Player, then Enemy increases in speed to dash
+        if (Physics.Raycast(transform.position, transform.forward, out player, Mathf.Infinity) && player.collider.CompareTag("Player"))
+        {
+            // If Dash just started, set isDashin to true and increase speed
+            if (!isDashing)
+            {
+                // Set isDashing to true
+                isDashing = true;
+                // Move Enemy toward Player using SetDestination, with dashingBoost
+                _navMeshAgent.speed = dashBoost * _enemy.entityStats.speed;
+                StartCoroutine(StopDashing());
+            }
+        }
+        // Else, enemy doesn't dash
+        else
+        {
+            isDashing = false;
+            _navMeshAgent.speed = _enemy.entityStats.speed;
+        }
+    }
+
+    // Turns off Enemy Dash Speed after a while if Enemy hasn't collided with Player
+    private IEnumerator StopDashing()
+    {
+        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn + 7);
+        if (isDashing)
+        {
+            isDashing = false;
+            _navMeshAgent.speed = _enemy.entityStats.speed;
+        }
     }
 
     // Stop Enemy Movement
-
     public void StopEnemy()
     {
-        // Set isMoving to false
-        isMoving = false;
-        // Set velocity of Enemy
+        // Set Destination to current position
+        _navMeshAgent.enabled = false;
         _rigidbody.velocity = Vector3.zero;
-    }
-    
-    private void OnCollisionEnter(Collision col)
-    {
-        //Movement
-        
-        // If collide with a Player, they take damage and then they move back
-        if (col.transform.CompareTag("Player"))
-        {
-            meleeAttack = false;
-            _rigidbody.AddForce(-pushBackForce * transform.forward, ForceMode.Impulse);
-        }
-        // If collide with another Enemy, then move to left or right
-        if (col.transform.CompareTag("Enemy"))
-        {
-            int index = Random.Range(1, 3);
-            if (index == 1)
-            {
-                // Move right
-                _rigidbody.AddForce(pushBackForce * transform.right, ForceMode.Impulse);
-            }
-            else
-            {
-                // Move left
-                _rigidbody.AddForce(-pushBackForce * transform.right, ForceMode.Impulse);
-            }
-        }
     }
 }
