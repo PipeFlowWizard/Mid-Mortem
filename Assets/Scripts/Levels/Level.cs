@@ -6,15 +6,41 @@ using Random = UnityEngine.Random;
 
 public class Level : MonoBehaviour
 {
-    
+    [SerializeField] List<GameObject> forestObstacles;
     public LevelData data;
     public List<Room> Rooms;
     public Level nextLevel;
     public GameManager.biomes biome;
-    
-    
-    
-    
+    public bool keyUnlocked = false;
+   
+    public List<Door> doorsAccessibleToBoss;
+    internal void keyAcquired()
+    {
+        keyUnlocked = true;
+        if (doorsAccessibleToBoss.Count > 0)
+        {
+            doorsAccessibleToBoss[0].openDoor();
+            //disable them all
+            foreach(Door door in doorsAccessibleToBoss)
+            {
+                StartCoroutine(DestroyDoor(door.gameObject));
+                
+            }
+        }
+      
+    }
+
+
+    public bool getKeyState()
+    {
+        return keyUnlocked;
+    }
+
+    private void Start()
+    {
+        doorsAccessibleToBoss = new List<Door>();
+    }
+
     /// <summary>
     /// Samples a random point within a rectangular area surrounding a point
     /// </summary>
@@ -62,10 +88,16 @@ public class Level : MonoBehaviour
         var enemy = Spawn(position, data.Spawnables[rand]);
         enemy.GetComponent<Enemy>().CurrentRoom = currentroom;
     }
-
-    public void SpawnBoss(Vector3 position, Room currentroom)
+    public void SpawnObstacle(Vector3 position, Room currentroom)
     {
+        var rand = Random.Range(0, data.ForestObstacles.Count);
+        var obstacle = Spawn(position, data.ForestObstacles[rand]);
+        obstacle.transform.SetParent(transform);
         
+    }
+    public IEnumerator SpawnBoss(Vector3 position, Room currentroom)
+    {
+        yield return new WaitForEndOfFrame();
         var enemy = Spawn(position, data.Spawnables[3]);
         // enemy.GetComponent<Enemy>()._currentRoom = currentroom;
     }
@@ -74,4 +106,14 @@ public class Level : MonoBehaviour
     {
         biome = theBiome;
     }
+
+    public IEnumerator DestroyDoor(GameObject door)
+    {
+        yield return new WaitForEndOfFrame();
+
+        Destroy(door);
+
+
+    }
+
 }

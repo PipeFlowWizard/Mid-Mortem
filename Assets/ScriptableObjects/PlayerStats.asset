@@ -19,7 +19,7 @@ MonoBehaviour:
   meleeSpawn: 2
   reapTime: 10
   defense: 0.75
-  speed: 5
+  speed: 15
   maxRange: 15
   chaseRange: 5
   attackSpeed: 5

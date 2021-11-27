@@ -21,10 +21,10 @@ public class HurtBox : MonoBehaviour
             // TODO: Add in Reap Animation and adding modifier 
             if (enemy.waitingForReap)
             {
-                Debug.Log("I T S  R E A P I N'  T I M E");
-                enemy.Combat.reapedEvent.Raise();
+                enemy.Combat.RaiseReapEvent();
                 enemy.Movement.StopEnemy();
-                enemy.Combat.KillEnemy();
+                enemy.gameObject.AddComponent<ReapLevitation>();
+                enemy.Combat.KillAfterSeconds(5f);
             }
             // Else, the Enemy just takes normal damage
             else
@@ -33,9 +33,6 @@ public class HurtBox : MonoBehaviour
                 enemy.Movement.Rigidbody.AddForce(parent.transform.forward * 5, ForceMode.Impulse);
                 other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
             }
-
-            
-            Debug.Log("enemy damaged");
         }
     }
 }

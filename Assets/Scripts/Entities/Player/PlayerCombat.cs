@@ -46,6 +46,10 @@ public class PlayerCombat : MonoBehaviour
     public void ChargedRangedAttack()
     {
     }
-    
+
+    public void OnReapEvent()
+    {
+        // TODO: restore souls and health
+    }
     
 }

@@ -71,7 +71,6 @@ public class LevelCreation : MonoBehaviour
                 placedGrid[i, j] = room;
                 room.name = "Room " + "[" + i + "," + j + "]";
                 Room theRoom = room.GetComponent<Room>();
-                
                 rooms.Add(theRoom);
                 
             }
@@ -93,19 +92,23 @@ public class LevelCreation : MonoBehaviour
                 theRoom.SetLeftRoom(i == 0 ? null : placedGrid[i - 1, j].GetComponent<Room>());
                 theRoom.SetTopRoom(j >= gridM - 1 ? null : placedGrid[i, j + 1].GetComponent<Room>());
                 theRoom.SetRightRoom(i >= gridN - 1 ? null : placedGrid[i + 1, j].GetComponent<Room>());
+
+
                 
 
             }
         }
-        addKey(keys);
+        level.transform.localScale = new Vector3(5, 5, 5);
         level.setBiome(theBiome);
         level.name = theBiome.ToString();
         level.Rooms = rooms;
         foreach (var levelRoom in rooms)
         { 
             levelRoom.SetLevel(level);
+            for(int i=0;i<5;i++) levelRoom.SpawnObstacleInRoomRandom();
         }
-        level.transform.localScale = new Vector3(5,5,5);
+        
+        addKey(keys);
         return level;
     }
     private void addKey(int nbKeys)

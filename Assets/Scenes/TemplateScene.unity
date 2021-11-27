@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.4390331, g: 0.48726958, b: 0.56752753, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -202,7 +202,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-6078
+  m_Name: pb_Mesh-1320
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -367,10 +367,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 5980914422587083449, guid: 69889b245cc89234aacb438a5e485385, type: 3}
-      propertyPath: playerHurtEvent
-      value: 
-      objectReference: {fileID: 11400000, guid: f3eae8b796cbe314b9774d95d6d949e7, type: 2}
     - target: {fileID: 5980914422587083453, guid: 69889b245cc89234aacb438a5e485385, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -674,13 +670,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256364267}
-  m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
+  m_LocalRotation: {x: 0.77811074, y: -0.15335412, z: 0.20849411, w: 0.5723254}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+  m_LocalEulerAnglesHint: {x: 107.32901, y: -30, z: 0}
 --- !u!1 &1632390302
 GameObject:
   m_ObjectHideFlags: 0
@@ -692,6 +688,7 @@ GameObject:
   - component: {fileID: 1632390304}
   - component: {fileID: 1632390303}
   - component: {fileID: 1632390305}
+  - component: {fileID: 1632390306}
   m_Layer: 0
   m_Name: InputManager
   m_TagString: Untagged
@@ -837,6 +834,7 @@ MonoBehaviour:
   soulQueueInputEvent:
     m_PersistentCalls:
       m_Calls: []
+  reapTimer: 5
 --- !u!4 &1632390304
 Transform:
   m_ObjectHideFlags: 0
@@ -870,6 +868,34 @@ MonoBehaviour:
       - m_Target: {fileID: 1632390303}
         m_TargetAssemblyTypeName: InputController, Assembly-CSharp
         m_MethodName: ToggleActionMap
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1632390306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1632390302}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80f5cc5b8c2ccf4daaea044cf8a7a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1632390303}
+        m_TargetAssemblyTypeName: InputController, Assembly-CSharp
+        m_MethodName: OnReapEvent
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -962,15 +988,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977300, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3413322
+      value: 0.34133223
       objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977300, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.009044147
+      value: 0.009044205
       objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977300, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0032844774
+      value: -0.0032844984
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253088, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_Follow
@@ -986,15 +1012,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253089, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.3413322
+      value: 0.34133223
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253089, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.009044147
+      value: 0.009044205
       objectReference: {fileID: 0}
     - target: {fileID: 5921356021688253089, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.0032844774
+      value: -0.0032844984
       objectReference: {fileID: 0}
     - target: {fileID: 6229206948689011438, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_RootOrder

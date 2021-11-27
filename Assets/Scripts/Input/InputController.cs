@@ -32,6 +32,7 @@ public class InputController : MonoBehaviour
     public SoulQueueInputEvent soulQueueInputEvent;
 
     private bool _isPaused = false;
+    public float reapTimer = 5f;
 
     private void Awake()
     {
@@ -98,6 +99,7 @@ public class InputController : MonoBehaviour
             DisableForPause();
         }
     }
+
     
     private void OnMovePerformed(InputAction.CallbackContext ctx)
     {
@@ -157,4 +159,16 @@ public class InputController : MonoBehaviour
     {
         soulQueueInputEvent.Invoke((int) ctx.ReadValue<float>());
     }
+    public void OnReapEvent()
+    {
+        StartCoroutine(ReapTimerCo());
+    }
+
+    private IEnumerator ReapTimerCo()
+    {
+        ToggleActionMap();
+        yield return new WaitForSeconds(reapTimer);
+        ToggleActionMap();
+    }
+    
 }

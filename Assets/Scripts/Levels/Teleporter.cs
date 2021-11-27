@@ -13,11 +13,22 @@ public class Teleporter : MonoBehaviour
     {
         
     }
-
-    void OnTriggerEnter(Collider other)
+    public void teleportPlayer(GameObject g, Room room)
     {
-        Debug.Log(other.gameObject.name);
-        transform.parent.GetComponent<RoomTransporter>().teleportPlayer(other.gameObject , destination);
+        Debug.Log("Hit confirmed");
+
+        g.transform.position = room.transform.position + Vector3.up;
+
+        room.SpawnEnemyInRoomRandom();
+    }
+        void OnTriggerEnter(Collider other)
+    {
+
+        if (other.tag == "Player")
+        {
+            Debug.Log(other.gameObject.name);
+            teleportPlayer(other.gameObject, destination);
+        }
         
     }
 
