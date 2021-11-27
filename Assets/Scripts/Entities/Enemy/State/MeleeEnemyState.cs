@@ -15,12 +15,14 @@ public class MeleeEnemyState : State
     public override void Action()
     {
         // Melee Attack is handled by EnemyHurtBox.cs
+        enemy.VFX.MeleeAttack();
     }
 
     public override void OnStateEnter()
     {
         base.OnStateEnter();
         enemy.VFX.ChangeColor();
+        enemy.VFX.MeleeAttack();
     }
 
     public override void OnStateExit()

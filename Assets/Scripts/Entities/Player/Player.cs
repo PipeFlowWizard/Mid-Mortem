@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 
@@ -22,6 +23,7 @@ public class Player : Entity
     //VFX
     [SerializeField] private Material reaperMaterial;
     private PlayerVFX playerVFX;
+    private CinemachineImpulseSource _impulseSource;
     
     // Properties
     public PlayerMovement Movement => playerMovement;
@@ -38,6 +40,7 @@ public class Player : Entity
 
     public void Start()
     {
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
         _rigidbody = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
@@ -63,7 +66,8 @@ public class Player : Entity
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
-        
+        Debug.Log("Impulse");
+        _impulseSource.GenerateImpulse();
         // Player ded
         if (CurrentHealth <= 0)
         {
