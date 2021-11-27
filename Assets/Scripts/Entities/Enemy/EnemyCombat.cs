@@ -11,6 +11,7 @@ public class EnemyCombat : MonoBehaviour
     private bool canReap = true;
     public bool waitingForReap;
     private bool isDead = false;
+    private bool raisedReapEvent = false;
 
     [SerializeField] private Rigidbody _rigidbody;
 
@@ -39,6 +40,8 @@ public class EnemyCombat : MonoBehaviour
     private void OnCollisionExit(Collision col)
     {
         //Combat
+        if (isDead)
+            return;
         
         // After Enemy collides with Player, they stop moving, and Call AttackTimer for 2 seconds
         if (col.transform.CompareTag("Player"))
@@ -92,6 +95,28 @@ public class EnemyCombat : MonoBehaviour
         StartCoroutine(ReapTimer());
     }
 
+    // Avoir raising event multiple times
+    public void RaiseReapEvent()
+    {
+        if (raisedReapEvent) return;
+
+        Debug.Log("I T S  R E A P I N'  T I M E");
+        raisedReapEvent = true;
+        reapedEvent.Raise();
+    }
+
+    // Kill after seconds, used to delay death in reaping
+    public void KillAfterSeconds(float seconds)
+    {
+        StartCoroutine(KillAfterSecondsCo(seconds));
+    }
+    
+    private IEnumerator KillAfterSecondsCo(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        KillEnemy();
+    }
+    
     // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
     public void KillEnemy()
     {

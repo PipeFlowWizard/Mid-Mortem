@@ -243,7 +243,7 @@ MonoBehaviour:
   entityStats: {fileID: 11400000, guid: 1de8243940ce95f489eec5e3f8221d3f, type: 2}
   _rigidbody: {fileID: 0}
   target: {fileID: 0}
-  canReap: 0
+  canReap: 1
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
 --- !u!114 &7505473047719119343
@@ -294,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f66c6b2eb54c3d4b889eab3acbceab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _material: {fileID: 0}
 --- !u!54 &8103064924768368068
 Rigidbody:
   m_ObjectHideFlags: 0

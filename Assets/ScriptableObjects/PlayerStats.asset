@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 1000
   mp: 100
-  attack: 100
+  attack: 10
   rangedSpawn: 3
   meleeSpawn: 2
   reapTime: 10
