@@ -7,6 +7,7 @@ public class EnemyCombat : MonoBehaviour
 {
     private Enemy _enemy;
     public bool rangeAttack = true;
+    private bool raisedReapEvent = false;
 
     [SerializeField] private Rigidbody _rigidbody;
 
@@ -72,6 +73,28 @@ public class EnemyCombat : MonoBehaviour
         StartCoroutine(ReapTimer());
     }
 
+    // Avoir raising event multiple times
+    public void RaiseReapEvent()
+    {
+        if (raisedReapEvent) return;
+
+        Debug.Log("I T S  R E A P I N'  T I M E");
+        raisedReapEvent = true;
+        reapedEvent.Raise();
+    }
+
+    // Kill after seconds, used to delay death in reaping
+    public void KillAfterSeconds(float seconds)
+    {
+        StartCoroutine(KillAfterSecondsCo(seconds));
+    }
+    
+    private IEnumerator KillAfterSecondsCo(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        KillEnemy();
+    }
+    
     // KillEnemy knocks the enemy down and Stops all Coroutines and sets attack to false
     //TODO: move to Enemy.cs
     public void KillEnemy()
