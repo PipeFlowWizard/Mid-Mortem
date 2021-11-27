@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using TMPro;
 using UnityEngine;
 
@@ -19,6 +20,7 @@ public class Player : Entity
     private PlayerCombat playerCombat;
     [SerializeField] private Ability currentAbility;
     [SerializeField] private Ability dashAbility;
+    private CinemachineImpulseSource _impulseSource;
     
     //VFX
     [SerializeField] private Material reaperMaterial;
@@ -41,6 +43,7 @@ public class Player : Entity
 
     public void Start()
     {
+        _impulseSource = GetComponent<CinemachineImpulseSource>();
         _rigidbody = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
         playerCombat = GetComponent<PlayerCombat>();
@@ -83,6 +86,7 @@ public class Player : Entity
         if (IsInvincible) return;
         playerHurtEvent.Raise();
 
+        _impulseSource.GenerateImpulse();
         // Player ded
         if (CurrentHealth <= 0)
         {

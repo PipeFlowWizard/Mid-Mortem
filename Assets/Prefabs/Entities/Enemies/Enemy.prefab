@@ -204,6 +204,7 @@ GameObject:
   - component: {fileID: 8770511024635530214}
   - component: {fileID: 1525532460}
   - component: {fileID: 1525532461}
+  - component: {fileID: 4614428035817040847}
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
@@ -306,6 +307,18 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &4614428035817040847
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6372111953452568670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cd45e800fe8865419c734dd075422ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8103064924768368069
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,6 +442,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f66c6b2eb54c3d4b889eab3acbceab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _material: {fileID: 0}
   _animator: {fileID: 0}
 --- !u!54 &8103064924768368068
 Rigidbody:
