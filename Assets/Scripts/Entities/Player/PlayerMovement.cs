@@ -89,9 +89,10 @@ public class PlayerMovement : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hitInfo, maxDistance: 300f))
         {
             Vector3 target = hitInfo.point;
-            target.y = mesh.transform.position.y;
-            mesh.transform.LookAt(target);
-
+            target.y = transform.position.y;
+            var quat = Quaternion.LookRotation(target - transform.position, Vector3.up);
+            player.Rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation,quat, rotationSpeed * Time.deltaTime));
+            // mesh.transform.LookAt(target);
         }
     }
 
