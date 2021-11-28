@@ -5,17 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    [SerializeField] private string playSceneName;
-    [SerializeField] private string optionSceneName;
+    private void Start()
+    {
+        Time.timeScale = 0;
+    }
 
     public void play()
     {
-        SceneManager.LoadScene(playSceneName, LoadSceneMode.Single);
+        Time.timeScale = 1;
+        gameObject.SetActive(false);
     }
 
     public void options()
     {
-        SceneManager.LoadScene(optionSceneName, LoadSceneMode.Single);
+
     }
 
     public void quit()
