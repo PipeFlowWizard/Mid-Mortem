@@ -14,6 +14,12 @@ public class UI : MonoBehaviour
 
     private bool _isPaused;
 
+    private void Update()
+    {
+        if (player != null)
+            player.GetComponent<Player>().TakeDamage(5);
+    }
+
     private void Start()
     {
         playerStats = player.GetComponent<Entity>();
@@ -32,6 +38,7 @@ public class UI : MonoBehaviour
     [SerializeField] private GameObject pauseUI;
     [SerializeField] private GameObject optionsUI;
     [SerializeField] private GameObject hurtUI;
+    [SerializeField] private GameObject mainMenuUI;
 
     private void InitializeStats()
     {
@@ -124,10 +131,9 @@ public class UI : MonoBehaviour
 
     public void OnPlayerDeath()
     {
-        //print("OnDiedEvent()");
+        print("OnDiedEvent()");
         playerDeathUI.SetActive(true);
-        playerDeathUI.GetComponent<Burning>().SetBurning(true);
-
+        playerDeathUI.transform.Find("Image").GetComponent<Burning>().SetBurning(true);
     }
 
     public void OnEnemyReaped()

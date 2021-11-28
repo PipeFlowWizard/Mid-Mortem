@@ -119,7 +119,6 @@ public class Player : Entity
         // HUD and Game manager can listen to this event
         playerDeathEvent.Raise();
         base.Die();
-    }
-    
+    }    
 
 }

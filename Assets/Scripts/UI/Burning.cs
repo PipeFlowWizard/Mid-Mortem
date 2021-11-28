@@ -5,14 +5,14 @@ using UnityEngine.UI;
 
 public class Burning : MonoBehaviour
 {
-    Material material;
-    bool isDissolving = false;
-    float fade = 0f;
+    private Material material;
+    public bool isDissolving = false;
+    private float fade = 0f;
 
     // Start is called before the first frame update
     void Start()
     {
-        material = gameObject.transform.GetChild(0).GetComponent<Image>().material;
+        material = GetComponent<Image>().material;
     }
 
     // Update is called once per frame
