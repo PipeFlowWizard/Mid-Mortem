@@ -39,14 +39,20 @@ public class RangedEnemyState : State
             // If Enemy is Boss, then it can use Boss Attacks
             if (enemy.isBossEnemy)
             {
-                // If randomNumber is between 1 & 8 and Enemy is SPEED, then use MeteorFall attack
-                if (randomNumber >= 1 && randomNumber <= 8 && enemy.entityStats.entityType == EntityStats.EntityType.SPEED)
+                // If randomNumber is between 1 & 8 and current level is greater than or equal to 1, then Boss can use XAttack
+                if (randomNumber >= 1 && randomNumber <= 8 && enemy.currentLevel >= 1)
+                {
+                    enemy.Combat.rangeAttack = false;
+                    enemy.Combat.XAttack();
+                }
+                // If randomNumber is between 9 and 16 and current level is greater than or equal to 2, then Boss can use MeteorFall
+                if (randomNumber >= 9 && randomNumber <= 16 && enemy.currentLevel >= 2)
                 {
                     enemy.Combat.rangeAttack = false;
                     enemy.Combat.MeteorFall();
                 }
-                // If randomNumber is between 9 and 16 and Enemy is DEFENSE, then fire HeatSeeker
-                if (randomNumber >= 9 && randomNumber <= 16 && enemy.entityStats.entityType == EntityStats.EntityType.DEFENSE)
+                // If randomNumer is between 17 and 24 and current level is greater than or equal to 3, then Boss can use HeatSeeker
+                if(randomNumber >= 17 && randomNumber <= 24 && enemy.currentLevel >= 3)
                 {
                     enemy.Combat.rangeAttack = false;
                     enemy.Combat.HeatSeeker();

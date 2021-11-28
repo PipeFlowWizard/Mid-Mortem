@@ -43,6 +43,9 @@ public class Enemy : Entity
         get => _currentRoom;
         set {if (!_currentRoom) _currentRoom = value;}
     }
+    // Current Level of Game
+    public int currentLevel;
+    [SerializeField] private int levelBoost; // Boost Enemies get to stats from current level
 
         // Start is called before the first frame update
     void Start()
@@ -53,6 +56,13 @@ public class Enemy : Entity
         _enemyVfx = GetComponent<EnemyVFX>();
         GetPlayer();
         stateController = new EnemyStateController(this);
+        // Get currentLevel
+        currentLevel = 1;
+        // Update enemy stats from level
+        entityStats.attack += (levelBoost * currentLevel);
+        entityStats.attackSpeed += (levelBoost * currentLevel);
+        entityStats.defense -= ((levelBoost * currentLevel) / 20);
+        entityStats.speed += (levelBoost * currentLevel);
     }
 
 

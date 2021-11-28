@@ -341,7 +341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8103064924768368064
 Transform:
   m_ObjectHideFlags: 0
@@ -382,6 +382,8 @@ MonoBehaviour:
   isDead: 0
   deathEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
   reapedEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
+  currentLevel: 0
+  levelBoost: 2
 --- !u!114 &7505473047719119343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,6 +400,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 0}
   enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
   tripleAttackOffset: 2
+  xAttackSpeed: 0
   invincibleTime: 3
   isInvincible: 0
   invincibleSize: 1.5

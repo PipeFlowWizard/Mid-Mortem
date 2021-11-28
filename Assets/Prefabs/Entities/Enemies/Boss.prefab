@@ -268,6 +268,8 @@ MonoBehaviour:
   isDead: 0
   deathEvent: {fileID: 11400000, guid: c0a5637356d603d4b9cb84288e63e8d0, type: 2}
   reapedEvent: {fileID: 11400000, guid: abd6d6ba86947c949be861407e7d1dab, type: 2}
+  currentLevel: 0
+  levelBoost: 2
 --- !u!114 &3682714940229730772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,14 +286,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 0
-  patrolPointSet: 0
-  patrolPointRange: 0
   suicide: 0
   isDashing: 0
   dashBoost: 0
   rotationDamp: 0.5
-  pushBackForce: 0
-  meleeAttack: 1
   desiredLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &8694008844289626177
 MonoBehaviour:
@@ -308,7 +306,8 @@ MonoBehaviour:
   rangeAttack: 1
   _rigidbody: {fileID: 0}
   enemySpell: {fileID: 1830672277127870288, guid: f102a52979dd055499e219a8cde878aa, type: 3}
-  tripleAttackOffset: 0
+  tripleAttackOffset: 1.5
+  xAttackSpeed: 2.5
   invincibleTime: 0
   isInvincible: 0
   invincibleSize: 0
@@ -332,6 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f66c6b2eb54c3d4b889eab3acbceab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _material: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!54 &6094749961544445442
 Rigidbody:
   m_ObjectHideFlags: 0
