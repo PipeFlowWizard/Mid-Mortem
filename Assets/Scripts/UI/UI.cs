@@ -14,10 +14,29 @@ public class UI : MonoBehaviour
 
     private bool _isPaused;
 
-    private void Update()
+    [Header("Stat Texts")]
+    [SerializeField] private TextMeshProUGUI statTextHealth;
+    [SerializeField] private TextMeshProUGUI statTextSouls;
+    [SerializeField] private TextMeshProUGUI statTextAttack;
+    [SerializeField] private TextMeshProUGUI statTextSpeed;
+    [SerializeField] private TextMeshProUGUI statTextDefense;
+
+    [Header("Screens")]
+    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject optionsUI;
+    [SerializeField] private GameObject gameOverUI;
+    [SerializeField] private GameObject enemyReapedUI;
+    [SerializeField] private GameObject BossReapedUI;
+    [SerializeField] private GameObject hurtUI;
+
+    private void Awake()
     {
-        if (player != null)
-            player.GetComponent<Player>().TakeDamage(5);
+        mainMenuUI.SetActive(true);
+        gameOverUI.SetActive(false);
+        pauseUI.SetActive(false);
+        optionsUI.SetActive(false);
+        hurtUI.SetActive(false);
     }
 
     private void Start()
@@ -25,20 +44,12 @@ public class UI : MonoBehaviour
         playerStats = player.GetComponent<Entity>();
         InitializeStats();
     }
-    
-    [SerializeField] private TextMeshProUGUI statTextHealth;
-    [SerializeField] private TextMeshProUGUI statTextSouls;
-    [SerializeField] private TextMeshProUGUI statTextAttack;
-    [SerializeField] private TextMeshProUGUI statTextSpeed;
-    [SerializeField] private TextMeshProUGUI statTextDefense;
 
-    [SerializeField] private GameObject playerDeathUI;
-    [SerializeField] private GameObject enemyReapedUI;
-    [SerializeField] private GameObject BossReapedUI;
-    [SerializeField] private GameObject pauseUI;
-    [SerializeField] private GameObject optionsUI;
-    [SerializeField] private GameObject hurtUI;
-    [SerializeField] private GameObject mainMenuUI;
+    private void Update()   // Debug
+    {
+        //if (player != null)
+        //    player.GetComponent<Player>().TakeDamage(5);
+    }
 
     private void InitializeStats()
     {
@@ -132,8 +143,8 @@ public class UI : MonoBehaviour
     public void OnPlayerDeath()
     {
         print("OnDiedEvent()");
-        playerDeathUI.SetActive(true);
-        playerDeathUI.transform.Find("Image").GetComponent<Burning>().SetBurning(true);
+        gameOverUI.SetActive(true);
+        gameOverUI.transform.Find("Image").GetComponent<Burning>().SetBurning(true);
     }
 
     public void OnEnemyReaped()
