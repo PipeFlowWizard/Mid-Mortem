@@ -32,7 +32,7 @@ public class EnemyVFX : MonoBehaviour
 
     public void SetEnemyHealthState()
     {
-        // If health is less than 50 but greater than 25, the Enemy turns yellow
+        // If maxHealth is less than 50 but greater than 25, the Enemy turns yellow
         // Call CurrentHealthState
         if (_enemy.CurrentHealthState() == 1)
         {
@@ -47,7 +47,7 @@ public class EnemyVFX : MonoBehaviour
                 _material.color = yellow;
             }
         }
-        // If health is less than 25, Enemy turns red
+        // If maxHealth is less than 25, Enemy turns red
         else if (_enemy.CurrentHealthState() == 2)
         {
             if (flash)
@@ -64,10 +64,7 @@ public class EnemyVFX : MonoBehaviour
 
     }
 
-    public void MeleeAttack()
-    {
-        _animator.Play("EnemyMelee");
-    }
+
 
     public void ChangeColor()
     {

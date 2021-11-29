@@ -33,7 +33,7 @@ public class EnemySpell : MonoBehaviour
     // When EnemySpell collides with PLAYER, it deals damage, else it is destroyed
     private void OnTriggerEnter(Collider col)
     {
-        // If col has PLAYER tag, then it deals attack damage
+        // If col has PLAYER tag, then it deals attackDamage damage
         if(col.CompareTag(PLAYER))
         {
             // Player component is found in Parent Player object

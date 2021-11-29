@@ -341,7 +341,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8103064924768368064
 Transform:
   m_ObjectHideFlags: 0
@@ -430,8 +430,8 @@ MonoBehaviour:
     m_Bits: 0
   suicide: 0
   isDashing: 0
-  dashBoost: 0
-  rotationDamp: 0.5
+  dashBoost: 10
+  rotationDamp: 2
   desiredLocation: {x: 0, y: 0, z: 0}
 --- !u!114 &1137221348838083318
 MonoBehaviour:
@@ -493,9 +493,9 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 1
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 20
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 360
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1

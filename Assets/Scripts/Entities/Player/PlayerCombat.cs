@@ -32,6 +32,8 @@ public class PlayerCombat : MonoBehaviour
     public void MeleeAttack()
     {
         // Debug.Log("Melee Attempt");
+        var force = (transform.forward * 20) - _player.Rigidbody.velocity;
+        _player.Rigidbody.AddForce(force,ForceMode.VelocityChange);
         anim.Play("MeleeAttack");
     }
     
@@ -49,7 +51,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnReapEvent()
     {
-        // TODO: restore souls and health
+        // TODO: restore souls and maxHealth
     }
     
 }

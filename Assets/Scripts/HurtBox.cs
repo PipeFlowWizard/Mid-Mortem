@@ -21,16 +21,16 @@ public class HurtBox : MonoBehaviour
             // TODO: Add in Reap Animation and adding modifier 
             if (enemy.waitingForReap)
             {
-                enemy.Combat.RaiseReapEvent();
+                enemy.RaiseReapEvent();
                 enemy.Movement.StopEnemy();
                 //Add and play an animation instead of this! it's also a bit wonky
                 enemy.gameObject.AddComponent<ReapLevitation>();
-                enemy.Combat.KillAfterSeconds(5f);
+                enemy.KillAfterSeconds(5f);
             }
             // Else, the Enemy just takes normal damage
             else
             {
-                enemy.TakeDamage(parent.entityStats.attack);
+                enemy.TakeDamage(parent.entityStats.attackDamage);
                 enemy.Movement.Rigidbody.AddForce(parent.transform.forward * 2, ForceMode.Impulse);
                 other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
             }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HeatSeekerAttack : MonoBehaviour
 {
-    // Reference to Rigidbody of HeatSeeker attack
+    // Reference to Rigidbody of HeatSeeker attackDamage
     private Rigidbody _rigidbody;
     // Reference to Player Transform
     private Transform player;
@@ -26,7 +26,7 @@ public class HeatSeekerAttack : MonoBehaviour
     // Update is called once per frame
     void Update()
     { 
-        // If Player still in scene, continue to follow Player with attack
+        // If Player still in scene, continue to follow Player with attackDamage
         if(player != null)
         {
             TurnSpell();
@@ -62,7 +62,7 @@ public class HeatSeekerAttack : MonoBehaviour
         _rigidbody.MovePosition(transform.position + (transform.forward * speed) * Time.deltaTime);
     }
 
-    // HeatSeeker attack only lasts for a certain amount of time
+    // HeatSeeker attackDamage only lasts for a certain amount of time
     private IEnumerator SpellLifetime()
     {
         yield return new WaitForSeconds(lifeTime);

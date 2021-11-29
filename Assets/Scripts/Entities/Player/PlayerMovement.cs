@@ -102,7 +102,7 @@ public class PlayerMovement : MonoBehaviour
 
         if (lookDirection != Vector3.zero)
         {
-            mesh.transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation,
+                    transform.rotation = Quaternion.RotateTowards(mesh.transform.rotation,
                 Quaternion.LookRotation(lookDirection, Vector3.up),
                 rotationSpeed * Time.deltaTime);
         }

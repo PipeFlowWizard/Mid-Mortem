@@ -11,8 +11,8 @@ using UnityEngine;
 public class Enemy : Entity
 {
     // Fields
-    [SerializeField] private State currentState; // Current State of Enemy
-    private EnemyStateController stateController; // State Controller of Enemy
+    //[SerializeField] private State currentState; // Current State of Enemy
+    private EnemyStateMachine _stateMachine; // State Controller of Enemy
     public bool isBossEnemy; // Is Enemy a Boss or Not
     
     private EnemyMovement _movement;
@@ -24,13 +24,16 @@ public class Enemy : Entity
     [SerializeField] private Room _currentRoom;
     
     public Transform target; // Enemy target (Player)
-    public bool canReap = true; // Enemy can still be Reaped if health drops to below 25%
+    public bool canReap = true; // Enemy can still be Reaped if maxHealth drops to below 25%
     public bool waitingForReap = false; // Enemy waits for 10 seconds giving Player chance to Reap
     public bool isDead = false; // Enemy has been killed
 
     [Header("Events")]
     [SerializeField] private GameEvent deathEvent;
     [SerializeField] private GameEvent reapedEvent;
+    
+    [SerializeField] private float pushBackForce = 15.0f;
+    private bool raisedReapEvent = false;
 
     // Properties
     public GameEvent DeathEvent => deathEvent;
@@ -55,30 +58,30 @@ public class Enemy : Entity
         _combat = GetComponent<EnemyCombat>();
         _enemyVfx = GetComponent<EnemyVFX>();
         GetPlayer();
-        stateController = new EnemyStateController(this);
+        _stateMachine = new EnemyStateMachine(this);
         // Get currentLevel
         currentLevel = 1;
         // Update enemy stats from level
-        entityStats.attack += (levelBoost * currentLevel);
-        entityStats.attackSpeed += (levelBoost * currentLevel);
-        entityStats.defense -= ((levelBoost * currentLevel) / 20);
-        entityStats.speed += (levelBoost * currentLevel);
+        CurrentAttack = CurrentAttack + (levelBoost * currentLevel);
+        CurrentAttackSpeed = CurrentAttackSpeed + (levelBoost * currentLevel);
+        CurrentDefense = CurrentDefense - ((levelBoost * currentLevel) / 20);
+        CurrentSpeed = CurrentSpeed + (levelBoost * currentLevel);
     }
 
 
-    // Why is this in fixed update?
+    // Why is this in fixed update? --> it handles physics as well as logic. Can be separate
     void FixedUpdate()
     {
-        stateController.UpdateEnemyState();
-        currentState.Action();
+        _stateMachine.UpdateEnemyState();
+        _stateMachine.CurrentState.Action();
     }
 
     private void OnDrawGizmos()
     {
         Handles.color = Color.green;
-        Handles.DrawWireDisc(transform.position,Vector3.up,entityStats.chaseRange);
+        Handles.DrawWireDisc(transform.position,Vector3.up,entityStats.meleeRange);
         Handles.color = Color.red;
-        Handles.DrawWireDisc(transform.position,Vector3.up, entityStats.maxRange);
+        Handles.DrawWireDisc(transform.position,Vector3.up, entityStats.detectionRange);
     }
 
 
@@ -96,23 +99,6 @@ public class Enemy : Entity
         }
     }
     
-    public void SetState(State state)
-    {
-        //Debug.Log("Changing state");
-        // If currentState is already assigned, then call OnStateExit for that State
-        if (currentState != null)
-        {
-            currentState.OnStateExit();
-        }
-
-        // Set currentState to new state
-        currentState = state;
-        // If currentState is now not null, call OnStateEnter for that State
-        if (currentState != null)
-        {
-            currentState.OnStateEnter();
-        }
-    }
 
     // Override TakeDamage for when Enemy is in near invincible state
     public override void TakeDamage(int amount)
@@ -142,5 +128,58 @@ public class Enemy : Entity
         yield return new WaitForSeconds(abilityDuration);
         // Change back state
         // ...
+    }
+    public void KillEnemy()
+    {
+        deathEvent.Raise();
+        isDead = true;
+        _combat.rangeAttack = false;
+        _rigidbody.constraints = RigidbodyConstraints.None;
+        Movement._navMeshAgent.enabled = false;
+        _rigidbody.AddForce(-(pushBackForce) * .5f * transform.forward, ForceMode.Impulse);
+        _rigidbody.velocity = Vector3.zero;
+        if(CurrentRoom)
+        {
+            if (!isDead) CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
+        }
+        Destroy(gameObject,3);
+    }
+    // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
+    public void ReapEnemyTimer()
+    {
+        // Start ReapTimer Coroutine
+        StartCoroutine(ReapTimer());
+    }
+
+    // Avoir raising event multiple times
+    public void RaiseReapEvent()
+    {
+        if (raisedReapEvent) return;
+
+        Debug.Log("I T S  R E A P I N'  T I M E");
+        raisedReapEvent = true;
+        reapedEvent.Raise();
+    }
+
+    // Kill after seconds, used to delay death in reaping
+    public void KillAfterSeconds(float seconds)
+    {
+        StartCoroutine(KillAfterSecondsCo(seconds));
+    }
+    
+    private IEnumerator KillAfterSecondsCo(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        KillEnemy();
+    }
+    
+    // Make Enemy wait 10 seconds in Reaped State
+    public IEnumerator ReapTimer()
+    {
+        // After 10 seconds, Enemy can no longer be reaped and returns to previous state
+        yield return new WaitForSeconds(entityStats.reapTime);
+        canReap = false;
+        waitingForReap = false;
+        Movement._navMeshAgent.enabled = true;
     }
 }

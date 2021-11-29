@@ -7,7 +7,7 @@ using System;
 public class RangedEnemyState : State
 { 
     // RangedEnemyState takes an Enenmy Object in constructor
-    public RangedEnemyState(Enemy enemy) : base(enemy)
+    public RangedEnemyState(Enemy enemy,EnemyStateMachine stateMachine) : base(enemy,stateMachine)
     {
 
     }
@@ -25,16 +25,16 @@ public class RangedEnemyState : State
         enemy.Movement._navMeshAgent.enabled = true;
     }
 
-    // RangedEnemyState can perform different actions based on distance to Enemy and health
+    // RangedEnemyState can perform different actions based on distance to Enemy and maxHealth
     public override void Action()
     {
         // Turn enemy toward Player
         enemy.Movement.TurnEnemy(enemy.target.position);
-        // If attack is true, then can call RangeAttack and Start Coroutine AttackTimer
-        // to wait 3 seconds before next ranged attack
+        // If attackDamage is true, then can call RangeAttack and Start Coroutine AttackTimer
+        // to wait 3 seconds before next ranged attackDamage
         if (enemy.Combat.rangeAttack)
         {
-            // Get randomNumber to detemrine if special attack used
+            // Get randomNumber to detemrine if special attackDamage used
             int randomNumber = UnityEngine.Random.Range(1, 101);
             // If Enemy is Boss, then it can use Boss Attacks
             if (enemy.isBossEnemy)
@@ -85,6 +85,34 @@ public class RangedEnemyState : State
                 }
             }
         }
+        Decision();
     }
-    
+
+    // If Enemy in RANGE_ATTACK state, can change to IDLE if Player no longer in Scene or further than detectionRange or,
+    // RUN if Enemy maxHealth falls below 25%
+    // Boss Enemies can switch to Chase Player if they are within meleeRange
+    public override void Decision()
+    {
+        
+        base.Decision();
+        
+        // If Player no longer in scene, or further than detectionRange then switch to IDLE state
+        if (enemy.target == null || _stateMachine.GetPlayerDistance() > enemy.entityStats.detectionRange)
+        {
+            _stateMachine.SetState(_stateMachine.IdleState);
+        }
+        // If Enemy is boss and Player is within meleeRange, the Boss attacks
+        else if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.meleeRange && enemy.CurrentHealthState() < 2 && enemy.isBossEnemy)
+        {
+            _stateMachine.SetState(_stateMachine.ChaseState);
+
+        }
+        // If Enemy maxHealth is less than 25% it runs away from Player
+        /*else if(_stateMachine.GetPlayerDistance() <= enemy.entityStats.meleeRange && enemy.CurrentHealthState() >= 2 && !enemy.isBossEnemy)
+        {
+            _stateMachine.SetState(_stateMachine.RunState);
+
+        }*/
+        
+    }
 }
