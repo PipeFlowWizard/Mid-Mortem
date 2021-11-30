@@ -22,6 +22,7 @@ public class PlayerCombat : MonoBehaviour
     {
         if (Time.time > _nextSpellTime)
         {
+            //_player.ImpulseSource.GenerateImpulse();
             _nextSpellTime = Time.time + spellCD / 1000;
             Spell nSpell = Instantiate(spell, shootOut.position, Quaternion.identity);
             nSpell.Initialize(spellForward, attack);

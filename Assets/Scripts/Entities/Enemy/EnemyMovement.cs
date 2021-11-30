@@ -25,6 +25,8 @@ public class EnemyMovement : MonoBehaviour
 
     public Rigidbody Rigidbody => _rigidbody;
 
+    public Animator anim;
+
     private void Start()
     {
         desiredLocation = transform.position;
@@ -81,6 +83,8 @@ public class EnemyMovement : MonoBehaviour
         // If ray hits Player, then Enemy increases in speed to dash
         if (Physics.Raycast(transform.position, _enemy.target.transform.position - transform.position, out hit, Mathf.Infinity) && hit.collider.CompareTag("Player"))
         {
+            
+            anim.Play("Dash");
             Debug.Log("Dash Attack");
             Debug.DrawRay(transform.position, hit.point-transform.position,Color.red);
             // If Dash just started, set isDashin to true and increase speed

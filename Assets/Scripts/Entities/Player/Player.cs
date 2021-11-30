@@ -32,6 +32,7 @@ public class Player : Entity
     public Ability DashAbility => dashAbility;
     public PlayerCombat Combat => playerCombat;
     public PlayerVFX Vfx => playerVFX;
+    public CinemachineImpulseSource ImpulseSource => _impulseSource;
 
 
     [Header("Events")]

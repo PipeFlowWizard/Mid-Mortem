@@ -15,6 +15,7 @@ public class EnemyStateMachine
     private State _runState;
     private State _deadState;
     private State _reapState;
+    private StunEnemyState _stunState;
 
     public State CurrentState => _currentState;
 
@@ -27,7 +28,8 @@ public class EnemyStateMachine
     public State RangedState => _rangedState;
 
     public State RunState => _runState;
-    
+
+    public StunEnemyState StunState => _stunState;
 
     public EnemyStateMachine(Enemy enemy)
     {
@@ -39,6 +41,7 @@ public class EnemyStateMachine
         _meleeState = new MeleeEnemyState(enemy,this);
         _rangedState = new RangedEnemyState(enemy,this);
         _runState = new RepositionEnemyState(enemy,this);
+        _stunState = new StunEnemyState(enemy,this);
         _deadState = new DeadEnemyState(enemy,this);
         _currentState = _idleState;
     }
