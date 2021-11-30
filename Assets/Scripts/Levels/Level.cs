@@ -90,8 +90,25 @@ public class Level : MonoBehaviour
     }
     public void SpawnObstacle(Vector3 position, Room currentroom)
     {
-        var rand = Random.Range(0, data.ForestObstacles.Count);
-        var obstacle = Spawn(position, data.ForestObstacles[rand]);
+        var rand = 0;
+        GameObject obstacle = null;
+        switch (biome)
+        {
+            case GameManager.biomes.forest:
+                rand = Random.Range(0, data.ForestObstacles.Count);
+                obstacle = Spawn(position, data.ForestObstacles[rand]);
+                break;
+            case GameManager.biomes.desert:
+                rand = Random.Range(0, data.SandObstacles.Count);
+                obstacle = Spawn(position, data.SandObstacles[rand]);
+                break;
+            case GameManager.biomes.snow:
+                rand = Random.Range(0, data.SnowObstacles.Count);
+                obstacle = Spawn(position, data.SnowObstacles[rand]);
+                break;
+        }
+        
+        
         obstacle.transform.SetParent(transform);
         
     }
