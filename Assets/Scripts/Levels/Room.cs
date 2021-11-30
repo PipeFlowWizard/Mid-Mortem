@@ -196,6 +196,7 @@ public class Room : MonoBehaviour
         //check what type of biome first
 
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        point = new Vector3(point.x, point.y-1.5f, point.z);
         _level.SpawnObstacle(point, this);
     }
     public void SpawnBossInRoomRandom()
