@@ -14,6 +14,7 @@ public class Spell : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject _particleSystem;
     [SerializeField] private CinemachineImpulseSource _impulseSource;
+    [SerializeField] private AudioSource _audioSource;
 
     private float _spawnTime;
 
@@ -42,6 +43,7 @@ public class Spell : MonoBehaviour
             other.GetComponentInParent<Enemy>().TakeDamage(damage);
             other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
             _impulseSource.GenerateImpulse();
+            _audioSource.Play();
             var particles = Instantiate(_particleSystem, other.transform);
             Destroy(particles,1);
             Destroy(gameObject);
