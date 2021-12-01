@@ -362,6 +362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd20e18990d198c4faa0f0a0a90411a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _impulseSource: {fileID: 0}
 --- !u!135 &4951939368658615397
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -575,11 +576,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: a38c625f5588f62438e5b29080545302, type: 2}
+  soulCount: {fileID: 11400000, guid: ea5f9415dcdef0c4d80d3d5495518b35, type: 2}
   currentAbility: {fileID: 11400000, guid: c4dea079bcc656841a94e07206244cde, type: 2}
   dashAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
   playerHurtEvent: {fileID: 11400000, guid: f3eae8b796cbe314b9774d95d6d949e7, type: 2}
+  playerSpellEvent: {fileID: 11400000, guid: 92dae2af2d4635a46b488c85fbcdca4f, type: 2}
+  playerAttackEvent: {fileID: 11400000, guid: 5662b06511fd7a946a187864dea12298, type: 2}
 --- !u!114 &5980914422587083454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -723,7 +727,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f80f5cc5b8c2ccf4daaea044cf8a7a72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 1d4751fcf7c411142a7c74fde7cea854, type: 2}
+  gameEvent: {fileID: 11400000, guid: ccf841dd79455b242a094b094a401e2e, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -909,6 +913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd20e18990d198c4faa0f0a0a90411a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _impulseSource: {fileID: 0}
 --- !u!1 &6037823677484136839
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,6 +18,7 @@ public class Player : Entity
     private Rigidbody _rigidbody;
     //Combat
     private PlayerCombat playerCombat;
+    public FloatValue soulCount;
     [SerializeField] private Ability currentAbility;
     [SerializeField] private Ability dashAbility;
     private CinemachineImpulseSource _impulseSource;
@@ -38,6 +39,8 @@ public class Player : Entity
     [Header("Events")]
     public GameEvent playerDeathEvent;
     public GameEvent playerHurtEvent;
+    public GameEvent playerSpellEvent;
+    public GameEvent playerAttackEvent;
 
     public Rigidbody Rigidbody => _rigidbody;
 

@@ -37,5 +37,9 @@ public class LevelData : ScriptableObject
         get => _sand;
         set => SandObstacles = value;
     }
+
+    public GameEvent desertBiomeEvent;
+    public GameEvent snowBiomeEvent;
+    public GameEvent forestBiomeEvent;
 }
 

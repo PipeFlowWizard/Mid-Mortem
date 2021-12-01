@@ -23,6 +23,7 @@ public class PlayerCombat : MonoBehaviour
         if (Time.time > _nextSpellTime)
         {
             //_player.ImpulseSource.GenerateImpulse();
+            _player.playerSpellEvent.Raise();
             _nextSpellTime = Time.time + spellCD / 1000;
             Spell nSpell = Instantiate(spell, shootOut.position, Quaternion.identity);
             nSpell.Initialize(spellForward, attack);
@@ -33,6 +34,7 @@ public class PlayerCombat : MonoBehaviour
     public void MeleeAttack()
     {
         // Debug.Log("Melee Attempt");
+        _player.playerAttackEvent.Raise();
         var force = (transform.forward * 20) - _player.Rigidbody.velocity;
         _player.Rigidbody.AddForce(force,ForceMode.VelocityChange);
         anim.Play("MeleeAttack");
@@ -53,6 +55,21 @@ public class PlayerCombat : MonoBehaviour
     public void OnReapEvent()
     {
         // TODO: restore souls and maxHealth
+        print("HEALTH:" + _player.CurrentHealth.ToString());
+        _player.CurrentHealth += 15;
+        if (_player.CurrentHealth >= _player.entityStats.maxHealth)
+        {
+            _player.CurrentHealth = _player.entityStats.maxHealth;
+        }
+
+        print(_player.CurrentHealth.ToString());
+        print("SOULS:" + _player.soulCount.runTimeValue.ToString());
+        _player.soulCount.runTimeValue += 20;
+        if (_player.soulCount.runTimeValue >= _player.soulCount.initialValue)
+        {
+            _player.soulCount.runTimeValue = _player.soulCount.initialValue;
+        }
+        print(_player.soulCount.runTimeValue.ToString());
     }
     
 }
