@@ -105,8 +105,14 @@ public class LevelCreation : MonoBehaviour
         foreach (var levelRoom in rooms)
         { 
             levelRoom.SetLevel(level);
-            for(int i=0;i<5;i++) levelRoom.SpawnObstacleInRoomRandom();
+            for (int i = 0; i < 5; i++) { 
+                levelRoom.SpawnObstacleInRoomRandom();
+                //levelRoom.SpawnGrassInRoomRandom();
+            }
+
         }
+       
+
         
         addKey(keys);
         return level;
