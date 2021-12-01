@@ -122,17 +122,14 @@ public class Level : MonoBehaviour
         switch (biome)
         {
             case GameManager.biomes.forest:
-                if (data.ForestGrass != null)
-                    rand = Random.Range(0, data.ForestGrass.Count);
-                if(data.ForestGrass != null)
+                rand = Random.Range(0, data.ForestGrass.Count);
+
                 obstacle = Spawn(pos, data.ForestGrass[0]);
                 break;
                 
             case GameManager.biomes.desert:
-                if (data.SandGrass != null)
-                    rand = Random.Range(0, data.SandGrass.Count);
-                if (data.SandGrass != null)
-                    obstacle = Spawn(pos, data.SandGrass[0]);
+                rand = Random.Range(0, data.SandGrass.Count);
+                obstacle = Spawn(pos, data.SandGrass[0]);
                 break;
         }
 
