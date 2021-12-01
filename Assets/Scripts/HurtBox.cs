@@ -32,7 +32,7 @@ public class HurtBox : MonoBehaviour
             // Else, the Enemy just takes normal damage
             else
             {
-                _impulseSource.GenerateImpulse();
+                if(_impulseSource) _impulseSource.GenerateImpulse();
                 enemy.TakeDamage(parent.entityStats.attackDamage);
                 enemy.Movement.Rigidbody.AddForce((enemy.transform.position - parent.transform.position).normalized * 5, ForceMode.VelocityChange);
                 other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();

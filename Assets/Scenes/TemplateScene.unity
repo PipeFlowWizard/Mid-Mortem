@@ -145,6 +145,7 @@ GameObject:
   - component: {fileID: 228943672}
   - component: {fileID: 228943671}
   - component: {fileID: 228943670}
+  - component: {fileID: 228943673}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -180,6 +181,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 7945554626392360281, guid: 3aa3e0763e0034c4e9662afe6dad410f, type: 3}
   data: {fileID: 11400000, guid: 71089951f5e9ced4f94b89354f8ce312, type: 2}
+  navigationBaker: {fileID: 228943673}
   gridN: 4
   gridM: 4
 --- !u!4 &228943672
@@ -196,13 +198,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &228943673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 228943669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d8f7100a27eb04bb741ab2698c71aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &236118192
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1320
+  m_Name: pb_Mesh-1354
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2

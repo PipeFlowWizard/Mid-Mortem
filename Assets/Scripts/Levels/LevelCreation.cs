@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class LevelCreation : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class LevelCreation : MonoBehaviour
     
     public GameObject roomPrefab;
     [SerializeField] public LevelData data;
+    [SerializeField] private NavigationBaker navigationBaker;
 
     public int gridN;
     public int gridM;
@@ -72,7 +75,8 @@ public class LevelCreation : MonoBehaviour
                 room.name = "Room " + "[" + i + "," + j + "]";
                 Room theRoom = room.GetComponent<Room>();
                 rooms.Add(theRoom);
-                
+                navigationBaker.AddGameObjectToSurface(room);
+
             }
         }
         for (int i = 0; i < gridN; i++)
@@ -109,6 +113,9 @@ public class LevelCreation : MonoBehaviour
         }
         
         addKey(keys);
+        // Right now, obstacles are NOT considered, as that adds like a billion geometry and it doesn't rly matter 
+        // if navigation isn't 100%
+        navigationBaker.BakeCookies();
         return level;
     }
     private void addKey(int nbKeys)
@@ -230,6 +237,7 @@ public class LevelCreation : MonoBehaviour
     public void GenerateLevel()
     {
         DestroyImmediate(currentLevel);
+        navigationBaker.ClearSurfaces();
         createLevel(GameManager.biomes.desert);
     }
 }
