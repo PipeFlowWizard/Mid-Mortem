@@ -113,7 +113,7 @@ public class Enemy : Entity
         {
             base.TakeDamage(amount);
         }
-        _stateMachine.SetState(_stateMachine.StunState.SetDuration(.5f));
+        _stateMachine.SetState(_stateMachine.StunState.SetDuration(.1f));
     }
 
     public void CastAbility()
