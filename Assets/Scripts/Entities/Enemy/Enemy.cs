@@ -141,7 +141,8 @@ public class Enemy : Entity
         _rigidbody.velocity = Vector3.zero;
         if(CurrentRoom)
         {
-            if (!isDead) CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
+            /*if (!isDead) */
+            CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
         }
         Destroy(gameObject,3);
     }
