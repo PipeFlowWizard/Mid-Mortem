@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private Player player;
     [SerializeField] private float rotationSpeed = 360.0f;
     [SerializeField] private float dashCd = .5f;
-
+    [SerializeField] private GameObject aim;
     private bool canDash = true;
     private Camera _cam;
     public GameObject mesh;
@@ -99,6 +99,9 @@ public class PlayerMovement : MonoBehaviour
             var quat = Quaternion.LookRotation(target - transform.position, Vector3.up);
             player.Rigidbody.MoveRotation(Quaternion.Slerp(transform.rotation,quat, rotationSpeed * Time.deltaTime));
             // mesh.transform.LookAt(target);
+            if (aim)
+                aim.transform.position = hitInfo.point;
+
         }
     }
 

@@ -14,6 +14,8 @@ public class PlayerCombat : MonoBehaviour
     public int soulRecoverAmount = 15;
     public float reapTimer = 3;
     public Animator anim;
+    private float lastMeleeTime = 0;
+    
     
     private float _nextSpellTime = 0f;
 
@@ -37,11 +39,15 @@ public class PlayerCombat : MonoBehaviour
     
     public void MeleeAttack()
     {
-        // Debug.Log("Melee Attempt");
-        _player.playerAttackEvent.Raise();
-        var force = (transform.forward * 20) - _player.Rigidbody.velocity;
-        _player.Rigidbody.AddForce(force,ForceMode.VelocityChange);
-        anim.Play("MeleeAttack");
+        if(Time.time - lastMeleeTime >= 1f/_player.entityStats.meleeAttackSpeed)
+        {
+            // Debug.Log("Melee Attempt");
+            _player.playerAttackEvent.Raise();
+            var force = (transform.forward * 20) - _player.Rigidbody.velocity;
+            _player.Rigidbody.AddForce(force, ForceMode.VelocityChange);
+            anim.Play("MeleeAttack");
+            lastMeleeTime = Time.time;
+        }
     }
 
     public void FirstAbility()
