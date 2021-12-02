@@ -15,8 +15,8 @@ public class MeleeEnemyState : State
     public override void Action()
     {
         // Melee Attack is handled by EnemyHurtBox.cs
-        enemy.Combat.MeleeAttack();
         Decision();
+        enemy.Combat.MeleeAttack();
     }
 
     public override void OnStateEnter()

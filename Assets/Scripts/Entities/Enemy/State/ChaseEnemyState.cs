@@ -14,6 +14,7 @@ public class ChaseEnemyState : State
     // ChaseEnemyState can perform different actions based on distance to Enemy and maxHealth
     public override void Action()
     {
+        Decision();
         if(enemy.target != null)
         {
             int randomNumber = UnityEngine.Random.Range(1, 1001);
@@ -28,7 +29,6 @@ public class ChaseEnemyState : State
                 enemy.Movement.MoveEnemy(enemy.target.position);
             }
         }
-        Decision();
     }
 
     public override void OnStateEnter()

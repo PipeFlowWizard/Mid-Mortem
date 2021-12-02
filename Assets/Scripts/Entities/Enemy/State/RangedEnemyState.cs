@@ -30,6 +30,7 @@ public class RangedEnemyState : State
     // RangedEnemyState can perform different actions based on distance to Enemy and maxHealth
     public override void Action()
     {
+        Decision();
         // Turn enemy toward Player
         enemy.Movement.TurnEnemy(enemy.target.position);
         
@@ -44,7 +45,6 @@ public class RangedEnemyState : State
             Debug.Log("Enemy Attack");
             EnemyAttack();
         }
-        Decision();
     }
 
     private void EnemyAttack()

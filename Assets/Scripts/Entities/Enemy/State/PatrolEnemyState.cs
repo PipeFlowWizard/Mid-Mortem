@@ -18,13 +18,13 @@ public class PatrolEnemyState : State
     // Enemy performs no Action while in Idle state, except looking for Player
     public override void Action()
     {
+        Decision();
         // If Enemy is not Boss, it Patrols around room
         if (!enemy.isBossEnemy)
         {
             PatrolEnemy();
             enemy.GetPlayer();
         }
-        Decision();
     }
 
     // OnStateEnter Stop Enemy Movement
