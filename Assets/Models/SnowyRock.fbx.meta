@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c9d07bf86414e344890c707dd1669d5e
+guid: b416250f4eea0364d9dfaddf270346d2
 ModelImporter:
   serializedVersion: 20200
   internalIDToNameTable: []
@@ -8,6 +8,11 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: ColorPalette
+    second: {fileID: 2100000, guid: d2d96efc46c6ad746a685c8f314b4aae, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
     second: {fileID: 2100000, guid: d2d96efc46c6ad746a685c8f314b4aae, type: 2}
   - first:
       type: UnityEngine:Material
@@ -41,7 +46,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
     lODScreenPercentages: []
     globalScale: 1
