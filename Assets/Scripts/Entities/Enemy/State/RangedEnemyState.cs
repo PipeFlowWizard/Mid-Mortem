@@ -29,7 +29,8 @@ public class RangedEnemyState : State
     public override void Action()
     {
         // Turn enemy toward Player
-        enemy.Movement.TurnEnemy(enemy.target.position);
+        if(enemy.target)
+            enemy.Movement.TurnEnemy(enemy.target.position);
         
         // If Enemy is Boss, then it can use Boss Attacks
         if (enemy.isBossEnemy)

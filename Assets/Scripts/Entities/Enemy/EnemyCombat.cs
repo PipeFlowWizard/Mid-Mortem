@@ -21,8 +21,7 @@ public class EnemyCombat : MonoBehaviour
 
     public GameObject meteorFallObject;                     // GameObject for MeteorFall attackDamage
     public GameObject heatSeekerObject;                     // GameObject for HeatSeeker attackDamage
-
-    [SerializeField] private float rotationDamp = 0.5f;
+    
     
     
 
