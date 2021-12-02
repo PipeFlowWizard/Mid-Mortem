@@ -10,10 +10,13 @@ public class GameManager : MonoBehaviour
     private List<Level> _levels;
     public enum biomes { forest, desert, snow };
 
+    public GameEvent doorsUnlockedEvent;
     // Start is called before the first frame update
     void Start()
     {
-
+        //Load screen
+        // Main menu
+        // Create level
         initializeGame();
             
     }
@@ -47,13 +50,19 @@ public class GameManager : MonoBehaviour
         _levels[1].setNextLevel(_levels[2]);
         _levels[1].transform.position = _levels[1].transform.position + new Vector3(500, 0, 0);
 
-
-        
+        foreach(Level lvl in _levels)
+        {
+            foreach(Room rm in lvl.Rooms)
+            {
+                for(int i=0;i<10;i++)rm.SpawnGrassInRoomRandom();
+            }
+        }
         foreach (var room in _levels[0].Rooms)
         {
             if (room.startSelf)
             {
                 player.transform.position = room.transform.position + Vector3.up;
+                _levels[0].SetMusic();
                 //first room is pAcifist    
                 //for (int i = 0; i < 4; i++ )
                 
@@ -63,7 +72,9 @@ public class GameManager : MonoBehaviour
                 //introduce reaping mechanic
                 
             }
+            
         }
+      
 
     }
     // Update is called once per frame

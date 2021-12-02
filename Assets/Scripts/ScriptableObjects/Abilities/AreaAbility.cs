@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu]
 public class AreaAbility : Ability
 {
-    // [SerializeField] private float dashForce;
     
     public override void SoulAbility(Vector3 position, Vector3 direction, Animator anim = null, Rigidbody rb = null)
     {

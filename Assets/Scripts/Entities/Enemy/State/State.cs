@@ -16,7 +16,7 @@ public abstract class State
     // OnStateEnter is called when GameObject enters new State
     public virtual void OnStateEnter()
     {
-        Debug.Log(this.GetType());
+        // Debug.Log(this.GetType());
         stateEnterTime = Time.time;
     }
 

@@ -31,6 +31,8 @@ public class Enemy : Entity
     [Header("Events")]
     [SerializeField] private GameEvent deathEvent;
     [SerializeField] private GameEvent reapedEvent;
+    [SerializeField] private GameEvent spellEvent;
+    [SerializeField] private GameEvent hurtEvent;
     
     [SerializeField] private float pushBackForce = 15.0f;
     private bool raisedReapEvent = false;
@@ -38,6 +40,8 @@ public class Enemy : Entity
     // Properties
     public GameEvent DeathEvent => deathEvent;
     public GameEvent ReapedEvent => reapedEvent;
+    public GameEvent SpellEvent => spellEvent;
+    public GameEvent HurtEvent => hurtEvent;
     public EnemyMovement Movement => _movement;
     public EnemyCombat Combat => _combat;
     public EnemyVFX VFX => _enemyVfx;
@@ -47,7 +51,7 @@ public class Enemy : Entity
         set {if (!_currentRoom) _currentRoom = value;}
     }
     // Current Level of Game
-    public int currentLevel;
+    public int currentLevel = 1;
     [SerializeField] private int levelBoost; // Boost Enemies get to stats from current level
 
         // Start is called before the first frame update
@@ -60,20 +64,22 @@ public class Enemy : Entity
         GetPlayer();
         _stateMachine = new EnemyStateMachine(this);
         // Get currentLevel
-        currentLevel = 1;
         // Update enemy stats from level
+        SetStatsFromLevel();
+    }
+
+    public void SetStatsFromLevel()
+    {
         CurrentAttack = CurrentAttack + (levelBoost * currentLevel);
         CurrentAttackSpeed = CurrentAttackSpeed + (levelBoost * currentLevel);
         CurrentDefense = CurrentDefense - ((levelBoost * currentLevel) / 20);
         CurrentSpeed = CurrentSpeed + (levelBoost * currentLevel);
     }
 
-
     // Why is this in fixed update? --> it handles physics as well as logic. Can be separate
     void FixedUpdate()
     {
-        _stateMachine.UpdateEnemyState();
-        _stateMachine.CurrentState.Action();
+        _stateMachine.Tick();
     }
 
     private void OnDrawGizmos()
@@ -103,6 +109,7 @@ public class Enemy : Entity
     // Override TakeDamage for when Enemy is in near invincible state
     public override void TakeDamage(int amount)
     {
+        hurtEvent.Raise();
         // If isInvincible is true, reduce amount by damageReduction
         if (_combat.isInvincible)
         {
@@ -113,7 +120,7 @@ public class Enemy : Entity
         {
             base.TakeDamage(amount);
         }
-        _stateMachine.SetState(_stateMachine.StunState.SetDuration(.5f));
+        _stateMachine.SetState(_stateMachine.StunState.SetDuration(.1f));
     }
 
     public void CastAbility()
@@ -141,7 +148,8 @@ public class Enemy : Entity
         _rigidbody.velocity = Vector3.zero;
         if(CurrentRoom)
         {
-            if (!isDead) CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
+            /*if (!isDead) */
+            CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
         }
         Destroy(gameObject,3);
     }

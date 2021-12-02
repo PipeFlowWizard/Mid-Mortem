@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 1178992160003290965}
   - component: {fileID: 6094749961544445442}
   - component: {fileID: 1080479056}
+  - component: {fileID: 7218435698900950978}
   m_Layer: 0
   m_Name: TreeBoss
   m_TagString: Enemy
@@ -268,6 +269,9 @@ MonoBehaviour:
   isDead: 0
   deathEvent: {fileID: 11400000, guid: c0a5637356d603d4b9cb84288e63e8d0, type: 2}
   reapedEvent: {fileID: 11400000, guid: abd6d6ba86947c949be861407e7d1dab, type: 2}
+  spellEvent: {fileID: 11400000, guid: 0b3af47373c0a1f43936294e4aaaae92, type: 2}
+  hurtEvent: {fileID: 11400000, guid: 7ff0994c713eef042bbd2443aba5e04d, type: 2}
+  pushBackForce: 15
   currentLevel: 0
   levelBoost: 2
 --- !u!114 &3682714940229730772
@@ -287,10 +291,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   suicide: 0
-  isDashing: 0
   dashBoost: 0
   rotationDamp: 0.5
   desiredLocation: {x: 0, y: 0, z: 0}
+  anim: {fileID: 0}
 --- !u!114 &8694008844289626177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeAttack: 1
+  projectileSpeed: 5
   _rigidbody: {fileID: 0}
   enemySpell: {fileID: 1830672277127870288, guid: f102a52979dd055499e219a8cde878aa, type: 3}
   tripleAttackOffset: 1.5
@@ -315,10 +320,7 @@ MonoBehaviour:
   meteorFallObject: {fileID: 1511467521296544908, guid: a6e75a0f81bb4eb4c93a770425d81221, type: 3}
   heatSeekerObject: {fileID: 6991017682539234195, guid: 52e6ea0e2d74e924dae0da0148349ce5, type: 3}
   rotationDamp: 0.5
-  pushBackForce: 0
-  deathEvent: {fileID: 0}
-  reapedEvent: {fileID: 0}
-  anim: {fileID: 0}
+  anim: {fileID: 4834065972891693616}
 --- !u!114 &1178992160003290965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,6 +373,25 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!95 &7218435698900950978
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6094749961544445503}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6211334943044604346
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class DeadEnemyState : State
     public override void OnStateEnter()
     {
         base.OnStateEnter();
+        
     }
 
     public override void OnStateExit()

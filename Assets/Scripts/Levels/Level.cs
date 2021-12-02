@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -10,6 +11,7 @@ public class Level : MonoBehaviour
     public LevelData data;
     public List<Room> Rooms;
     public Level nextLevel;
+    public int levelCounter = 1;
     public GameManager.biomes biome;
     public bool keyUnlocked = false;
    
@@ -30,6 +32,25 @@ public class Level : MonoBehaviour
       
     }
 
+    public void SetMusic()
+    {
+        switch (biome)
+        {
+            case GameManager.biomes.desert:
+                data.desertBiomeEvent.Raise();
+                break;
+            case GameManager.biomes.snow:
+                data.snowBiomeEvent.Raise();
+                break;
+            case GameManager.biomes.forest:
+                data.forestBiomeEvent.Raise();
+                break;
+            default:
+                data.forestBiomeEvent.Raise();
+                break;
+        }
+        
+    }
 
     public bool getKeyState()
     {
@@ -96,7 +117,17 @@ public class Level : MonoBehaviour
         {
             case GameManager.biomes.forest:
                 rand = Random.Range(0, data.ForestObstacles.Count);
-                obstacle = Spawn(position, data.ForestObstacles[rand]);
+
+                GameObject theObstacle = data.ForestObstacles[rand];
+                if (theObstacle.name.Contains("Rock"))
+                {
+                    position += new Vector3(0, 0.5f, 0);
+                }
+                if (theObstacle.name.Contains("Tree (5)"))
+                {
+                    position += new Vector3(0, 0.5f, 0);
+                }
+                obstacle = Spawn(position, theObstacle);
                 break;
             case GameManager.biomes.desert:
                 rand = Random.Range(0, data.SandObstacles.Count);
@@ -112,35 +143,57 @@ public class Level : MonoBehaviour
         obstacle.transform.SetParent(transform);
         
     }
+    //dont ask
 
-    //Justin Testing Grass Spawning
     public void SpawnGrass(Vector3 position, Room currentroom)
     {
-        Vector3 pos = new Vector3(position.x, (position.y + 0.975f), position.z);
         var rand = 0;
         GameObject obstacle = null;
         switch (biome)
         {
             case GameManager.biomes.forest:
-                rand = Random.Range(0, data.ForestGrass.Count);
-
-                obstacle = Spawn(pos, data.ForestGrass[0]);
+                rand = Random.Range(0, data.GrassForest.Count);
+                position = new Vector3(position.x + 10, position.y, position.z);
+                obstacle = Spawn(position, data.GrassForest[rand]);
                 break;
-                
             case GameManager.biomes.desert:
-                rand = Random.Range(0, data.SandGrass.Count);
-                obstacle = Spawn(pos, data.SandGrass[0]);
+                rand = Random.Range(0, data.GrassSand.Count);
+                position = new Vector3(position.x + 35, position.y, position.z);
+                obstacle = Spawn(position, data.GrassSand[rand]);
                 break;
+            
         }
 
 
-        obstacle.transform.SetParent(transform);
-    }
+        obstacle.transform.SetParent(currentroom.transform);
 
+    }
     public IEnumerator SpawnBoss(Vector3 position, Room currentroom)
     {
         yield return new WaitForEndOfFrame();
-        var enemy = Spawn(position, data.Spawnables[3]);
+        GameObject boss;
+        switch (biome)
+        {
+            case GameManager.biomes.desert:
+                boss = data.Spawnables[5];
+                break;
+            case GameManager.biomes.forest:
+                boss = data.Spawnables[3];
+                break;
+            case GameManager.biomes.snow:
+                boss = data.Spawnables[4];
+                break;
+            default:
+                boss = data.Spawnables[3];
+                break;
+        }
+
+        Enemy enemy = Spawn(position, boss).GetComponent<Enemy>();
+        enemy.currentLevel = levelCounter;
+
+
+
+
         // enemy.GetComponent<Enemy>()._currentRoom = currentroom;
     }
 
