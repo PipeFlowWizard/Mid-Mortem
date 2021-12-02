@@ -87,36 +87,49 @@ public class PatrolEnemyState : State
         base.Decision();
         if( enemy.target != null)
         {
-            // ATTACK type Enemy has a 50/50 chance of attacks from RANGE or CHASING
             int randomNumber = UnityEngine.Random.Range(1, 3);
-            // If randomNumber is 1, and Enemy is ATTACK, or if Enemy is SPEED, then they chase Player
-            // Boss Enemies can't chase after Player
-            if ((randomNumber == 1 && enemy.entityStats.entityType == EntityStats.EntityType.ATTACK) || enemy.entityStats.entityType == EntityStats.EntityType.SPEED && !enemy.isBossEnemy)
+            if (enemy.isBossEnemy)
             {
-                // If Player is in Scene (within detectionRange), and Enemy still has more than 25% maxHealth, it chases after Player
-                if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.detectionRange && enemy.CurrentHealthState() < 2)
-                {
-                    _stateMachine.SetState(_stateMachine.ChaseState);
-                }
-                // Else, if Enemy has less than 25% maxHealth and Player in Scene (within Enemy meleeRange), it runs away from Player, if not boss
-                /*else if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.meleeRange && enemy.CurrentHealthState() >= 2)
-                {
-                    _stateMachine.SetState(_stateMachine.RunState);
-                }*/
-            }
-            // If randomNumber is 2, and Enemy is ATTACK, or if Enemy is DEFENSE or BossEnemy, then they attackDamage from Range
-            else if ((randomNumber == 2 && enemy.entityStats.entityType == EntityStats.EntityType.ATTACK) || enemy.entityStats.entityType == EntityStats.EntityType.DEFENSE || enemy.isBossEnemy)
-            {
-                // If Player is in Scene (within detectionRange), and Enemy still has more than 25% maxHealth, it attacks Player from Range
                 if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.detectionRange && enemy.CurrentHealthState() < 2)
                 { 
                     _stateMachine.SetState(_stateMachine.RangedState);
                 }
-                // Else, if Enemy has less than 25% maxHealth and Player in Scene (within Enemy meleeRange), it runs away from Player
-                /*else if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.meleeRange && enemy.CurrentHealthState() >= 2 && !enemy.isBossEnemy)
+            }
+            else
+            {
+                if (enemy.entityStats.entityType == EntityStats.EntityType.ATTACK)
                 {
-                    _stateMachine.SetState(_stateMachine.RunState);
-                }*/
+                    if (randomNumber == 1)
+                    {
+                        if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.detectionRange && enemy.CurrentHealthState() < 2)
+                        {
+                            _stateMachine.SetState(_stateMachine.ChaseState);
+                        }
+                    }
+
+                    if (randomNumber == 2)
+                    {
+                        if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.detectionRange && enemy.CurrentHealthState() < 2)
+                        { 
+                            _stateMachine.SetState(_stateMachine.RangedState);
+                        }
+                    }
+                    
+                }
+                else if (enemy.entityStats.entityType == EntityStats.EntityType.DEFENSE)
+                {
+                    if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.detectionRange && enemy.CurrentHealthState() < 2)
+                    { 
+                        _stateMachine.SetState(_stateMachine.RangedState);
+                    }
+                }
+                else if (enemy.entityStats.entityType == EntityStats.EntityType.SPEED)
+                {
+                    if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.detectionRange && enemy.CurrentHealthState() < 2)
+                    {
+                        _stateMachine.SetState(_stateMachine.ChaseState);
+                    }
+                }    
             }
         }
     }

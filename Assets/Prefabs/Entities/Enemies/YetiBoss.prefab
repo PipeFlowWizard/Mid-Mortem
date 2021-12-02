@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 824628519261627780}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.67822, y: 0.67822, z: 0.67822}
   m_Children: []
   m_Father: {fileID: 538023705129889803}
   m_RootOrder: 1
@@ -111,12 +111,12 @@ GameObject:
   m_Component:
   - component: {fileID: 538023705129889803}
   - component: {fileID: 71433934657566637}
+  - component: {fileID: 71433934657566633}
+  - component: {fileID: 71433934657566635}
+  - component: {fileID: 71433934657566636}
+  - component: {fileID: 71433934657566634}
   - component: {fileID: 71433934657566639}
   - component: {fileID: 71433934657566638}
-  - component: {fileID: 71433934657566636}
-  - component: {fileID: 71433934657566635}
-  - component: {fileID: 71433934657566634}
-  - component: {fileID: 71433934657566633}
   m_Layer: 0
   m_Name: YetiBoss
   m_TagString: Untagged
@@ -156,6 +156,95 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 1
+--- !u!114 &71433934657566633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881756756000238257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19430e8e541cdb4397fe338bd43ca3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityStats: {fileID: 11400000, guid: 8f9128b22a5604e478f5b13248658d0a, type: 2}
+  isBossEnemy: 1
+  _ability: {fileID: 11400000, guid: d5b9c1fc19553fd43865ec12816fd178, type: 2}
+  _rigidbody: {fileID: 71433934657566637}
+  _currentRoom: {fileID: 0}
+  target: {fileID: 0}
+  canReap: 1
+  waitingForReap: 0
+  isDead: 0
+  deathEvent: {fileID: 11400000, guid: c0a5637356d603d4b9cb84288e63e8d0, type: 2}
+  reapedEvent: {fileID: 11400000, guid: abd6d6ba86947c949be861407e7d1dab, type: 2}
+  spellEvent: {fileID: 11400000, guid: 0b3af47373c0a1f43936294e4aaaae92, type: 2}
+  hurtEvent: {fileID: 11400000, guid: 7ff0994c713eef042bbd2443aba5e04d, type: 2}
+  pushBackForce: 15
+  currentLevel: 1
+  levelBoost: 2
+--- !u!114 &71433934657566635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881756756000238257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 219368dff9c77814abd4b816982dc1eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rangeAttack: 1
+  projectileSpeed: 5
+  _rigidbody: {fileID: 0}
+  enemySpell: {fileID: 1830672277127870288, guid: f102a52979dd055499e219a8cde878aa, type: 3}
+  tripleAttackOffset: 1
+  xAttackSpeed: 1
+  invincibleTime: 1
+  isInvincible: 0
+  invincibleSize: 0
+  damageReduction: 0
+  meteorFallObject: {fileID: 1511467521296544908, guid: a6e75a0f81bb4eb4c93a770425d81221, type: 3}
+  heatSeekerObject: {fileID: 6991017682539234195, guid: 52e6ea0e2d74e924dae0da0148349ce5, type: 3}
+  rotationDamp: 0.5
+  anim: {fileID: 71433934657566639}
+--- !u!114 &71433934657566636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881756756000238257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f66c6b2eb54c3d4b889eab3acbceab4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _material: {fileID: 2100000, guid: e64be7e8abced72488ee447bed10c44d, type: 2}
+  _animator: {fileID: 71433934657566639}
+--- !u!114 &71433934657566634
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 881756756000238257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee42901210433842b768f5dd493860f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _navMeshAgent: {fileID: 71433934657566638}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  suicide: 0
+  dashBoost: 0
+  rotationDamp: 0.5
+  desiredLocation: {x: 0, y: 0, z: 0}
+  anim: {fileID: 71433934657566639}
 --- !u!95 &71433934657566639
 Animator:
   serializedVersion: 3
@@ -197,95 +286,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &71433934657566636
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881756756000238257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f66c6b2eb54c3d4b889eab3acbceab4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _material: {fileID: 0}
-  _animator: {fileID: 0}
---- !u!114 &71433934657566635
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881756756000238257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 219368dff9c77814abd4b816982dc1eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rangeAttack: 1
-  projectileSpeed: 5
-  _rigidbody: {fileID: 0}
-  enemySpell: {fileID: 0}
-  tripleAttackOffset: 0
-  xAttackSpeed: 0
-  invincibleTime: 0
-  isInvincible: 0
-  invincibleSize: 0
-  damageReduction: 0
-  meteorFallObject: {fileID: 0}
-  heatSeekerObject: {fileID: 0}
-  rotationDamp: 0.5
-  anim: {fileID: 0}
---- !u!114 &71433934657566634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881756756000238257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee42901210433842b768f5dd493860f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _navMeshAgent: {fileID: 0}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  suicide: 0
-  dashBoost: 0
-  rotationDamp: 0.5
-  desiredLocation: {x: 0, y: 0, z: 0}
-  anim: {fileID: 0}
---- !u!114 &71433934657566633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 881756756000238257}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a19430e8e541cdb4397fe338bd43ca3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  entityStats: {fileID: 11400000, guid: 8f9128b22a5604e478f5b13248658d0a, type: 2}
-  isBossEnemy: 1
-  _ability: {fileID: 0}
-  _rigidbody: {fileID: 0}
-  _currentRoom: {fileID: 0}
-  target: {fileID: 0}
-  canReap: 1
-  waitingForReap: 0
-  isDead: 0
-  deathEvent: {fileID: 11400000, guid: c0a5637356d603d4b9cb84288e63e8d0, type: 2}
-  reapedEvent: {fileID: 11400000, guid: abd6d6ba86947c949be861407e7d1dab, type: 2}
-  spellEvent: {fileID: 11400000, guid: 0b3af47373c0a1f43936294e4aaaae92, type: 2}
-  hurtEvent: {fileID: 11400000, guid: 7ff0994c713eef042bbd2443aba5e04d, type: 2}
-  pushBackForce: 15
-  currentLevel: 0
-  levelBoost: 2
 --- !u!1 &1740019038566993850
 GameObject:
   m_ObjectHideFlags: 0
@@ -463,11 +463,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7014478147036719839}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.49991274, y: 0.50008726, z: 0.49991274, w: 0.50008726}
   m_LocalPosition: {x: -0, y: 0, z: 0}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_Children:
   - {fileID: 6603356933507204089}
   m_Father: {fileID: 538023705129889803}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 90, z: 0}

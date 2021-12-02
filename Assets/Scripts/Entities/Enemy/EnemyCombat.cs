@@ -13,7 +13,7 @@ public class EnemyCombat : MonoBehaviour
 
     [SerializeField] private GameObject enemySpell;         // Reference to EnemySpell GameObject
     [SerializeField] private float tripleAttackOffset;      // Offset for TripleRangedAttack between spells
-    [SerializeField] private float xAttackSpeed;            // Speed for Special XAttack of boss
+    [SerializeField] private float xAttackSpeed;            // Speed for Special SuperRangedAttack of boss
 
     [SerializeField] private int invincibleTime;            // Time the Enemy is takes less damage than normal
     public bool isInvincible;                               // Enemy takes less damage than normal using ability
@@ -54,50 +54,39 @@ public class EnemyCombat : MonoBehaviour
     }
     
     
-    // KillEnemy knocks the enemy down and Stops all Coroutines and sets attackDamage to false
-    //TODO: move to Enemy.cs
-   
     
     public void RangedAttack()
     {
-        // Enemy can only attackDamage if it is Not Dead and if it is Not Waiting For Reap
-        if (!_enemy.isDead && !_enemy.waitingForReap)
-        {
-            // Offset is transform.forward
-            GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward + transform.up, Quaternion.identity);
+        // Offset is transform.forward
+            GameObject spellObj = Instantiate(enemySpell, _enemy.transform.position + _enemy.transform.forward + transform.up, Quaternion.identity);
             EnemySpell spell = spellObj.GetComponent<EnemySpell>();
             // Set direction and speed of spell
 
             spell.FireSpell(transform.forward, projectileSpeed, _enemy.entityStats.attackDamage);
             _enemy.SpellEvent.Raise();
             // Start Timer to wait for next Ranged Attack
-            StartCoroutine(RangeAttackTimer());
-        }
     }
 
     // Special RangedAttack that fires three projectiles at once
     public void TripleRangedAttack()
     {
-        // Enemy can only attackDamage if it is Not Dead and if it is Not Waiting For Reap
-        if (!_enemy.isDead && !_enemy.waitingForReap)
-        {
-            // Offset is transform.forward
-            // Fire an attackDamage in front of Enemy
-            GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward + transform.up, Quaternion.identity);
-            EnemySpell spell = spellObj.GetComponent<EnemySpell>();
-            // Fire attackDamage slightly to the right of Enemy
-            GameObject spellObj2 = Instantiate(enemySpell, transform.position + transform.forward + (transform.right * tripleAttackOffset) + transform.up, Quaternion.identity);
-            EnemySpell spell2 = spellObj2.GetComponent<EnemySpell>();
-            // Fire attackDamage slightly to the left of Enemy
-            GameObject spellObj3 = Instantiate(enemySpell, transform.position + transform.forward - (transform.right * tripleAttackOffset) + transform.up, Quaternion.identity);
-            EnemySpell spell3 = spellObj3.GetComponent<EnemySpell>();
-            // Set direction and speed of spell
-            spell.FireSpell(transform.forward, projectileSpeed, _enemy.entityStats.attackDamage);
-            spell2.FireSpell(transform.forward,projectileSpeed, _enemy.entityStats.attackDamage);
-            spell3.FireSpell(transform.forward, projectileSpeed, _enemy.entityStats.attackDamage);
-            // Start Timer to wait for next Ranged Attack
-            StartCoroutine(RangeAttackTimer());
-        }
+        
+        // Offset is transform.forward
+        // Fire an attackDamage in front of Enemy
+        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward + transform.up, Quaternion.identity);
+        EnemySpell spell = spellObj.GetComponent<EnemySpell>();
+        // Fire attackDamage slightly to the right of Enemy
+        GameObject spellObj2 = Instantiate(enemySpell, transform.position + transform.forward + (transform.right * tripleAttackOffset) + transform.up, Quaternion.identity);
+        EnemySpell spell2 = spellObj2.GetComponent<EnemySpell>();
+        // Fire attackDamage slightly to the left of Enemy
+        GameObject spellObj3 = Instantiate(enemySpell, transform.position + transform.forward - (transform.right * tripleAttackOffset) + transform.up, Quaternion.identity);
+        EnemySpell spell3 = spellObj3.GetComponent<EnemySpell>();
+        // Set direction and speed of spell
+        spell.FireSpell(transform.forward, projectileSpeed, _enemy.entityStats.attackDamage);
+        spell2.FireSpell(transform.forward,projectileSpeed, _enemy.entityStats.attackDamage);
+        spell3.FireSpell(transform.forward, projectileSpeed, _enemy.entityStats.attackDamage);
+        // Start Timer to wait for next Ranged Attack
+
     }
 
     // Set Enemy to be invincible and 1.5 times it's regular size for 3 seconds
@@ -117,7 +106,6 @@ public class EnemyCombat : MonoBehaviour
         GameObject meteor = Instantiate(meteorFallObject, _enemy.target.position, Quaternion.identity);
         MeteorFallAttack meteorAttack = meteor.GetComponent<MeteorFallAttack>();
         // Start Timer to wait for next Ranged Attack
-        StartCoroutine(RangeAttackTimer());
         meteorAttack.MeteorCrash();
     }
 
@@ -126,42 +114,26 @@ public class EnemyCombat : MonoBehaviour
     {
         GameObject heatSeeker = Instantiate(heatSeekerObject, transform.position + (4 * transform.forward) + transform.up, Quaternion.identity);
         // Start Timer to wait for next Ranged Attack
-        StartCoroutine(RangeAttackTimer());
     }
 
-    // XAttack is a special ranged attackDamage that fires multiple ranged spells in the form of an X
-    public void XAttack()
+    // SuperRangedAttack is a special ranged attackDamage that fires multiple ranged spells in the form of an X
+    public void SuperRangedAttack()
     {
         // Offset is transform.forward
-        // Fire an attackDamage in front of Enemy
-        GameObject spellObj = Instantiate(enemySpell, transform.position + transform.forward + (2 * transform.up), Quaternion.identity);
+        GameObject spellObj = Instantiate(enemySpell, _enemy.transform.position + _enemy.transform.forward + transform.up, Quaternion.identity);
         EnemySpell spell = spellObj.GetComponent<EnemySpell>();
-        // Fire attackDamage slightly to the right and above Enemy
-        GameObject spellObj2 = Instantiate(enemySpell, transform.position + transform.forward + (transform.right * tripleAttackOffset) + (3 * transform.up), Quaternion.identity);
-        EnemySpell spell2 = spellObj2.GetComponent<EnemySpell>();
-        // Fire attackDamage slightly to the left and above Enemy
-        GameObject spellObj3 = Instantiate(enemySpell, transform.position + transform.forward - (transform.right * tripleAttackOffset) + (3 * transform.up), Quaternion.identity);
-        EnemySpell spell3 = spellObj3.GetComponent<EnemySpell>();
-        // Fire attackDamage slightly to the right and below Enemy
-        GameObject spellObj4 = Instantiate(enemySpell, transform.position + transform.forward + (transform.right * tripleAttackOffset) + transform.up, Quaternion.identity);
-        EnemySpell spell4 = spellObj4.GetComponent<EnemySpell>();
-        // Fire attackDamage slightly to the left and below Enemy
-        GameObject spellObj5 = Instantiate(enemySpell, transform.position + transform.forward - (transform.right * tripleAttackOffset) + transform.up, Quaternion.identity);
-        EnemySpell spell5 = spellObj5.GetComponent<EnemySpell>();
         // Set direction and speed of spell
-        spell.FireSpell(transform.forward, xAttackSpeed *  projectileSpeed, _enemy.entityStats.attackDamage);
-        spell2.FireSpell(transform.forward, xAttackSpeed * projectileSpeed, _enemy.entityStats.attackDamage);
-        spell3.FireSpell(transform.forward, xAttackSpeed * projectileSpeed, _enemy.entityStats.attackDamage);
-        spell4.FireSpell(transform.forward, xAttackSpeed * projectileSpeed, _enemy.entityStats.attackDamage);
-        spell5.FireSpell(transform.forward, xAttackSpeed * projectileSpeed, _enemy.entityStats.attackDamage);
+
+        spell.FireSpell(transform.forward, projectileSpeed * 10, _enemy.entityStats.attackDamage);
+        _enemy.SpellEvent.Raise();
         // Start Timer to wait for next Ranged Attack
-        StartCoroutine(RangeAttackTimer());
     }
     
     public void MeleeAttack()
     {
         // TODO: enemy melee animation and hurtbox
         // Debug.Log("Melee Attempt");
-        anim.Play("EnemyMelee");
+        anim.Play("Melee");
     }
+    
 }

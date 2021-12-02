@@ -43,7 +43,6 @@ public class EnemyMovement : MonoBehaviour
     // Rotate Enemy toward Player
     public void TurnEnemy(Vector3 destination)
     {
-        Debug.Log("turning");
         // Enemy can only turn if it is Not Dead and Not Waiting For Reap
         if (!_enemy.isDead)
         {
