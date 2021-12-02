@@ -395,6 +395,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5980914422587083453, guid: 69889b245cc89234aacb438a5e485385, type: 3}
   m_PrefabInstance: {fileID: 253748340}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &253748351 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8028468390444591852, guid: 69889b245cc89234aacb438a5e485385, type: 3}
+  m_PrefabInstance: {fileID: 253748340}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 253748343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5952b38688b5433419b504a607cea6d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1256364267
 GameObject:
   m_ObjectHideFlags: 0
@@ -564,6 +575,36 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  ability1InputEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 253748351}
+        m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
+        m_MethodName: FirstAbility
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  ability2InputEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 253748351}
+        m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
+        m_MethodName: SecondAbility
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   meleeInputEvent:
     m_PersistentCalls:
       m_Calls:
@@ -645,7 +686,6 @@ MonoBehaviour:
   soulQueueInputEvent:
     m_PersistentCalls:
       m_Calls: []
-  reapTimer: 5
 --- !u!4 &1632390304
 Transform:
   m_ObjectHideFlags: 0

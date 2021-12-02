@@ -19,7 +19,8 @@ public class Player : Entity
     //Combat
     private PlayerCombat playerCombat;
     public FloatValue soulCount;
-    [SerializeField] private Ability currentAbility;
+    [SerializeField] private Ability firstAbility;
+    [SerializeField] private Ability secondAbility;
     [SerializeField] private Ability dashAbility;
     private CinemachineImpulseSource _impulseSource;
     
@@ -29,7 +30,8 @@ public class Player : Entity
     
     // Properties
     public PlayerMovement Movement => playerMovement;
-    public Ability CurrentAbility => currentAbility;
+    public Ability FirstAbility => firstAbility;
+    public Ability SecondAbility => secondAbility;
     public Ability DashAbility => dashAbility;
     public PlayerCombat Combat => playerCombat;
     public PlayerVFX Vfx => playerVFX;
@@ -57,19 +59,6 @@ public class Player : Entity
         reaperMaterial.color = Color.black;
     }
 
-
-    public IEnumerator AbilityCo(float abilityDuration)
-    {
-        // Change state
-        //...
-        currentAbility.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
-            Combat.anim, _rigidbody);
-        yield return new WaitForSeconds(abilityDuration);
-        // For invinsibility ability
-        if(IsInvincible) ToggleInvincibility();
-        // Change back state
-        // ...
-    }
 
     public IEnumerator AbilityCo(float abilityDuration, Ability ability)
     {

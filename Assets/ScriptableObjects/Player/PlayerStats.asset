@@ -19,7 +19,7 @@ MonoBehaviour:
   meleeAttackSpeed: 2
   reapTime: 10
   defense: 0.75
-  speed: 15
+  speed: 40
   detectionRange: 15
   meleeRange: 5
   rangedAttackRange: 12

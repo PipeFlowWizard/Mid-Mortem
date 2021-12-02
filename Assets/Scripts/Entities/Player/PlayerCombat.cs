@@ -9,6 +9,10 @@ public class PlayerCombat : MonoBehaviour
     [SerializeField] private Spell spell;
     [SerializeField]  float spellCD = 100f;
     [SerializeField] private Transform shootOut;
+
+    public int healthRecoverAmount = 10;
+    public int soulRecoverAmount = 15;
+    public float reapTimer = 3;
     public Animator anim;
     
     private float _nextSpellTime = 0f;
@@ -39,13 +43,26 @@ public class PlayerCombat : MonoBehaviour
         _player.Rigidbody.AddForce(force,ForceMode.VelocityChange);
         anim.Play("MeleeAttack");
     }
+
+    public void FirstAbility()
+    {
+        if (_player.FirstAbility)
+        {
+            StartCoroutine(_player.AbilityCo(_player.FirstAbility.duration, _player.FirstAbility));
+        }
+        
+    }
+    public void SecondAbility()
+    {
+        if (_player.SecondAbility)
+        {
+            StartCoroutine(_player.AbilityCo(_player.SecondAbility.duration, _player.SecondAbility));
+        }
+    }
     
     public void ChargedMeleeAttack()
     {
-        if (_player.CurrentAbility)
-        {
-            StartCoroutine(_player.AbilityCo(_player.CurrentAbility.duration));
-        } 
+
     }
 
     public void ChargedRangedAttack()
@@ -54,22 +71,25 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnReapEvent()
     {
-        // TODO: restore souls and maxHealth
-        print("HEALTH:" + _player.CurrentHealth.ToString());
-        _player.CurrentHealth += 15;
+        StartCoroutine(ReapTimerCo());
+        _player.CurrentHealth += healthRecoverAmount;
         if (_player.CurrentHealth >= _player.entityStats.maxHealth)
         {
             _player.CurrentHealth = _player.entityStats.maxHealth;
         }
 
-        print(_player.CurrentHealth.ToString());
-        print("SOULS:" + _player.soulCount.runTimeValue.ToString());
-        _player.soulCount.runTimeValue += 20;
+        _player.soulCount.runTimeValue += soulRecoverAmount;
         if (_player.soulCount.runTimeValue >= _player.soulCount.initialValue)
         {
             _player.soulCount.runTimeValue = _player.soulCount.initialValue;
         }
-        print(_player.soulCount.runTimeValue.ToString());
+    }
+    
+    private IEnumerator ReapTimerCo()
+    {
+        _player.Movement.MoveSpeed = _player.Movement.MoveSpeed / 2;
+        yield return new WaitForSeconds(reapTimer);
+        _player.Movement.MoveSpeed = _player.entityStats.speed;
     }
     
 }

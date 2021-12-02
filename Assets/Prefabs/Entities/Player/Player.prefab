@@ -577,7 +577,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entityStats: {fileID: 11400000, guid: a38c625f5588f62438e5b29080545302, type: 2}
   soulCount: {fileID: 11400000, guid: ea5f9415dcdef0c4d80d3d5495518b35, type: 2}
-  currentAbility: {fileID: 11400000, guid: c4dea079bcc656841a94e07206244cde, type: 2}
+  firstAbility: {fileID: 11400000, guid: c4dea079bcc656841a94e07206244cde, type: 2}
+  secondAbility: {fileID: 11400000, guid: 0208c11eed85c0f489194a8eeb60c05e, type: 2}
   dashAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
   reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
@@ -597,7 +598,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 5980914422587083449}
-  moveSpeed: 40
   rotationSpeed: 720
   dashCd: 0.5
   mesh: {fileID: 5980914422613970973}
@@ -617,6 +617,9 @@ MonoBehaviour:
   spell: {fileID: 1340668513475526878, guid: 1837cb9a7ee96b746b67f2ab7ea75817, type: 3}
   spellCD: 500
   shootOut: {fileID: 6037823677484136832}
+  healthRecoverAmount: 10
+  soulRecoverAmount: 15
+  reapTimer: 1.5
   anim: {fileID: 6037823677362757639}
 --- !u!114 &6761072464038866005
 MonoBehaviour:

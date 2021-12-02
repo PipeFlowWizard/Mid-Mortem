@@ -34,4 +34,13 @@ public class PlayerController : MonoBehaviour
         _player.Combat.ChargedRangedAttack();
     }
 
+    public void OnFirstAbilityInput()
+    {
+        _player.Combat.FirstAbility();
+    }
+
+    public void OnSecondAbilityInput()
+    {
+        _player.Combat.SecondAbility();
+    }
 }
