@@ -120,10 +120,6 @@ public class Level : MonoBehaviour
                 rand = Random.Range(0, data.ForestObstacles.Count);
 
                 GameObject theObstacle = data.ForestObstacles[rand];
-                if (theObstacle.name.Contains("Rock"))
-                {
-                    position += new Vector3(0, 0.5f, 0);
-                }
                 if (theObstacle.name.Contains("Tree (5)"))
                 {
                     position += new Vector3(0, 0.5f, 0);
@@ -142,7 +138,8 @@ public class Level : MonoBehaviour
         
         
         obstacle.transform.SetParent(transform);
-        
+        obstacle.transform.rotation = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f);
+
     }
     //dont ask
 
@@ -159,7 +156,7 @@ public class Level : MonoBehaviour
                 break;
             case GameManager.biomes.desert:
                 rand = Random.Range(0, data.GrassSand.Count);
-                position = new Vector3(position.x + 35, position.y, position.z);
+                position = new Vector3(position.x +15, position.y, position.z+10);
                 obstacle = Spawn(position, data.GrassSand[rand]);
                 break;
             
@@ -167,6 +164,48 @@ public class Level : MonoBehaviour
 
 
         obstacle.transform.SetParent(currentroom.transform);
+        if (biome == GameManager.biomes.desert)
+        {
+            obstacle.transform.position = new Vector3(position.x + 25, position.y, position.z);
+        }
+
+    }
+    public void SpawnRocks(Vector3 position, Room currentroom)
+    {
+        var rand = Random.Range(0.5f, 3f);
+        GameObject obstacle = null;
+        switch (biome)
+        {
+            case GameManager.biomes.forest:
+                
+                position = new Vector3(position.x, position.y-0.25f, position.z);
+                obstacle = Spawn(position, data.forestRock);
+                break;
+            case GameManager.biomes.desert:
+                position = new Vector3(position.x, position.y - 0.25f, position.z);
+                obstacle = Spawn(position, data.sandRock);
+                break;
+            case GameManager.biomes.snow:
+                position = new Vector3(position.x, position.y - 0.25f, position.z);
+                obstacle = Spawn(position, data.snowRock);
+                rand = Random.Range(0.5f, 2f);
+                break;
+
+
+        }
+
+        
+        obstacle.transform.SetParent(currentroom.transform);
+        obstacle.transform.localScale = obstacle.transform.localScale * rand;
+        if (biome != GameManager.biomes.snow)
+        {
+            obstacle.transform.rotation = Random.rotation;
+        }
+        else
+        {
+            obstacle.transform.rotation = Quaternion.Euler(0.0f, Random.Range(0.0f, 360.0f), 0.0f);
+        }
+
 
     }
     public IEnumerator SpawnBoss(Vector3 position, Room currentroom)

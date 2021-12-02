@@ -129,7 +129,9 @@ public class Room : MonoBehaviour
 
         return this.gameObject;
     }
-    
+
+   
+
     public void spawnKey() {
         floor.GetComponent<MeshRenderer>().material = pink;
         keyRoomSelf = true;
@@ -206,6 +208,13 @@ public class Room : MonoBehaviour
             point = new Vector3(point.x, point.y, point.z);
             _level.SpawnGrass(point, this);
         }
+    }
+
+    public void SpawnRocks()
+    {
+        Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        point = new Vector3(point.x, point.y, point.z);
+        _level.SpawnRocks(point, this);
     }
     public void SpawnBossInRoomRandom()
     {

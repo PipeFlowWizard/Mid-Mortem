@@ -54,7 +54,18 @@ public class GameManager : MonoBehaviour
         {
             foreach(Room rm in lvl.Rooms)
             {
-                for(int i=0;i<10;i++)rm.SpawnGrassInRoomRandom();
+                for (int i = 0; i < 10; i++)
+                {
+                    rm.SpawnGrassInRoomRandom();
+                    
+                }
+                var ran = Random.Range(1, 5);
+                    for (int i = 0; i < ran; i++)
+                    {
+                            rm.SpawnRocks();
+                        
+                    }
+                
             }
         }
         foreach (var room in _levels[0].Rooms)
