@@ -16,7 +16,7 @@ MonoBehaviour:
   mp: 100
   attackDamage: 30
   rangedAttackSpeed: 10
-  meleeAttackSpeed: 2
+  meleeAttackSpeed: 3
   reapTime: 10
   defense: 0.75
   speed: 40

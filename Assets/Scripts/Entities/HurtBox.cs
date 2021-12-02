@@ -8,6 +8,7 @@ public class HurtBox : MonoBehaviour
 {
     private Player parent;
     [SerializeField] CinemachineImpulseSource _impulseSource;
+    public ParticleSystem particles;
     private void Start()
     {
         parent = GetComponentInParent<Player>();
@@ -29,9 +30,10 @@ public class HurtBox : MonoBehaviour
             // Else, the Enemy just takes normal damage
             else
             {
+                particles.Play();
                 if(_impulseSource) _impulseSource.GenerateImpulse();
                 enemy.TakeDamage(parent.entityStats.attackDamage);
-                enemy.Movement.Rigidbody.AddForce((enemy.transform.position - parent.transform.position).normalized * 5, ForceMode.VelocityChange);
+                enemy.Movement.Rigidbody.AddForce((enemy.transform.position - parent.transform.position).normalized * 10, ForceMode.VelocityChange);
                 other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
             }
         }

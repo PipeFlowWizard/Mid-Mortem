@@ -321,6 +321,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5980914422587083454, guid: 69889b245cc89234aacb438a5e485385, type: 3}
+      propertyPath: aim
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5980914422587083455, guid: 69889b245cc89234aacb438a5e485385, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1470,7 +1474,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-453152
+  m_Name: pb_Mesh-484540
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -1806,9 +1810,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 767594191, guid: 234010d501453e741b4011de6325c490, type: 3}
+      propertyPath: m_CameraType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1948441854769279488, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_Name
       value: Camera
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237271426464153269, guid: 234010d501453e741b4011de6325c490, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4700995583933097125, guid: 234010d501453e741b4011de6325c490, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5921356020398977299, guid: 234010d501453e741b4011de6325c490, type: 3}
       propertyPath: m_TargetTexture
@@ -1919,6 +1935,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 221684327541442009, guid: b5dec36ed32606e4096821feb711d53f, type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 381788564258709574, guid: b5dec36ed32606e4096821feb711d53f, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
