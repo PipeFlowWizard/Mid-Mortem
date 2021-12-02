@@ -902,6 +902,50 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1747133501 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 986604428863345344, guid: 280289c577f361c44b1480587b7a3653, type: 3}
+  m_PrefabInstance: {fileID: 986604428953875957}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1747133502
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747133501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80f5cc5b8c2ccf4daaea044cf8a7a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1747133503}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: OnGameOver
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1747133503 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 986604428863345347, guid: 280289c577f361c44b1480587b7a3653, type: 3}
+  m_PrefabInstance: {fileID: 986604428953875957}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747133501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67d4bb02f0b317a4599dfaffe390f2e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1798164365
 GameObject:
   m_ObjectHideFlags: 0
@@ -1239,7 +1283,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1351700829750141933, guid: b5dec36ed32606e4096821feb711d53f, type: 3}
       propertyPath: m_SizeDelta.x
-      value: -299.51038
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1351700829750141933, guid: b5dec36ed32606e4096821feb711d53f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -284.90955
       objectReference: {fileID: 0}
     - target: {fileID: 1351700830343274744, guid: b5dec36ed32606e4096821feb711d53f, type: 3}
       propertyPath: m_IsActive
@@ -1457,6 +1505,10 @@ PrefabInstance:
       propertyPath: Player
       value: 
       objectReference: {fileID: 253748343}
+    - target: {fileID: 6989418543538588870, guid: b5dec36ed32606e4096821feb711d53f, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6989418543538588870, guid: b5dec36ed32606e4096821feb711d53f, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
       value: 25

@@ -14,6 +14,7 @@ public class PlayerCombat : MonoBehaviour
     public int soulRecoverAmount = 15;
     public float reapTimer = 3;
     public Animator anim;
+
     
     private float _nextSpellTime = 0f;
 

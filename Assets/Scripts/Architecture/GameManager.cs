@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private List<Level> _levels;
     public enum biomes { forest, desert, snow };
+    public float SceneResetTime = 5;
 
     public GameEvent doorsUnlockedEvent;
     // Start is called before the first frame update
@@ -81,6 +83,15 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
+    }private IEnumerator WaitToReload()
+    {
+        yield return new WaitForSeconds(SceneResetTime);
+        SceneManager.LoadScene(0);
+    }
+
+    public void OnGameOver()
+    {
+        StartCoroutine(WaitToReload());
     }
     
     

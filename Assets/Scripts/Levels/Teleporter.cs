@@ -8,6 +8,7 @@ public class Teleporter : MonoBehaviour
 {
 
     private int roomNum;
+    public GameEvent levelProgressEvent;
     [SerializeField]
     private Room destination;
     private void Start()

@@ -109,6 +109,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 365322a870d76fe4dae494790ab926ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelProgressEvent: {fileID: 11400000, guid: 73d1cee6d23ca9641af834ee2e33cf1d, type: 2}
   destination: {fileID: 0}
 --- !u!1001 &3913748711397313307
 PrefabInstance:

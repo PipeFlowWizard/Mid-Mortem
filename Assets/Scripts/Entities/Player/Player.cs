@@ -24,6 +24,10 @@ public class Player : Entity
     [SerializeField] private Ability dashAbility;
     private CinemachineImpulseSource _impulseSource;
     
+    private bool _hasDashAbility = false;
+    private bool _hasFirstAbility = false;
+    private bool _hasSecondAbility = false;
+    
     //VFX
     [SerializeField] private Material reaperMaterial;
     private PlayerVFX playerVFX;
@@ -33,6 +37,12 @@ public class Player : Entity
     public Ability FirstAbility => firstAbility;
     public Ability SecondAbility => secondAbility;
     public Ability DashAbility => dashAbility;
+
+    public bool HasDashAbility => _hasDashAbility;
+    public bool HasFirstAbility => _hasFirstAbility;
+    public bool HasSecondAbility => _hasSecondAbility;
+
+
     public PlayerCombat Combat => playerCombat;
     public PlayerVFX Vfx => playerVFX;
     public CinemachineImpulseSource ImpulseSource => _impulseSource;
@@ -112,6 +122,11 @@ public class Player : Entity
         // HUD and Game manager can listen to this event
         playerDeathEvent.Raise();
         base.Die();
+    }
+    public void OnLevelProgression()
+    {
+        
+        
     }
     
 
