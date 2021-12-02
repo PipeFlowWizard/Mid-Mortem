@@ -88,6 +88,7 @@ public class UI : MonoBehaviour
     {
         _isPaused = false;
         pauseUI.GetComponent<PauseMenu>().resume();
+        optionsUI.GetComponent<Options>().resume();
         //pauseUI.SetActive(false);
         Time.timeScale = 1;
     }
