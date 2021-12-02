@@ -47,7 +47,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void FirstAbility()
     {
-        if (_player.FirstAbility)
+        if (_player.FirstAbility && _player.HasFirstAbility)
         {
             StartCoroutine(_player.AbilityCo(_player.FirstAbility.duration, _player.FirstAbility));
         }
@@ -55,7 +55,7 @@ public class PlayerCombat : MonoBehaviour
     }
     public void SecondAbility()
     {
-        if (_player.SecondAbility)
+        if (_player.SecondAbility && _player.HasSecondAbility)
         {
             StartCoroutine(_player.AbilityCo(_player.SecondAbility.duration, _player.SecondAbility));
         }

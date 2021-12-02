@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Cinemachine;
 using TMPro;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PlayerMovement))]
 [RequireComponent(typeof(PlayerCombat))]
@@ -27,6 +28,13 @@ public class Player : Entity
     private bool _hasDashAbility = false;
     private bool _hasFirstAbility = false;
     private bool _hasSecondAbility = false;
+
+    private List<int> _abilityProgression = new List<int>() {1, 2, 3};
+
+    public GameEvent dashGotEvent;
+    public GameEvent firstAbilityGotEvent;
+    public GameEvent secondAbilityGotEvent;
+
     
     //VFX
     [SerializeField] private Material reaperMaterial;
@@ -125,8 +133,27 @@ public class Player : Entity
     }
     public void OnLevelProgression()
     {
+        int n = Random.Range(0, _abilityProgression.Count);
+        int pick = _abilityProgression[n];
+        _abilityProgression.Remove(pick);
         
-        
+        switch (pick)
+        {
+            case 1:
+                _hasDashAbility = true;
+                dashGotEvent.Raise();
+                break;
+            case 2:
+                _hasFirstAbility = true;
+                firstAbilityGotEvent.Raise();
+                break;
+            case 3:
+                _hasSecondAbility = true;
+                secondAbilityGotEvent.Raise();
+                break;
+        }
+
+
     }
     
 

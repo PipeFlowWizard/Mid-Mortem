@@ -15,7 +15,7 @@ public class EnemyHurtBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            var player = other.GetComponent<Player>();
+            var player = other.GetComponentInParent<Player>();
             
             player.Rigidbody.AddForce((player.transform.position - parent.transform.position).normalized * 10,ForceMode.Impulse);
             player.TakeDamage(parent.entityStats.attackDamage);

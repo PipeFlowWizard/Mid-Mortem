@@ -541,6 +541,7 @@ GameObject:
   - component: {fileID: 2510757653830015796}
   - component: {fileID: 8275161817218071673}
   - component: {fileID: 1860241772651058748}
+  - component: {fileID: 3204230417409168454}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -580,6 +581,9 @@ MonoBehaviour:
   firstAbility: {fileID: 11400000, guid: c4dea079bcc656841a94e07206244cde, type: 2}
   secondAbility: {fileID: 11400000, guid: 0208c11eed85c0f489194a8eeb60c05e, type: 2}
   dashAbility: {fileID: 11400000, guid: edf53b022e2ce1345926a479d449559c, type: 2}
+  dashGotEvent: {fileID: 11400000, guid: 065387fe5f831324fb0f3429342f63aa, type: 2}
+  firstAbilityGotEvent: {fileID: 11400000, guid: 27f696f3c30895b449f81a7e82fbe28b, type: 2}
+  secondAbilityGotEvent: {fileID: 11400000, guid: 88af06b42e4dcdc4b950e889731490c5, type: 2}
   reaperMaterial: {fileID: -3846018093981099296, guid: 4d6fd6b9f39177b4d97371bf8dd7227f, type: 3}
   playerDeathEvent: {fileID: 11400000, guid: 447c421b6f661c144829a5894fee737a, type: 2}
   playerHurtEvent: {fileID: 11400000, guid: f3eae8b796cbe314b9774d95d6d949e7, type: 2}
@@ -737,6 +741,34 @@ MonoBehaviour:
       - m_Target: {fileID: 8028468390444591852}
         m_TargetAssemblyTypeName: PlayerCombat, Assembly-CSharp
         m_MethodName: OnReapEvent
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3204230417409168454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5980914422587083455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f80f5cc5b8c2ccf4daaea044cf8a7a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 73d1cee6d23ca9641af834ee2e33cf1d, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5980914422587083449}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnLevelProgression
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -131,7 +131,7 @@ public class PlayerMovement : MonoBehaviour
     public void OnDashInput()
     {
         // Check for dash cooldown
-        if (player.DashAbility && Time.time > _lastDashTime + dashCd && canDash)
+        if (player.DashAbility && Time.time > _lastDashTime + dashCd && canDash && player.HasDashAbility)
         {
             _lastDashTime = Time.time;
             StartCoroutine(player.AbilityCo(player.DashAbility.duration, player.DashAbility));

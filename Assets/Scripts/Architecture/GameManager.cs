@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public float SceneResetTime = 5;
 
     public GameEvent doorsUnlockedEvent;
+    public GameEvent levelProgressionEvent;
     // Start is called before the first frame update
     void Start()
     {
@@ -77,6 +78,7 @@ public class GameManager : MonoBehaviour
             
         }
       
+        levelProgressionEvent.Raise();
 
     }
     // Update is called once per frame
