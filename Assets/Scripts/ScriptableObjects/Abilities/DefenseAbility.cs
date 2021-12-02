@@ -10,6 +10,8 @@ public class DefenseAbility : Ability
     {
         if (playerSoulCount.runTimeValue < soulCost) return;
 
+        playerSoulCount.runTimeValue -= soulCost;
+        playerAbilityUsedEvent.Raise();
         if (rb)
         {
 

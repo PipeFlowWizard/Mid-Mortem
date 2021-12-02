@@ -31,6 +31,25 @@ public class Level : MonoBehaviour
       
     }
 
+    public void SetMusic()
+    {
+        switch (biome)
+        {
+            case GameManager.biomes.desert:
+                data.desertBiomeEvent.Raise();
+                break;
+            case GameManager.biomes.snow:
+                data.snowBiomeEvent.Raise();
+                break;
+            case GameManager.biomes.forest:
+                data.forestBiomeEvent.Raise();
+                break;
+            default:
+                data.forestBiomeEvent.Raise();
+                break;
+        }
+        
+    }
 
     public bool getKeyState()
     {

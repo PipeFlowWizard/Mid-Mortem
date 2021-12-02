@@ -31,6 +31,8 @@ public class Enemy : Entity
     [Header("Events")]
     [SerializeField] private GameEvent deathEvent;
     [SerializeField] private GameEvent reapedEvent;
+    [SerializeField] private GameEvent spellEvent;
+    [SerializeField] private GameEvent hurtEvent;
     
     [SerializeField] private float pushBackForce = 15.0f;
     private bool raisedReapEvent = false;
@@ -38,6 +40,8 @@ public class Enemy : Entity
     // Properties
     public GameEvent DeathEvent => deathEvent;
     public GameEvent ReapedEvent => reapedEvent;
+    public GameEvent SpellEvent => spellEvent;
+    public GameEvent HurtEvent => hurtEvent;
     public EnemyMovement Movement => _movement;
     public EnemyCombat Combat => _combat;
     public EnemyVFX VFX => _enemyVfx;
@@ -103,6 +107,7 @@ public class Enemy : Entity
     // Override TakeDamage for when Enemy is in near invincible state
     public override void TakeDamage(int amount)
     {
+        hurtEvent.Raise();
         // If isInvincible is true, reduce amount by damageReduction
         if (_combat.isInvincible)
         {

@@ -155,6 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Key: {fileID: 0}
+  doorsUnlockedEvent: {fileID: 11400000, guid: 9fa13686c01394b42839b459274c16e0, type: 2}
 --- !u!1 &1927262312504879474
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     private List<Level> _levels;
     public enum biomes { forest, desert, snow };
 
+    public GameEvent doorsUnlockedEvent;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,6 +57,7 @@ public class GameManager : MonoBehaviour
             if (room.startSelf)
             {
                 player.transform.position = room.transform.position + Vector3.up;
+                _levels[0].SetMusic();
                 //first room is pAcifist    
                 //for (int i = 0; i < 4; i++ )
                 

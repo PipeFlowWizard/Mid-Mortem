@@ -5,7 +5,8 @@ using UnityEngine;
 [CreateAssetMenu]
 public class AreaAbility : Ability
 {
-    // [SerializeField] private float dashForce;
+    [SerializeField] private float explosionForce;
+    [SerializeField] private float explosionRadius;
     
     public override void SoulAbility(Vector3 position, Vector3 direction, Animator anim = null, Rigidbody rb = null)
     {
@@ -25,6 +26,7 @@ public class AreaAbility : Ability
         if (rb)
         {
             rb.velocity = Vector3.zero;
+            rb.AddExplosionForce(explosionForce, rb.position, explosionRadius);
         }
     }
 }

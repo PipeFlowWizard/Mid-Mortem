@@ -69,6 +69,7 @@ public class EnemyCombat : MonoBehaviour
             // Set direction and speed of spell
 
             spell.FireSpell(transform.forward, projectileSpeed, _enemy.entityStats.attackDamage);
+            _enemy.SpellEvent.Raise();
             // Start Timer to wait for next Ranged Attack
             StartCoroutine(RangeAttackTimer());
         }

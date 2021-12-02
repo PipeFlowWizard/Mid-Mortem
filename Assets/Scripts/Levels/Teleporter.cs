@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR;
 
 public class Teleporter : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class Teleporter : MonoBehaviour
     {
         Debug.Log("Hit confirmed");
 
+        room._level.SetMusic();
         g.transform.position = room.transform.position + Vector3.up;
 
         room.SpawnEnemyInRoomRandom();

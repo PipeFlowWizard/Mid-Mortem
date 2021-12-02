@@ -211,7 +211,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 474020368903781299}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a19430e8e541cdb4397fe338bd43ca3a, type: 3}
   m_Name: 
@@ -227,6 +227,8 @@ MonoBehaviour:
   isDead: 0
   deathEvent: {fileID: 11400000, guid: c0a5637356d603d4b9cb84288e63e8d0, type: 2}
   reapedEvent: {fileID: 11400000, guid: abd6d6ba86947c949be861407e7d1dab, type: 2}
+  spellEvent: {fileID: 11400000, guid: 0b3af47373c0a1f43936294e4aaaae92, type: 2}
+  hurtEvent: {fileID: 11400000, guid: 7ff0994c713eef042bbd2443aba5e04d, type: 2}
   pushBackForce: 15
   currentLevel: 0
   levelBoost: 2

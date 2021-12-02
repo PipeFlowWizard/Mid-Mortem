@@ -268,6 +268,9 @@ MonoBehaviour:
   isDead: 0
   deathEvent: {fileID: 11400000, guid: c0a5637356d603d4b9cb84288e63e8d0, type: 2}
   reapedEvent: {fileID: 11400000, guid: abd6d6ba86947c949be861407e7d1dab, type: 2}
+  spellEvent: {fileID: 11400000, guid: 0b3af47373c0a1f43936294e4aaaae92, type: 2}
+  hurtEvent: {fileID: 11400000, guid: 7ff0994c713eef042bbd2443aba5e04d, type: 2}
+  pushBackForce: 15
   currentLevel: 0
   levelBoost: 2
 --- !u!114 &3682714940229730772
@@ -287,10 +290,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   suicide: 0
-  isDashing: 0
   dashBoost: 0
   rotationDamp: 0.5
   desiredLocation: {x: 0, y: 0, z: 0}
+  anim: {fileID: 0}
 --- !u!114 &8694008844289626177
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rangeAttack: 1
+  projectileSpeed: 5
   _rigidbody: {fileID: 0}
   enemySpell: {fileID: 1830672277127870288, guid: f102a52979dd055499e219a8cde878aa, type: 3}
   tripleAttackOffset: 1.5
@@ -315,9 +319,6 @@ MonoBehaviour:
   meteorFallObject: {fileID: 1511467521296544908, guid: a6e75a0f81bb4eb4c93a770425d81221, type: 3}
   heatSeekerObject: {fileID: 6991017682539234195, guid: 52e6ea0e2d74e924dae0da0148349ce5, type: 3}
   rotationDamp: 0.5
-  pushBackForce: 0
-  deathEvent: {fileID: 0}
-  reapedEvent: {fileID: 0}
   anim: {fileID: 0}
 --- !u!114 &1178992160003290965
 MonoBehaviour:
