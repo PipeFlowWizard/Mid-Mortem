@@ -17,6 +17,10 @@ public class LevelData : ScriptableObject
     private List<GameObject> _snow;
     [SerializeField]
     private List<GameObject> _sand;
+    [SerializeField]
+    private List<GameObject> _forestGrass;
+    [SerializeField]
+    private List<GameObject> _sandGrass;
     public List<GameObject> Spawnables
     {
         get => _spawnables;
@@ -37,7 +41,16 @@ public class LevelData : ScriptableObject
         get => _sand;
         set => SandObstacles = value;
     }
-
+    public List<GameObject> GrassForest
+    {
+        get => _forestGrass;
+        set => GrassForest = value;
+    }
+    public List<GameObject> GrassSand
+    {
+        get => _sandGrass;
+        set => GrassSand = value;
+    }
     public GameEvent desertBiomeEvent;
     public GameEvent snowBiomeEvent;
     public GameEvent forestBiomeEvent;

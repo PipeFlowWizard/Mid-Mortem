@@ -191,13 +191,21 @@ public class Room : MonoBehaviour
     }
     public void SpawnObstacleInRoomRandom()
     {
-        //TODO: Make this spawn enemies and items instead of a generic gameobject
-
-        //check what type of biome first
+        
 
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
         point = new Vector3(point.x, point.y-1.5f, point.z);
         _level.SpawnObstacle(point, this);
+    }
+    public void SpawnGrassInRoomRandom()
+    {
+
+        if (_level.biome != GameManager.biomes.snow)
+        {
+            Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+            point = new Vector3(point.x, point.y, point.z);
+            _level.SpawnGrass(point, this);
+        }
     }
     public void SpawnBossInRoomRandom()
     {

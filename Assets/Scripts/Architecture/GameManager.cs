@@ -50,8 +50,13 @@ public class GameManager : MonoBehaviour
         _levels[1].setNextLevel(_levels[2]);
         _levels[1].transform.position = _levels[1].transform.position + new Vector3(500, 0, 0);
 
-
-        
+        foreach(Level lvl in _levels)
+        {
+            foreach(Room rm in lvl.Rooms)
+            {
+                for(int i=0;i<10;i++)rm.SpawnGrassInRoomRandom();
+            }
+        }
         foreach (var room in _levels[0].Rooms)
         {
             if (room.startSelf)
@@ -67,7 +72,9 @@ public class GameManager : MonoBehaviour
                 //introduce reaping mechanic
                 
             }
+            
         }
+      
 
     }
     // Update is called once per frame

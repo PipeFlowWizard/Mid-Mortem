@@ -110,8 +110,9 @@ public class LevelCreation : MonoBehaviour
         { 
             levelRoom.SetLevel(level);
             for(int i=0;i<5;i++) levelRoom.SpawnObstacleInRoomRandom();
+            //for (int i = 0; i < 5; i++) levelRoom.SpawnGrassInRoomRandom();
+
         }
-        
         addKey(keys);
         // Right now, obstacles are NOT considered, as that adds like a billion geometry and it doesn't rly matter 
         // if navigation isn't 100%

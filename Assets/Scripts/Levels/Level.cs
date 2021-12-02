@@ -116,7 +116,17 @@ public class Level : MonoBehaviour
         {
             case GameManager.biomes.forest:
                 rand = Random.Range(0, data.ForestObstacles.Count);
-                obstacle = Spawn(position, data.ForestObstacles[rand]);
+
+                GameObject theObstacle = data.ForestObstacles[rand];
+                if (theObstacle.name.Contains("Rock"))
+                {
+                    position += new Vector3(0, 0.5f, 0);
+                }
+                if (theObstacle.name.Contains("Tree (5)"))
+                {
+                    position += new Vector3(0, 0.5f, 0);
+                }
+                obstacle = Spawn(position, theObstacle);
                 break;
             case GameManager.biomes.desert:
                 rand = Random.Range(0, data.SandObstacles.Count);
@@ -131,6 +141,31 @@ public class Level : MonoBehaviour
         
         obstacle.transform.SetParent(transform);
         
+    }
+    //dont ask
+
+    public void SpawnGrass(Vector3 position, Room currentroom)
+    {
+        var rand = 0;
+        GameObject obstacle = null;
+        switch (biome)
+        {
+            case GameManager.biomes.forest:
+                rand = Random.Range(0, data.GrassForest.Count);
+                position = new Vector3(position.x + 10, position.y, position.z);
+                obstacle = Spawn(position, data.GrassForest[rand]);
+                break;
+            case GameManager.biomes.desert:
+                rand = Random.Range(0, data.GrassSand.Count);
+                position = new Vector3(position.x + 35, position.y, position.z);
+                obstacle = Spawn(position, data.GrassSand[rand]);
+                break;
+            
+        }
+
+
+        obstacle.transform.SetParent(currentroom.transform);
+
     }
     public IEnumerator SpawnBoss(Vector3 position, Room currentroom)
     {
