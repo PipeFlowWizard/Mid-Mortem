@@ -6,7 +6,6 @@ using UnityEngine;
 public class EnemyCombat : MonoBehaviour
 {
     private Enemy _enemy;
-    public bool rangeAttack = true;
     public float projectileSpeed = 5;
 
     [SerializeField] private Rigidbody _rigidbody;
@@ -35,14 +34,6 @@ public class EnemyCombat : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody>();
     }
     
-    public IEnumerator RangeAttackTimer()
-    {
-        // Every 3 seconds set launch to true
-        yield return new WaitForSeconds(_enemy.entityStats.rangedAttackSpeed);
-        rangeAttack = true;   
-    }
-
-   
 
     // Make Enemy Invincible for 3 seconds
     public IEnumerator InvincibleTimer()

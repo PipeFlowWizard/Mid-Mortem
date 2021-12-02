@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   mp: 100
-  attackDamage: 20
-  rangedAttackSpeed: 3
+  attackDamage: 30
+  rangedAttackSpeed: 10
   meleeAttackSpeed: 2
   reapTime: 10
   defense: 0.75

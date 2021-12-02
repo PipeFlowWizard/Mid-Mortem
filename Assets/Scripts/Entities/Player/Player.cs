@@ -107,7 +107,7 @@ public class Player : Entity
 
     }
 #endregion
-    protected override void Die()
+    public override void Die()
     {
         // HUD and Game manager can listen to this event
         playerDeathEvent.Raise();

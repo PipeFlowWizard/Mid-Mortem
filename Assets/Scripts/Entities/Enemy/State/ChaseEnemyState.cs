@@ -47,7 +47,10 @@ public class ChaseEnemyState : State
     public override void Decision()
     {
         base.Decision();
-        
+        if (enemy.CurrentHealthState() == 3)
+        {
+            _stateMachine.SetState(_stateMachine.DeadState);
+        }
         // If Player no longer in scene, then switch to IDLE state
         if (enemy.target == null)
         {

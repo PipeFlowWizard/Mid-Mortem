@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Timeline.Actions;
 using UnityEngine;
 
-public class DeadEnemyState : State
+public class ReapEnemyState : State
 {
    
-    public DeadEnemyState(Enemy enemy,EnemyStateMachine stateMachine) : base(enemy,stateMachine)
+    public ReapEnemyState(Enemy enemy,EnemyStateMachine stateMachine) : base(enemy,stateMachine)
     {
     }
-
+    
     // Enemy runs away from Player
     public override void Action()
     {
@@ -17,7 +18,7 @@ public class DeadEnemyState : State
     public override void OnStateEnter()
     {
         base.OnStateEnter();
-        enemy.Die();
+        enemy.RaiseReapEvent();
     }
 
     public override void OnStateExit()
@@ -28,6 +29,5 @@ public class DeadEnemyState : State
     public override void Decision()
     {
         base.Decision();
-        
     }
 }

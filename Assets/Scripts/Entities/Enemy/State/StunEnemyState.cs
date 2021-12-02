@@ -38,6 +38,10 @@ public class StunEnemyState : State
     public override void Decision()
     {
         base.Decision();
+        if (enemy.CurrentHealthState() == 3)
+        {
+            _stateMachine.SetState(_stateMachine.DeadState);
+        }
         if (Time.time - enterTime > stunDuration)
         {
             _stateMachine.SetState(_stateMachine.ChaseState);

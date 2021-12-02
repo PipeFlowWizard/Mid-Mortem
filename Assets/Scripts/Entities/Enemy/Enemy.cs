@@ -45,6 +45,7 @@ public class Enemy : Entity
     public EnemyMovement Movement => _movement;
     public EnemyCombat Combat => _combat;
     public EnemyVFX VFX => _enemyVfx;
+    public EnemyStateMachine StateMachine => _stateMachine;
     public Room CurrentRoom
     {
         get => _currentRoom;
@@ -133,27 +134,12 @@ public class Enemy : Entity
         // Change back state
         // ...
     }
-    public void KillEnemy()
-    {
-        deathEvent.Raise();
-        isDead = true;
-        _combat.rangeAttack = false;
-        _rigidbody.constraints = RigidbodyConstraints.None;
-        Movement._navMeshAgent.enabled = false;
-        _rigidbody.AddForce(-(pushBackForce) * .5f * transform.forward, ForceMode.Impulse);
-        _rigidbody.velocity = Vector3.zero;
-        if(CurrentRoom)
-        {
-            /*if (!isDead) */
-            CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
-        }
-        Destroy(gameObject,3);
-    }
+    
     // ReapEnemyTimer starts ReapTimer so Player has 10 seconds to reap Enemy
     public void ReapEnemyTimer()
     {
         // Start ReapTimer Coroutine
-        StartCoroutine(ReapTimer());
+        StartCoroutine(ReapWindowTimer());
     }
 
     // Avoir raising event multiple times
@@ -167,19 +153,41 @@ public class Enemy : Entity
     }
 
     // Kill after seconds, used to delay death in reaping
-    public void KillAfterSeconds(float seconds)
+
+    public void Reap()
     {
-        StartCoroutine(KillAfterSecondsCo(seconds));
+        
+        TakeDamage(100);
+        gameObject.AddComponent<ReapLevitation>(); 
+        _stateMachine.SetState(_stateMachine.ReapState);
+        StartCoroutine(KillAfterSecondsCo(5f));
     }
+
+    public override void Die()
+    {
+        deathEvent.Raise();
+        isDead = true;
+        _rigidbody.constraints = RigidbodyConstraints.None;
+        Movement._navMeshAgent.enabled = false;
+        _rigidbody.AddForce(-(pushBackForce) * .5f * transform.forward, ForceMode.Impulse);
+        _rigidbody.velocity = Vector3.zero;
+        if(CurrentRoom)
+        {
+            /*if (!isDead) */
+            CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
+        }
+        Destroy(gameObject,3);
+    }
+    
     
     private IEnumerator KillAfterSecondsCo(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        KillEnemy();
+        Die();
     }
     
     // Make Enemy wait 10 seconds in Reaped State
-    public IEnumerator ReapTimer()
+    public IEnumerator ReapWindowTimer()
     {
         // After 10 seconds, Enemy can no longer be reaped and returns to previous state
         yield return new WaitForSeconds(entityStats.reapTime);

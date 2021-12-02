@@ -26,9 +26,13 @@ public class EnemyStateMachine
     public State MeleeState => _meleeState;
 
     public State RangedState => _rangedState;
-    
+
+    public State DeadState => _deadState;
+
+    public State ReapState => _reapState;
 
     public StunEnemyState StunState => _stunState;
+    
 
     public EnemyStateMachine(Enemy enemy)
     {
@@ -41,6 +45,7 @@ public class EnemyStateMachine
         _rangedState = new RangedEnemyState(enemy,this);
         _stunState = new StunEnemyState(enemy,this);
         _deadState = new DeadEnemyState(enemy,this);
+        _reapState = new ReapEnemyState(enemy,this);
         _currentState = _idleState;
     }
 
@@ -51,40 +56,13 @@ public class EnemyStateMachine
         _currentState.Action();
         // No matter which State Enemy is in, they can always enter DeadEnemyState, or start ReapEnemyState
         // If Enemy Health is 0, then Enemy is Dead
-        if (enemy.CurrentHealthState() == 3 && !enemy.isDead)
-        {
-            SetState(_deadState);
-            enemy.KillEnemy();
-        }
         // If Enemy maxHealth is below 25% and it can be reaped, then Enemy is Reapable
-        else if(enemy.CurrentHealthState() == 2 && enemy.canReap && !enemy.waitingForReap)
+        if(enemy.CurrentHealthState() == 2 && enemy.canReap && !enemy.waitingForReap)
         {
             enemy.Movement.StopEnemy();
             enemy.waitingForReap = true;
             enemy.ReapEnemyTimer();
         }
-        /*else if (!enemy.waitingForReap)
-        {
-            // If Player no longer in scene or outisde meleeRange, switch to IDLE
-            if(enemy.target == null || (!enemy.isBossEnemy && GetPlayerDistance() > enemy.entityStats.meleeRange) || (enemy.isBossEnemy && GetPlayerDistance() > enemy.entityStats.detectionRange))
-            {
-                SetState(_idleState);
-                enemyState = EnemyState.IDLE;
-            }
-            // If Enemy is boss and Player is within meleeRange, the Boss attacks
-            else if (GetPlayerDistance() <= enemy.entityStats.meleeRange && enemy.isBossEnemy)
-            {
-                SetState(_chaseState);
-                enemyState = EnemyState.CHASE;
-            }
-            // If Enemy is boss and Player is within detectionRange but not meleeRange, the Boss attacks from Range
-            else if (GetPlayerDistance() > enemy.entityStats.meleeRange && GetPlayerDistance() <= enemy.entityStats.detectionRange && enemy.isBossEnemy)
-            {
-                SetState(_rangedState);
-                enemyState = EnemyState.RANGE_ATTACK;
-            }
-           
-        }*/
     }
 
     // GetPlayerDistance returns distance to Player object
