@@ -17,7 +17,7 @@ public class PauseMenu : MonoBehaviour
 
         video = videoPlayer.GetComponent<VideoPlayer>();
 
-        gameObject.SetActive(false);
+        //gameObject.SetActive(false);
     }
 
     public void playVideo()
