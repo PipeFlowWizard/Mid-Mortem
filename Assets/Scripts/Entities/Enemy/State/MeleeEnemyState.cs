@@ -15,6 +15,7 @@ public class MeleeEnemyState : State
     public override void Action()
     {
         // Melee Attack is handled by EnemyHurtBox.cs
+        enemy.Movement.TurnEnemy(enemy.target.position);
         enemy.Combat.MeleeAttack();
         Decision();
     }
@@ -22,7 +23,8 @@ public class MeleeEnemyState : State
     public override void OnStateEnter()
     {
         base.OnStateEnter();
-        enemy.VFX.ChangeColor();
+        if(enemy.VFX.angryParticles)
+            enemy.VFX.angryParticles.Play();
         enemy.Combat.MeleeAttack();
     }
 
@@ -30,6 +32,8 @@ public class MeleeEnemyState : State
     {
         base.OnStateExit();
         enemy.VFX.ChangeColor();
+        if(enemy.VFX.angryParticles)
+            enemy.VFX.angryParticles.Stop();
     }
 
     // If Enemy is in MELEE state, can change to IDLE if Player no longer in scene or outside detectionRange, or

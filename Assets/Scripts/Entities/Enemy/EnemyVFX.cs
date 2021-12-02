@@ -16,6 +16,7 @@ public class EnemyVFX : MonoBehaviour
     private Color enemyColor; // Original Enemy Color
     private Enemy _enemy;
     [SerializeField] Animator _animator;
+    public ParticleSystem angryParticles;
 
     // Start is called before the first frame update
     void Start()
