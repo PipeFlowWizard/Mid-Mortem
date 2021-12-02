@@ -21,6 +21,12 @@ public class LevelData : ScriptableObject
     private List<GameObject> _forestGrass;
     [SerializeField]
     private List<GameObject> _sandGrass;
+    [SerializeField]
+    public GameObject forestRock;
+    [SerializeField]
+    public GameObject sandRock;
+    [SerializeField]
+    public GameObject snowRock;
     public List<GameObject> Spawnables
     {
         get => _spawnables;

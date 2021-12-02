@@ -24,7 +24,6 @@ MonoBehaviour:
   - {fileID: 8312389520638437942, guid: f08dcfe84e2433545a38c06fa809179f, type: 3}
   - {fileID: 7849540817304128462, guid: 270c09607b0b8a54c805c0b47aeff86a, type: 3}
   - {fileID: 3776474900106487556, guid: 9df1cecd4eeaa0a4e90567e4e190ce79, type: 3}
-  - {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
   - {fileID: 919132149155446097, guid: c9d07bf86414e344890c707dd1669d5e, type: 3}
   _snow:
   - {fileID: 929177650117587639, guid: 202a855676a439a41a0cd85a4743aac4, type: 3}
@@ -33,7 +32,6 @@ MonoBehaviour:
   - {fileID: 7645970632642544842, guid: c91ee5ef43beead45a6fc98e7a7eef6e, type: 3}
   - {fileID: 7791995037404526990, guid: 14671e4b8b851b642a938661d8188d3b, type: 3}
   - {fileID: 5415695674401362930, guid: aab561fc21baa174b813d73f5399a94c, type: 3}
-  - {fileID: 1162283546634690924, guid: d367f6efc08fcdc4ea6bd7d09a207ebd, type: 3}
   _sand:
   - {fileID: 4321497452016883601, guid: 723554a98bad05b40a0e01011bdaac0d, type: 3}
   - {fileID: 4777613152605211272, guid: 14e4a21b22d36a44b8f71c8bd1404f0c, type: 3}
@@ -41,13 +39,13 @@ MonoBehaviour:
   - {fileID: 2914721833161388970, guid: ac713dbde2b6fb449a86509faadb68ed, type: 3}
   - {fileID: 10550342462405495, guid: a58813670ebfad04fa2285d44c1b05e4, type: 3}
   - {fileID: 5005852745742869001, guid: e6db6b3cb9d05fc47981a94613525b81, type: 3}
-  - {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
-  - {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
-  - {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
   _forestGrass:
   - {fileID: 6739745610211653957, guid: d243680b21e1356419992d63540e5548, type: 3}
   _sandGrass:
   - {fileID: 5998365218224728783, guid: c44007a6f0bbbe24c9b4245be216efd6, type: 3}
+  forestRock: {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
+  sandRock: {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
+  snowRock: {fileID: 1162283546634690924, guid: d367f6efc08fcdc4ea6bd7d09a207ebd, type: 3}
   desertBiomeEvent: {fileID: 11400000, guid: fb3488903a4155043bb1124e4a593edb, type: 2}
   snowBiomeEvent: {fileID: 11400000, guid: b52477c6bdb31f24db16856291b3275a, type: 2}
   forestBiomeEvent: {fileID: 11400000, guid: d85ad51177a0dae45abca7670af5354b, type: 2}
