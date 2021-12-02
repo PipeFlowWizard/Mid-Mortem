@@ -142,6 +142,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yPos: 0
+  range: 8
+  exclusionRange: 0
 --- !u!114 &1927262312438976104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -282,3 +284,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   yPos: 1
+  range: 15
+  exclusionRange: 8

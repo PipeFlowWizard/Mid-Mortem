@@ -47,7 +47,7 @@ public class EnemyStateMachine
     // Tick handles any transitions between Enemy States
     public void Tick()
     {
-        Debug.Log(_currentState.GetType());
+        // Debug.Log(_currentState.GetType());
         _currentState.Action();
         // No matter which State Enemy is in, they can always enter DeadEnemyState, or start ReapEnemyState
         // If Enemy Health is 0, then Enemy is Dead
