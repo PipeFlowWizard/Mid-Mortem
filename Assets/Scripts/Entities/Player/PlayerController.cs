@@ -26,7 +26,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnRangedInput()
     {
-        _player.Combat.Cast(_player.Movement.mesh.transform.forward, _player.entityStats.attackDamage);
+        _player.Combat.Cast(_player.transform.forward, _player.entityStats.attackDamage);
     }
     
     public void OnRangedChargeInput()

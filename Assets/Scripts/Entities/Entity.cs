@@ -132,7 +132,7 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         // unsubscribe from all events -> die
         Destroy(gameObject);

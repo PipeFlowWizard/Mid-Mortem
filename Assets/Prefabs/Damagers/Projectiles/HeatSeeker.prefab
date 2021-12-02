@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 5858778633283464334}
   - component: {fileID: 7496072220166648880}
   - component: {fileID: 4674374907509687743}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HeatSeeker
-  m_TagString: Untagged
+  m_TagString: EnemySpell
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -125,6 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 581085ed79ef56c45b2144798aa3264d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 50
   damage: 10
   lifeTime: 20

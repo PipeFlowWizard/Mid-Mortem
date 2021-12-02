@@ -48,7 +48,7 @@ public class PatrolEnemyState : State
         }
 
         // If patrolPointSet is now true, then use NavMeshAgent to move towards patrolPoint
-        if (patrolPointSet && !enemy.isDead && !enemy.waitingForReap)
+        if (patrolPointSet && !enemy.waitingForReap)
         {
             enemy.Movement.TurnEnemy(patrolPoint);
             enemy.Movement._navMeshAgent.SetDestination(patrolPoint);
@@ -85,6 +85,10 @@ public class PatrolEnemyState : State
     public override void Decision()
     {
         base.Decision();
+        if (enemy.CurrentHealthState() == 3)
+        {
+            _stateMachine.SetState(_stateMachine.DeadState);
+        }
         if( enemy.target != null)
         {
             int randomNumber = UnityEngine.Random.Range(1, 3);

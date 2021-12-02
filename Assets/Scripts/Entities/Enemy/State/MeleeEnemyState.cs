@@ -38,7 +38,10 @@ public class MeleeEnemyState : State
     public override void Decision()
     {
         base.Decision();
-        
+        if (enemy.CurrentHealthState() == 3)
+        {
+            _stateMachine.SetState(_stateMachine.DeadState);
+        }
         // If Player is no longer in scene, or outside detectionRange, then switch to IDLE
         if(enemy.target == null || _stateMachine.GetPlayerDistance() > enemy.entityStats.detectionRange)
         {

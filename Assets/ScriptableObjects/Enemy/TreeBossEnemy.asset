@@ -15,7 +15,7 @@ MonoBehaviour:
   maxHealth: 500
   mp: 100
   attackDamage: 10
-  rangedAttackSpeed: 2
+  rangedAttackSpeed: 10
   meleeAttackSpeed: 2
   reapTime: 5
   defense: 0.85

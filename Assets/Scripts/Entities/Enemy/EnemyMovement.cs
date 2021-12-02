@@ -44,19 +44,16 @@ public class EnemyMovement : MonoBehaviour
     public void TurnEnemy(Vector3 destination)
     {
         // Enemy can only turn if it is Not Dead and Not Waiting For Reap
-        if (!_enemy.isDead)
+        // Get vector pointing towards Player
+        Vector3 direction = destination - transform.position;
+        direction.y = 0;
+        // Rotate Enemy is direction is not zero
+        if (direction != Vector3.zero)
         {
-            // Get vector pointing towards Player
-            Vector3 direction = destination - transform.position;
-            direction.y = 0;
-            // Rotate Enemy is direction is not zero
-            if (direction != Vector3.zero)
-            {
-                // Get Quaternion to rotate towards Player
-                Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
-                // Rotate Enemy, use Slerp to make Rotation gradual
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp );
-            }
+            // Get Quaternion to rotate towards Player
+            Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
+            // Rotate Enemy, use Slerp to make Rotation gradual
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp );
         }
     }
 
@@ -64,7 +61,7 @@ public class EnemyMovement : MonoBehaviour
     public void MoveEnemy(Vector3 destination)
     {
         // Enemy can only move if it is Not Dead and Not Waiting For Reap
-        if (!_enemy.isDead && !_enemy.waitingForReap)
+        if (!_enemy.waitingForReap)
         {
             // Move Enemy toward Player using SetDestination
             _navMeshAgent.SetDestination(destination);

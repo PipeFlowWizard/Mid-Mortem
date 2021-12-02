@@ -17,13 +17,11 @@ public class RangedEnemyState : State
     public override void OnStateEnter()
     {
         enemy.Movement.StopEnemy();
-        enemy.Combat.rangeAttack = true;
     }
 
     // On Exiting this State, rangeAttack is set to false
     public override void OnStateExit()
     {
-        enemy.Combat.rangeAttack = false;
         enemy.Movement._navMeshAgent.enabled = true;
     }
 
@@ -32,7 +30,8 @@ public class RangedEnemyState : State
     {
         Decision();
         // Turn enemy toward Player
-        enemy.Movement.TurnEnemy(enemy.target.position);
+        if(enemy.target)
+            enemy.Movement.TurnEnemy(enemy.target.position);
         
         // If Enemy is Boss, then it can use Boss Attacks
         if (enemy.isBossEnemy)
@@ -65,14 +64,11 @@ public class RangedEnemyState : State
                 }
                 else if (enemy.entityStats.entityType == EntityStats.EntityType.ATTACK)
                 {
-                    enemy.Combat.rangeAttack = false;
                     enemy.Combat.TripleRangedAttack();
                 }
-
             }
             else
             {
-                enemy.Combat.rangeAttack = false;
                 enemy.Combat.RangedAttack();
             }
 
@@ -123,7 +119,10 @@ public class RangedEnemyState : State
     {
         
         base.Decision();
-        
+        if (enemy.CurrentHealthState() == 3)
+        {
+            _stateMachine.SetState(_stateMachine.DeadState);
+        }
         // If Player no longer in scene, or further than detectionRange then switch to IDLE state
         if (enemy.target == null || _stateMachine.GetPlayerDistance() > enemy.entityStats.detectionRange)
         {

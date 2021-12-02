@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Cinemachine;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -59,6 +60,7 @@ public class Spell : MonoBehaviour
 
         if (gameObject && !other.CompareTag("Player") && !other.CompareTag("Ground"))
         {
+            Debug.Log(other.name);
             Destroy(gameObject);
         }
     }

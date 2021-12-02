@@ -615,7 +615,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spell: {fileID: 1340668513475526878, guid: 1837cb9a7ee96b746b67f2ab7ea75817, type: 3}
-  spellCD: 500
+  spellCD: 250
   shootOut: {fileID: 6037823677484136832}
   healthRecoverAmount: 10
   soulRecoverAmount: 15
@@ -862,6 +862,7 @@ GameObject:
   - component: {fileID: 6037823677193222806}
   - component: {fileID: 6037823677193222805}
   - component: {fileID: 3353632853975365706}
+  - component: {fileID: 1773478242}
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: PlayerHurtBox
@@ -916,7 +917,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd20e18990d198c4faa0f0a0a90411a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _impulseSource: {fileID: 0}
+  _impulseSource: {fileID: 1773478242}
+--- !u!114 &1773478242
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6037823677193222507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 180ecf9b41d478f468eb3e9083753217, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ImpulseDefinition:
+    m_ImpulseChannel: 1
+    m_RawSignal: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+    m_AmplitudeGain: 0.5
+    m_FrequencyGain: 2
+    m_RepeatMode: 0
+    m_Randomize: 1
+    m_TimeEnvelope:
+      m_AttackShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_DecayShape:
+        serializedVersion: 2
+        m_Curve: []
+        m_PreInfinity: 2
+        m_PostInfinity: 2
+        m_RotationOrder: 4
+      m_AttackTime: 0
+      m_SustainTime: 0.2
+      m_DecayTime: 0.7
+      m_ScaleWithImpact: 1
+      m_HoldForever: 0
+    m_ImpactRadius: 100
+    m_DirectionMode: 0
+    m_DissipationMode: 2
+    m_DissipationDistance: 1000
+    m_PropagationSpeed: 343
 --- !u!1 &6037823677484136839
 GameObject:
   m_ObjectHideFlags: 0
@@ -989,6 +1032,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6037823678831599203}
     m_Modifications:
+    - target: {fileID: 722994263744631257, guid: 2d805bc1880def946b6b20015b4deea3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 722994263744631260, guid: 2d805bc1880def946b6b20015b4deea3, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -997,9 +1044,17 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 722994264078059804, guid: 2d805bc1880def946b6b20015b4deea3, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 722994264556984672, guid: 2d805bc1880def946b6b20015b4deea3, type: 3}
       propertyPath: m_Name
       value: Scythe
+      objectReference: {fileID: 0}
+    - target: {fileID: 722994264556984672, guid: 2d805bc1880def946b6b20015b4deea3, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 722994264556984673, guid: 2d805bc1880def946b6b20015b4deea3, type: 3}
       propertyPath: m_RootOrder
@@ -1123,22 +1178,58 @@ PrefabInstance:
     - target: {fileID: -7918335002988649766, guid: b13672df8999e7545b484c6c334754f2, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: fef5056198d2f864dbd5b57d76153a3d, type: 2}
+      objectReference: {fileID: 2100000, guid: 8c4e16b78b3353148ad73d66fd961989, type: 2}
+    - target: {fileID: -7029948723529949830, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -5568371526223589888, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: -5117700066308340382, guid: b13672df8999e7545b484c6c334754f2, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5117700066308340382, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: -1018664272722485354, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 117214286460000749, guid: b13672df8999e7545b484c6c334754f2, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 117214286460000749, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: b13672df8999e7545b484c6c334754f2, type: 3}
       propertyPath: m_Name
       value: ReaperModel
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6317578925029434746, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c45ee659d7b904a4aa07ed9564d6b66d, type: 2}
+    - target: {fileID: 7202271454713460447, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c45ee659d7b904a4aa07ed9564d6b66d, type: 2}
     - target: {fileID: 8513859187771203891, guid: b13672df8999e7545b484c6c334754f2, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8513859187771203891, guid: b13672df8999e7545b484c6c334754f2, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b13672df8999e7545b484c6c334754f2, type: 3}
