@@ -14,11 +14,18 @@ public class UI : MonoBehaviour
 
     private bool _isPaused;
     public Image soulFill;
+    public Image hpFill;
+
+    //Cursor
+    public Texture2D cursorTexture;
+    public CursorMode cursorMode = CursorMode.Auto;
+    public Vector2 hotSpot = Vector2.zero;
+
 
     private void Start()
     {
-        playerStats = player.GetComponent<Entity>();
-        
+        //playerStats = player.GetComponent<Entity>();
+        playerStats = GetComponentInParent<UI>().player.GetComponent<Entity>();
         InitializeStats();
     }
     
@@ -51,7 +58,7 @@ public class UI : MonoBehaviour
         {
             case "Health":
                 statTextHealth.text = "Health: " + playerStats.CurrentHealth.ToString();
-                GetComponentInChildren<HpBar>().UpdateHP();
+                UpdateHP();
                 hurtUI.SetActive(true);
                 break;
 
@@ -73,6 +80,10 @@ public class UI : MonoBehaviour
         }
     }
 
+
+    //================
+    // Mana
+    //================
     // Souls are separate from Stats, for now they're represented by the skull in Pause Menu
     public void OnSoulCountUpdate()
     {
@@ -82,13 +93,21 @@ public class UI : MonoBehaviour
         soulFill.fillAmount = ratio;
     }
 
-    // TODO: FIX THIS
-    // For some reason, we have to toggle pause twice before the pauseUI gets active
+    //================
+    // HP
+    //================
+    public void UpdateHP()
+    {
+        float ratio = (float)playerStats.CurrentHealth / playerStats.MaxHealth;
+        hpFill.fillAmount = ratio;
+    }
+
     private void Resume()
     {
         _isPaused = false;
         pauseUI.GetComponent<PauseMenu>().resume();
-        //pauseUI.SetActive(false);
+        optionsUI.SetActive(false);
+        pauseUI.SetActive(false);
         Time.timeScale = 1;
     }
     private void Pause()
@@ -115,12 +134,21 @@ public class UI : MonoBehaviour
     public void goToOptions()
     {
         pauseUI.SetActive(false);
+        //bindingsUI.SetActive(false);
         optionsUI.SetActive(true);
+    }
+
+    public void goToKeyBindings()
+    {
+        //pauseUI.SetActive(false);
+       // optionsUI.SetActive(false);
+        //bindingsUI.SetActive(true);
     }
 
     public void returnToPause()
     {
         pauseUI.SetActive(true);
+        //bindingsUI.SetActive(false);
         optionsUI.SetActive(false);
     }
 
@@ -151,4 +179,6 @@ public class UI : MonoBehaviour
         yield return new WaitForSeconds(2);
         ui.SetActive(false);
     }
+
+   
 }

@@ -38,7 +38,7 @@ Material:
     m_Floats:
     - Vector1_1a4786e3b57a4ebcb70521c7c0951529: 0.44
     - Vector1_8c5e4213c8a94064819fffb759dbe517: 2.74
-    - _Intensity: 0.79
+    - _Intensity: 1.41
     - _Wind_Speed: 0.56
     m_Colors: []
   m_BuildTextureStacks: []

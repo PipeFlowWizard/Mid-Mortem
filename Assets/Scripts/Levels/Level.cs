@@ -116,7 +116,7 @@ public class Level : MonoBehaviour
     //Justin Testing Grass Spawning
     public void SpawnGrass(Vector3 position, Room currentroom)
     {
-        Vector3 pos = new Vector3(position.x, (position.y + 0.975f), position.z);
+        Vector3 pos = new Vector3(position.x, (position.y), position.z);
         var rand = 0;
         GameObject obstacle = null;
         switch (biome)
@@ -125,16 +125,17 @@ public class Level : MonoBehaviour
                 rand = Random.Range(0, data.ForestGrass.Count);
 
                 obstacle = Spawn(pos, data.ForestGrass[0]);
+                obstacle.transform.SetParent(transform);
                 break;
                 
             case GameManager.biomes.desert:
                 rand = Random.Range(0, data.SandGrass.Count);
                 obstacle = Spawn(pos, data.SandGrass[0]);
+                obstacle.transform.SetParent(transform);
                 break;
         }
 
-
-        obstacle.transform.SetParent(transform);
+        
     }
 
     public IEnumerator SpawnBoss(Vector3 position, Room currentroom)

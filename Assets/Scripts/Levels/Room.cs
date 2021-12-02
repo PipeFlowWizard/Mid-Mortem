@@ -203,7 +203,7 @@ public class Room : MonoBehaviour
     public void SpawnGrassInRoomRandom()
     {
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
-        point = new Vector3(point.x, point.y - 1.5f, point.z);
+        point = new Vector3(point.x, point.y-1.5f, point.z);
         _level.SpawnGrass(point, this);
     }
     public void SpawnBossInRoomRandom()

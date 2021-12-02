@@ -606,7 +606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roomPrefab: {fileID: 7945554626392360281, guid: 3aa3e0763e0034c4e9662afe6dad410f, type: 3}
-  data: {fileID: 11400000, guid: 71089951f5e9ced4f94b89354f8ce312, type: 2}
+  data: {fileID: 11400000, guid: 5e834f563d3b1cb4b859c4008ffbd5fe, type: 2}
   gridN: 4
   gridM: 4
 --- !u!4 &1853699535
