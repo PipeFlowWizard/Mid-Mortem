@@ -188,7 +188,7 @@ public class Level : MonoBehaviour
             case GameManager.biomes.snow:
                 position = new Vector3(position.x, position.y - 0.25f, position.z);
                 obstacle = Spawn(position, data.snowRock);
-                rand = Random.Range(0.5f, 2f);
+                rand = Random.Range(0.5f, 1f);
                 break;
 
 
