@@ -170,7 +170,26 @@ public class Level : MonoBehaviour
     public IEnumerator SpawnBoss(Vector3 position, Room currentroom)
     {
         yield return new WaitForEndOfFrame();
-        var enemy = Spawn(position, data.Spawnables[3]);
+        GameObject boss;
+        switch (biome)
+        {
+            case GameManager.biomes.desert:
+                boss = data.Spawnables[5];
+                break;
+            case GameManager.biomes.forest:
+                boss = data.Spawnables[3];
+                break;
+            case GameManager.biomes.snow:
+                boss = data.Spawnables[4];
+                break;
+            default:
+                boss = data.Spawnables[3];
+                break;
+        }
+
+        var enemy = Spawn(position, boss);
+        
+        
         // enemy.GetComponent<Enemy>()._currentRoom = currentroom;
     }
 

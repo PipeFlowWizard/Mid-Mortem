@@ -24,7 +24,7 @@ public class HurtBox : MonoBehaviour
             if (enemy.waitingForReap)
             {
                 enemy.RaiseReapEvent();
-                enemy.Movement.StopEnemy();
+                enemy.Movement.StopEnemy(); // ->
                 //Add and play an animation instead of this! it's also a bit wonky
                 enemy.gameObject.AddComponent<ReapLevitation>();
                 enemy.KillAfterSeconds(5f);

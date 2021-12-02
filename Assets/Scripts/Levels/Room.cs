@@ -213,7 +213,7 @@ public class Room : MonoBehaviour
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
         Debug.Log("SEIRR");
         StartCoroutine(_level.SpawnBoss(point,this));
-        // currentEnemyCount++;
+        currentEnemyCount++;
     }
   private Door InstantiateDoor(GameObject prefab)
     {

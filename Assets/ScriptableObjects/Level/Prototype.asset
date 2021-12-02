@@ -13,10 +13,12 @@ MonoBehaviour:
   m_Name: Prototype
   m_EditorClassIdentifier: 
   _spawnables:
-  - {fileID: 8103064924768368069, guid: 5f5be3f3fb48e0e4896481f84a411844, type: 3}
-  - {fileID: 8103064924768368069, guid: 5f5be3f3fb48e0e4896481f84a411844, type: 3}
+  - {fileID: 970407947992828501, guid: d711376e8d92db14db50e0360b940b00, type: 3}
+  - {fileID: 5608815759455258104, guid: 0bcce80a96aa60f4ea94bf61c995f6e7, type: 3}
   - {fileID: 8103064924768368069, guid: 5f5be3f3fb48e0e4896481f84a411844, type: 3}
   - {fileID: 6094749961544445503, guid: 1c421ce63599b51459cec3f9d3ae43e2, type: 3}
+  - {fileID: 881756756000238257, guid: 293bd51266990ed4eb82347307e58358, type: 3}
+  - {fileID: 474020368903781299, guid: 3f4a007e059a4984b9b9ad46d9008e29, type: 3}
   _forest:
   - {fileID: 4443694223101292977, guid: 5d81ef43c24774048a3646d322fdcc5b, type: 3}
   - {fileID: 6536079617499616961, guid: d95a4f60f782824409dddc5c5163d04b, type: 3}
