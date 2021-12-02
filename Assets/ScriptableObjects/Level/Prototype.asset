@@ -44,6 +44,10 @@ MonoBehaviour:
   - {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
   - {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
   - {fileID: 4225478458909282240, guid: 901f0f42d75381a4891b05da246d0c4a, type: 3}
+  _forestGrass:
+  - {fileID: 6739745610211653957, guid: d243680b21e1356419992d63540e5548, type: 3}
+  _sandGrass:
+  - {fileID: 5998365218224728783, guid: c44007a6f0bbbe24c9b4245be216efd6, type: 3}
   desertBiomeEvent: {fileID: 11400000, guid: fb3488903a4155043bb1124e4a593edb, type: 2}
   snowBiomeEvent: {fileID: 11400000, guid: b52477c6bdb31f24db16856291b3275a, type: 2}
   forestBiomeEvent: {fileID: 11400000, guid: d85ad51177a0dae45abca7670af5354b, type: 2}
