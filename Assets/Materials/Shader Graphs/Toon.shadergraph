@@ -194,8 +194,8 @@
     ],
     "m_VertexContext": {
         "m_Position": {
-            "x": 1061.5999755859375,
-            "y": -143.19996643066407
+            "x": 1107.199951171875,
+            "y": -244.0
         },
         "m_Blocks": [
             {
@@ -333,10 +333,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -687.2000122070313,
-            "y": -7.200001239776611,
-            "width": 136.800048828125,
-            "height": 34.39999771118164
+            "x": -501.5999755859375,
+            "y": 141.59999084472657,
+            "width": 138.39999389648438,
+            "height": 33.59999084472656
         }
     },
     "m_Slots": [
@@ -662,10 +662,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -416.79998779296877,
-            "y": 168.80001831054688,
-            "width": 208.00001525878907,
-            "height": 301.5999755859375
+            "x": -424.8000183105469,
+            "y": 94.39997863769531,
+            "width": 208.0,
+            "height": 302.4000244140625
         }
     },
     "m_Slots": [
@@ -1012,10 +1012,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 174.3999786376953,
-            "y": 125.5999755859375,
-            "width": 217.59999084472657,
-            "height": 325.6000061035156
+            "x": 140.00001525878907,
+            "y": 128.00001525878907,
+            "width": 217.60000610351563,
+            "height": 326.4000244140625
         }
     },
     "m_Slots": [
@@ -1292,7 +1292,7 @@
     "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
     "m_ObjectId": "be95fbf73b7447528a1d65d97ee17a2f",
     "m_Id": 0,
-    "m_DisplayName": "_LightColor",
+    "m_DisplayName": "Light Color",
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Out",
@@ -1339,10 +1339,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 25.599952697753908,
-            "y": 141.6000213623047,
-            "width": 114.39999389648438,
-            "height": 33.59999084472656
+            "x": -123.20001220703125,
+            "y": 108.00003051757813,
+            "width": 114.4000015258789,
+            "height": 33.600006103515628
         }
     },
     "m_Slots": [
