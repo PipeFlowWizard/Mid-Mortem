@@ -19,6 +19,7 @@ public class Teleporter : MonoBehaviour
         Debug.Log("Hit confirmed");
 
         room._level.SetMusic();
+        room._level.levelCounter += 1;
         g.transform.position = room.transform.position + Vector3.up;
 
         room.SpawnEnemyInRoomRandom();

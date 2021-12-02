@@ -65,12 +65,16 @@ public class Enemy : Entity
         _stateMachine = new EnemyStateMachine(this);
         // Get currentLevel
         // Update enemy stats from level
+        SetStatsFromLevel();
+    }
+
+    public void SetStatsFromLevel()
+    {
         CurrentAttack = CurrentAttack + (levelBoost * currentLevel);
         CurrentAttackSpeed = CurrentAttackSpeed + (levelBoost * currentLevel);
         CurrentDefense = CurrentDefense - ((levelBoost * currentLevel) / 20);
         CurrentSpeed = CurrentSpeed + (levelBoost * currentLevel);
     }
-
 
     // Why is this in fixed update? --> it handles physics as well as logic. Can be separate
     void FixedUpdate()

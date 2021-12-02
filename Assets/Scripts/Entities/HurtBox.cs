@@ -21,9 +21,9 @@ public class HurtBox : MonoBehaviour
             
             // If Enemy is waitingForReap, then they can call the ReapEnemy Function
             // TODO: Add in Reap Animation and adding modifier 
-            if (enemy.waitingForReap)
+            if (enemy.waitingForReap) // - > window of opp
             {
-                enemy.RaiseReapEvent();
+                enemy.RaiseReapEvent(); // -? kepe
                 enemy.Movement.StopEnemy(); // ->
                 //Add and play an animation instead of this! it's also a bit wonky
                 enemy.gameObject.AddComponent<ReapLevitation>();

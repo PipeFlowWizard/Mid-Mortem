@@ -11,6 +11,7 @@ public class Level : MonoBehaviour
     public LevelData data;
     public List<Room> Rooms;
     public Level nextLevel;
+    public int levelCounter = 1;
     public GameManager.biomes biome;
     public bool keyUnlocked = false;
    
@@ -187,9 +188,12 @@ public class Level : MonoBehaviour
                 break;
         }
 
-        var enemy = Spawn(position, boss);
-        
-        
+        Enemy enemy = Spawn(position, boss).GetComponent<Enemy>();
+        enemy.currentLevel = levelCounter;
+
+
+
+
         // enemy.GetComponent<Enemy>()._currentRoom = currentroom;
     }
 
