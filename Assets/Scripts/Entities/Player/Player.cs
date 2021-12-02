@@ -80,6 +80,8 @@ public class Player : Entity
         playerHurtEvent.Raise();
 
         _impulseSource.GenerateImpulse();
+        if(Vfx.playerHurtParticles)
+            Vfx.playerHurtParticles.Play();
         // Player ded
         if (CurrentHealth <= 0)
         {
