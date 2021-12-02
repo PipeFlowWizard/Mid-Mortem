@@ -51,7 +51,7 @@ public class Enemy : Entity
         set {if (!_currentRoom) _currentRoom = value;}
     }
     // Current Level of Game
-    public int currentLevel;
+    public int currentLevel = 1;
     [SerializeField] private int levelBoost; // Boost Enemies get to stats from current level
 
         // Start is called before the first frame update
@@ -64,7 +64,6 @@ public class Enemy : Entity
         GetPlayer();
         _stateMachine = new EnemyStateMachine(this);
         // Get currentLevel
-        currentLevel = 1;
         // Update enemy stats from level
         CurrentAttack = CurrentAttack + (levelBoost * currentLevel);
         CurrentAttackSpeed = CurrentAttackSpeed + (levelBoost * currentLevel);
@@ -76,8 +75,7 @@ public class Enemy : Entity
     // Why is this in fixed update? --> it handles physics as well as logic. Can be separate
     void FixedUpdate()
     {
-        _stateMachine.UpdateEnemyState();
-        _stateMachine.CurrentState.Action();
+        _stateMachine.Tick();
     }
 
     private void OnDrawGizmos()

@@ -20,7 +20,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - Texture2D_ac72387774dd49b9a4701430a84130d1:
-        m_Texture: {fileID: 2800000, guid: 20c2f9f88e06d9d48bbbe8f0a70811b4, type: 3}
+        m_Texture: {fileID: 2800000, guid: 15024714bcf280d4ba94eccfc16f8487, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
@@ -111,6 +111,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
+    - _LightColor: {r: 1, g: 0.987775, b: 0.9283019, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &2206272674111368143

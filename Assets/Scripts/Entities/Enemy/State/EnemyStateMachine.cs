@@ -26,8 +26,7 @@ public class EnemyStateMachine
     public State MeleeState => _meleeState;
 
     public State RangedState => _rangedState;
-
-    public State RunState => _runState;
+    
 
     public StunEnemyState StunState => _stunState;
 
@@ -40,15 +39,16 @@ public class EnemyStateMachine
         _chaseState = new ChaseEnemyState(enemy,this);
         _meleeState = new MeleeEnemyState(enemy,this);
         _rangedState = new RangedEnemyState(enemy,this);
-        _runState = new RepositionEnemyState(enemy,this);
         _stunState = new StunEnemyState(enemy,this);
         _deadState = new DeadEnemyState(enemy,this);
         _currentState = _idleState;
     }
 
-    // UpdateEnemyState handles any transitions between Enemy States
-    public void UpdateEnemyState()
+    // Tick handles any transitions between Enemy States
+    public void Tick()
     {
+        // Debug.Log(_currentState.GetType());
+        _currentState.Action();
         // No matter which State Enemy is in, they can always enter DeadEnemyState, or start ReapEnemyState
         // If Enemy Health is 0, then Enemy is Dead
         if (enemy.CurrentHealthState() == 3 && !enemy.isDead)
@@ -63,13 +63,7 @@ public class EnemyStateMachine
             enemy.waitingForReap = true;
             enemy.ReapEnemyTimer();
         }
-        
-        // If Enemy is in REAP state and no longer waiting for reap, can change to
-        // RUN state when Player within meleeRange and not Boss enemy, or
-        // RANGE_ATTACK if Enemy is Boss and Player further than meleeRange, or
-        // CHASE if Enemy is Boss and Player is within meleeRange
-        // IDLE state if Player no longer in scene, or Player is outside meleeRange
-        /*else if (enemyState == EnemyState.REAP && !enemy.waitingForReap)
+        /*else if (!enemy.waitingForReap)
         {
             // If Player no longer in scene or outisde meleeRange, switch to IDLE
             if(enemy.target == null || (!enemy.isBossEnemy && GetPlayerDistance() > enemy.entityStats.meleeRange) || (enemy.isBossEnemy && GetPlayerDistance() > enemy.entityStats.detectionRange))
@@ -89,12 +83,7 @@ public class EnemyStateMachine
                 SetState(_rangedState);
                 enemyState = EnemyState.RANGE_ATTACK;
             }
-            // If Player still in scene and within meleeRange, it runs away
-            else if(GetPlayerDistance() <= enemy.entityStats.meleeRange && !enemy.isBossEnemy)
-            {
-                //SetState(_runState);
-                enemyState = EnemyState.RUN;
-            }
+           
         }*/
     }
 

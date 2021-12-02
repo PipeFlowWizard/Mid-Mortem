@@ -12,8 +12,7 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody _rigidbody;                           // Reference to RigidBody of Enemy
 
     public NavMeshAgent _navMeshAgent;                     // Reference to NavMeshAgent
-    public LayerMask groundLayer;                          // Reference to Ground LayerMask
-
+    public LayerMask groundLayer;                         // Reference to Ground LayerMask
     public bool suicide;                                    // If Enemy is going to perform a suicide run
     
     [SerializeField] private float dashBoost;               // Dash Boost when Enemy is Dashin
@@ -44,8 +43,6 @@ public class EnemyMovement : MonoBehaviour
     // Rotate Enemy toward Player
     public void TurnEnemy(Vector3 destination)
     {
-        return;
-        Debug.Log("turning");
         // Enemy can only turn if it is Not Dead and Not Waiting For Reap
         if (!_enemy.isDead)
         {
