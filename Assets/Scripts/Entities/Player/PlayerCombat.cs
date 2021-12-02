@@ -29,7 +29,7 @@ public class PlayerCombat : MonoBehaviour
             //_player.ImpulseSource.GenerateImpulse();
             _player.playerSpellEvent.Raise();
             _nextSpellTime = Time.time + spellCD / 1000;
-            Spell nSpell = Instantiate(spell, shootOut.position, Quaternion.identity);
+            Spell nSpell = Instantiate(spell, shootOut.position, shootOut.rotation);
             nSpell.Initialize(spellForward, attack);
         }
         
