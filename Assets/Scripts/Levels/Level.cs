@@ -105,7 +105,7 @@ public class Level : MonoBehaviour
 
     public void SpawnEnemy(Vector3 position, Room currentroom)
     {
-        var rand = Random.Range(0, 2);
+        var rand = Random.Range(0, 3);
         Enemy enemy = Spawn(position, data.Spawnables[rand]).GetComponent<Enemy>();
         enemy.CurrentRoom = currentroom;
         enemy.currentLevel = levelCounter;
