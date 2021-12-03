@@ -262,7 +262,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectileSpeed: 5
   _rigidbody: {fileID: 0}
-  enemySpell: {fileID: 8588160654426122015, guid: e4b1f74f3262f9c40bb27c539c18f21f, type: 3}
+  enemySpell: {fileID: 1830672277127870288, guid: f102a52979dd055499e219a8cde878aa, type: 3}
   tripleAttackOffset: 2
   xAttackSpeed: 2
   invincibleTime: 0

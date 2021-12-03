@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2f7745270a5db146800b1117794309c, type: 3}
   m_Name: TreeBossEnemy
   m_EditorClassIdentifier: 
-  maxHealth: 500
+  maxHealth: 1000
   mp: 100
-  attackDamage: 10
-  rangedAttackSpeed: 10
+  attackDamage: 4
+  rangedAttackSpeed: 5
   meleeAttackSpeed: 2
   reapTime: 5
   defense: 0.85
