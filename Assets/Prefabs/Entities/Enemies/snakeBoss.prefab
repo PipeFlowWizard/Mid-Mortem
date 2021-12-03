@@ -124,7 +124,7 @@ GameObject:
   - component: {fileID: 744614367621940972}
   - component: {fileID: 744614367621940971}
   - component: {fileID: 744614367621940970}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: snakeBoss
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -752,7 +752,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4694881195307535261, guid: eada3c9d3e49ab145afbfbd285e6c746, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9091600423834410039, guid: eada3c9d3e49ab145afbfbd285e6c746, type: 3}
       propertyPath: m_Size.x

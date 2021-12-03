@@ -115,7 +115,7 @@ public class Room : MonoBehaviour
         }
         else if (bossRoomSelf)
         {
-            floor.GetComponent<MeshRenderer>().material = stone;
+            floor.GetComponent<MeshRenderer>().material = pink;
 
             tp = InstantiateTp(teleporter);
             tp.gameObject.SetActive(false);
