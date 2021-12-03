@@ -15,12 +15,13 @@ public class EnemyHurtBox : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            var player = other.GetComponent<Player>();
-            
-            player.Rigidbody.AddForce((player.transform.position - transform.position) * 100,ForceMode.Impulse);
-            player.TakeDamage(parent.entityStats.attack);
-            Debug.Log("player damaged");
-            
+            var player = other.GetComponentInParent<Player>();
+            if(player)
+            {
+                player.Rigidbody.AddForce((player.transform.position - parent.transform.position).normalized * 10,
+                    ForceMode.Impulse);
+                player.TakeDamage(parent.entityStats.attackDamage);
+            }
         }
     }
 }

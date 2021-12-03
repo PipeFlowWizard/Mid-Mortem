@@ -26,19 +26,20 @@ public class EnemySpell : MonoBehaviour
         spellRigidBody.velocity = direction * spellSpeed;
         attackPower = attack;
         // EnemySpell lasts for 15 seconds
-        StartCoroutine(EnemySpellLifetime());
+        Destroy(gameObject,lifeTime);
     }
     
 
     // When EnemySpell collides with PLAYER, it deals damage, else it is destroyed
     private void OnTriggerEnter(Collider col)
     {
-        // If col has PLAYER tag, then it deals attack damage
+        // If col has PLAYER tag, then it deals attackDamage damage
         if(col.CompareTag(PLAYER))
         {
             // Player component is found in Parent Player object
             Player player = col.GetComponentInParent<Player>();
             player.TakeDamage(attackPower);
+            Destroy(gameObject);
         }
         // Else, Start Coroutine to destroy EnemySpell after 15 seconds
         else if (col.CompareTag("Enemy") || col.CompareTag("PlayerHurtBox"))
@@ -52,11 +53,5 @@ public class EnemySpell : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
-    // EnemySpellLifetime will destroy EnemySpell after 15 seconds
-    private IEnumerator EnemySpellLifetime()
-    {
-        yield return new WaitForSeconds(lifeTime);
-        Destroy(gameObject);
-    }
+    
 }

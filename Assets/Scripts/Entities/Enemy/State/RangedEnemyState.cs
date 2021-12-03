@@ -7,11 +7,12 @@ using System;
 public class RangedEnemyState : State
 { 
     // RangedEnemyState takes an Enenmy Object in constructor
-    public RangedEnemyState(Enemy enemy) : base(enemy)
+    public RangedEnemyState(Enemy enemy,EnemyStateMachine stateMachine) : base(enemy,stateMachine)
     {
 
     }
 
+    private float lastAttackTime = 0;
     // On Entering this State, Enemy Stops moving then turns
     public override void OnStateEnter()
     {
@@ -21,70 +22,116 @@ public class RangedEnemyState : State
     // On Exiting this State, rangeAttack is set to false
     public override void OnStateExit()
     {
-        enemy.Combat.rangeAttack = false;
         enemy.Movement._navMeshAgent.enabled = true;
     }
 
-    // RangedEnemyState can perform different actions based on distance to Enemy and health
+    // RangedEnemyState can perform different actions based on distance to Enemy and maxHealth
     public override void Action()
     {
+        Decision();
         // Turn enemy toward Player
-        enemy.Movement.TurnEnemy(enemy.target.position);
-        // If attack is true, then can call RangeAttack and Start Coroutine AttackTimer
-        // to wait 3 seconds before next ranged attack
-        if (enemy.Combat.rangeAttack)
+        if(enemy.target)
+            enemy.Movement.TurnEnemy(enemy.target.position);
+        
+        // If Enemy is Boss, then it can use Boss Attacks
+        if (enemy.isBossEnemy)
         {
-            // Get randomNumber to detemrine if special attack used
-            int randomNumber = UnityEngine.Random.Range(1, 101);
-            // If Enemy is Boss, then it can use Boss Attacks
-            if (enemy.isBossEnemy)
+            BossAttack();
+        }
+        // If Enemy is normal enemy, it can use abilities
+        else
+        {
+            Debug.Log("Enemy Attack");
+            EnemyAttack();
+        }
+    }
+
+    private void EnemyAttack()
+    {
+        int randomNumber = UnityEngine.Random.Range(1, 11);
+        if (Time.time - lastAttackTime < 1f/enemy.entityStats.rangedAttackSpeed)
+        {
+            return;
+        }
+        else
+        {
+            // If randomNumber is between 1 & 5 and Enemy is DEFENSE, then use Invincible
+            if (randomNumber >= 1 && randomNumber <= 5)
             {
-                // If randomNumber is between 1 & 8 and current level is greater than or equal to 1, then Boss can use XAttack
-                if (randomNumber >= 1 && randomNumber <= 8 && enemy.currentLevel >= 1)
-                {
-                    enemy.Combat.rangeAttack = false;
-                    enemy.Combat.XAttack();
-                }
-                // If randomNumber is between 9 and 16 and current level is greater than or equal to 2, then Boss can use MeteorFall
-                if (randomNumber >= 9 && randomNumber <= 16 && enemy.currentLevel >= 2)
-                {
-                    enemy.Combat.rangeAttack = false;
-                    enemy.Combat.MeteorFall();
-                }
-                // If randomNumer is between 17 and 24 and current level is greater than or equal to 3, then Boss can use HeatSeeker
-                if(randomNumber >= 17 && randomNumber <= 24 && enemy.currentLevel >= 3)
-                {
-                    enemy.Combat.rangeAttack = false;
-                    enemy.Combat.HeatSeeker();
-                }
-                // Else, just normal Ranged Attack
-                else
-                {
-                    enemy.Combat.rangeAttack = false;
-                    enemy.Combat.RangedAttack();
-                }
-            }
-            // If Enemy is normal enemy, it can use abilities
-            else
-            {
-                // If randomNumber is between 1 & 5 and Enemy is DEFENSE, then use Invincible
-                if (randomNumber >= 1 && randomNumber <= 5 && enemy.entityStats.entityType == EntityStats.EntityType.DEFENSE)
+                if (enemy.entityStats.entityType == EntityStats.EntityType.DEFENSE)
                 {
                     enemy.Combat.Invincible();
                 }
-                // If randomNumber is between 6 and 10 and Enemy is ATTACK, then fire TripleRangedAttack
-                if (randomNumber >= 6 && randomNumber <= 10 && enemy.entityStats.entityType == EntityStats.EntityType.ATTACK)
+                else if (enemy.entityStats.entityType == EntityStats.EntityType.ATTACK)
                 {
-                    enemy.Combat.rangeAttack = false;
                     enemy.Combat.TripleRangedAttack();
                 }
-                else
-                {
-                    enemy.Combat.rangeAttack = false;
-                    enemy.Combat.RangedAttack();
-                }
             }
+            else
+            {
+                enemy.Combat.RangedAttack();
+            }
+
+            lastAttackTime = Time.time;
         }
     }
     
+    private void BossAttack()
+    {
+        int randomNumber = UnityEngine.Random.Range(1, 11);
+        if (Time.time - lastAttackTime < 1f/enemy.entityStats.rangedAttackSpeed)
+        {
+            return;
+        }
+    
+        // If randomNumber is between 1 & 8 and current level is greater than or equal to 1, then Boss can use SuperRangedAttack
+        if (randomNumber >= 2 && randomNumber <= 3 && enemy.currentLevel >= 1)
+        {
+            Debug.Log("X attack");
+            enemy.Combat.SuperRangedAttack();
+            
+        }
+        //If randomNumber is between 9 and 16 and current level is greater than or equal to 2, then Boss can use MeteorFall
+        else if (randomNumber >= 4 && randomNumber <= 6 && enemy.currentLevel >= 2)
+        {
+            enemy.Combat.MeteorFall();
+            Debug.Log("Meteor");
+        }
+        // If randomNumer is between 17 and 24 and current level is greater than or equal to 3, then Boss can use HeatSeeker
+        else if (randomNumber >= 7 && randomNumber <= 9 && enemy.currentLevel >= 3)
+        {
+            enemy.Combat.HeatSeeker();
+            Debug.Log("Heat");
+        }
+        // Else, just normal Ranged Attack
+        else
+        {
+            enemy.Combat.RangedAttack();
+            Debug.Log("normal");
+        }
+        
+
+        lastAttackTime = Time.time;
+    
+    }
+
+    public override void Decision()
+    {
+        
+        base.Decision();
+        if (enemy.CurrentHealthState() == 3)
+        {
+            _stateMachine.SetState(_stateMachine.DeadState);
+        }
+        // If Player no longer in scene, or further than detectionRange then switch to IDLE state
+        if (enemy.target == null || _stateMachine.GetPlayerDistance() > enemy.entityStats.detectionRange)
+        {
+            _stateMachine.SetState(_stateMachine.IdleState);
+        }
+        // If Enemy is boss and Player is within meleeRange, the Boss attacks
+        else if (_stateMachine.GetPlayerDistance() <= enemy.entityStats.meleeRange)
+        {
+            _stateMachine.SetState(_stateMachine.ChaseState);
+        }
+    }
 }

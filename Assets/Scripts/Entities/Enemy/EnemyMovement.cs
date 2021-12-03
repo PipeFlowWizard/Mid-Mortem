@@ -12,11 +12,9 @@ public class EnemyMovement : MonoBehaviour
     private Rigidbody _rigidbody;                           // Reference to RigidBody of Enemy
 
     public NavMeshAgent _navMeshAgent;                     // Reference to NavMeshAgent
-    public LayerMask groundLayer;                          // Reference to Ground LayerMask
-
+    public LayerMask groundLayer;                         // Reference to Ground LayerMask
     public bool suicide;                                    // If Enemy is going to perform a suicide run
-
-    public bool isDashing;                                  // When Enemy is dashing after Player
+    
     [SerializeField] private float dashBoost;               // Dash Boost when Enemy is Dashin
 
     private Enemy _enemy;
@@ -25,6 +23,8 @@ public class EnemyMovement : MonoBehaviour
     public Vector3 desiredLocation;
 
     public Rigidbody Rigidbody => _rigidbody;
+
+    public Animator anim;
 
     private void Start()
     {
@@ -37,7 +37,6 @@ public class EnemyMovement : MonoBehaviour
 
     private void Awake()
     {
-        isDashing = false;
         groundLayer = LayerMask.GetMask("Ground");
     }
 
@@ -45,19 +44,16 @@ public class EnemyMovement : MonoBehaviour
     public void TurnEnemy(Vector3 destination)
     {
         // Enemy can only turn if it is Not Dead and Not Waiting For Reap
-        if (!_enemy.isDead)
+        // Get vector pointing towards Player
+        Vector3 direction = destination - transform.position;
+        direction.y = 0;
+        // Rotate Enemy is direction is not zero
+        if (direction != Vector3.zero)
         {
-            // Get vector pointing towards Player
-            Vector3 direction = destination - transform.position;
-            direction.y = 0;
-            // Rotate Enemy is direction is not zero
-            if (direction != Vector3.zero)
-            {
-                // Get Quaternion to rotate towards Player
-                Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
-                // Rotate Enemy, use Slerp to make Rotation gradual
-                transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp);
-            }
+            // Get Quaternion to rotate towards Player
+            Quaternion rotate = Quaternion.LookRotation(direction, Vector3.up);
+            // Rotate Enemy, use Slerp to make Rotation gradual
+            transform.rotation = Quaternion.Slerp(transform.rotation, rotate, rotationDamp );
         }
     }
 
@@ -65,7 +61,7 @@ public class EnemyMovement : MonoBehaviour
     public void MoveEnemy(Vector3 destination)
     {
         // Enemy can only move if it is Not Dead and Not Waiting For Reap
-        if (!_enemy.isDead && !_enemy.waitingForReap)
+        if (!_enemy.waitingForReap)
         {
             // Move Enemy toward Player using SetDestination
             _navMeshAgent.SetDestination(destination);
@@ -77,39 +73,30 @@ public class EnemyMovement : MonoBehaviour
     public void TestDash(Vector3 destination)
     {
         // Check that Player has a direct path to Enemy
-        RaycastHit player;
+        RaycastHit hit;
         // If ray hits Player, then Enemy increases in speed to dash
-        if (Physics.Raycast(transform.position, transform.forward, out player, Mathf.Infinity) && player.collider.CompareTag("Player"))
+        if (Physics.Raycast(transform.position, _enemy.target.transform.position - transform.position, out hit, Mathf.Infinity) && hit.collider.CompareTag("Player"))
         {
+            
+            anim.Play("Dash");
+            Debug.Log("Dash Attack");
+            Debug.DrawRay(transform.position, hit.point-transform.position,Color.red);
             // If Dash just started, set isDashin to true and increase speed
-            if (!isDashing)
-            {
-                // Set isDashing to true
-                isDashing = true;
-                // Move Enemy toward Player using SetDestination, with dashingBoost
-                _navMeshAgent.speed = dashBoost * _enemy.entityStats.speed;
-                StartCoroutine(StopDashing());
-            }
+            // Set isDashing to true
+            //isDashing = true;
+            // Move Enemy toward Player using SetDestination, with dashingBoost
+            _rigidbody.AddForce((hit.point - transform.position).normalized * dashBoost, ForceMode.Impulse);
+            //_navMeshAgent.speed = dashBoost * _enemy.entityStats.speed;
+            
+            
         }
         // Else, enemy doesn't dash
         else
         {
-            isDashing = false;
             _navMeshAgent.speed = _enemy.entityStats.speed;
         }
     }
-
-    // Turns off Enemy Dash Speed after a while if Enemy hasn't collided with Player
-    private IEnumerator StopDashing()
-    {
-        yield return new WaitForSeconds(_enemy.entityStats.rangedSpawn + 7);
-        if (isDashing)
-        {
-            isDashing = false;
-            _navMeshAgent.speed = _enemy.entityStats.speed;
-        }
-    }
-
+    
     // Stop Enemy Movement
     public void StopEnemy()
     {

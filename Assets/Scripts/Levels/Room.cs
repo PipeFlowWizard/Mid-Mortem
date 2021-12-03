@@ -111,11 +111,11 @@ public class Room : MonoBehaviour
         }
         else if (startSelf)
         {
-            floor.GetComponent<MeshRenderer>().material = blue;
+            floor.GetComponent<MeshRenderer>().material = stone;
         }
         else if (bossRoomSelf)
         {
-            floor.GetComponent<MeshRenderer>().material = green;
+            floor.GetComponent<MeshRenderer>().material = blue;
 
             tp = InstantiateTp(teleporter);
             tp.gameObject.SetActive(false);
@@ -129,7 +129,9 @@ public class Room : MonoBehaviour
 
         return this.gameObject;
     }
-    
+
+   
+
     public void spawnKey() {
         floor.GetComponent<MeshRenderer>().material = pink;
         keyRoomSelf = true;
@@ -191,12 +193,28 @@ public class Room : MonoBehaviour
     }
     public void SpawnObstacleInRoomRandom()
     {
-        //TODO: Make this spawn enemies and items instead of a generic gameobject
-
-        //check what type of biome first
+        
 
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        point = new Vector3(point.x, point.y-1.5f, point.z);
         _level.SpawnObstacle(point, this);
+    }
+    public void SpawnGrassInRoomRandom()
+    {
+
+        if (_level.biome != GameManager.biomes.snow)
+        {
+            Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+            point = new Vector3(point.x, point.y, point.z);
+            _level.SpawnGrass(point, this);
+        }
+    }
+
+    public void SpawnRocks()
+    {
+        Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
+        point = new Vector3(point.x, point.y, point.z);
+        _level.SpawnRocks(point, this);
     }
     public void SpawnBossInRoomRandom()
     {
@@ -204,7 +222,7 @@ public class Room : MonoBehaviour
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
         Debug.Log("SEIRR");
         StartCoroutine(_level.SpawnBoss(point,this));
-        // currentEnemyCount++;
+        currentEnemyCount++;
     }
   private Door InstantiateDoor(GameObject prefab)
     {

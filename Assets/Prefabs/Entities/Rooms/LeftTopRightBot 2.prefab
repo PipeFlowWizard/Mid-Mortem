@@ -815,14 +815,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb66f7f9c00f4e84fbd295f79484e0a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  botWallPref: {fileID: 0}
-  topWallPref: {fileID: 0}
-  rightWallPref: {fileID: 0}
-  leftWallPref: {fileID: 0}
+  botWallPref: {fileID: 6174889685314196531, guid: fde40c1ee1a4c484da14733d4895eb09, type: 3}
+  topWallPref: {fileID: 7235789916127070387, guid: b8f4b0b0981469447a1d75a189f12e9c, type: 3}
+  rightWallPref: {fileID: 5243808681541910546, guid: d0289a3f34955f146a6cf56b8973bf76, type: 3}
+  leftWallPref: {fileID: 7865499180420322220, guid: 9cbd5317804ae0c4db4e10b3c1491f86, type: 3}
   floor: {fileID: 0}
-  topDoorPref: {fileID: 0}
-  rightDoorPref: {fileID: 0}
-  teleporter: {fileID: 0}
+  topDoorPref: {fileID: 4770137698056704282, guid: dd5853b2bb8789c4fa201267473cb959, type: 3}
+  rightDoorPref: {fileID: 1858736098234534036, guid: edca011cb17b100479cc4886eeb4e367, type: 3}
+  teleporter: {fileID: 8562774460282216927, guid: 51e79346734a41241b9b1fe0f6c279ff, type: 3}
+  puzzle: {fileID: 1927262312258346524, guid: e749ccc23641bcd4e80da36b1751fcaa, type: 3}
   blue: {fileID: 2100000, guid: a2c40f8d37326894c92075fd2274dcd3, type: 2}
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}

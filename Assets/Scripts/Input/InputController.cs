@@ -9,6 +9,8 @@ using UnityEngine.Events;
 [Serializable] public class MoveInputEvent : UnityEvent<float, float> {}
 [Serializable] public class LookInputEvent : UnityEvent<float, float> {}
 [Serializable] public class DashInputEvent : UnityEvent {}
+[Serializable] public class Ability1InputEvent : UnityEvent {}
+[Serializable] public class Ability2InputEvent : UnityEvent {}
 [Serializable] public class MeleeInputEvent : UnityEvent {}
 [Serializable] public class MeleeChargeInputEvent : UnityEvent {}
 [Serializable] public class RangedInputEvent : UnityEvent {}
@@ -23,6 +25,8 @@ public class InputController : MonoBehaviour
     public MoveInputEvent moveInputEvent;
     public LookInputEvent lookInputEvent;
     public DashInputEvent dashInputEvent;
+    public Ability1InputEvent ability1InputEvent;
+    public Ability2InputEvent ability2InputEvent;
     public MeleeInputEvent meleeInputEvent;
     public MeleeChargeInputEvent meleeChargeInputEvent;
     public RangedInputEvent rangedInputEvent;
@@ -32,7 +36,6 @@ public class InputController : MonoBehaviour
     public SoulQueueInputEvent soulQueueInputEvent;
 
     private bool _isPaused = false;
-    public float reapTimer = 5f;
 
     private void Awake()
     {
@@ -53,6 +56,8 @@ public class InputController : MonoBehaviour
         _controls.Action.Enable();
         _controls.Action.MeleeAttack.performed += OnMeleePerformed;
         _controls.Action.RangedAttack.performed += OnRangedPerformed;
+        _controls.Action.Ability1.performed += _ => OnAbility1Performed(); 
+        _controls.Action.Ability2.performed += _ => OnAbility2Performed(); 
 
         // UI
         _controls.UI.Enable();
@@ -119,6 +124,15 @@ public class InputController : MonoBehaviour
         dashInputEvent.Invoke();
     }
 
+    private void OnAbility1Performed()
+    {
+        ability1InputEvent.Invoke();
+    }
+    private void OnAbility2Performed()
+    {
+        ability2InputEvent.Invoke();
+    }
+    
     private void OnMeleePerformed(InputAction.CallbackContext ctx)
     {
         switch (ctx.interaction)
@@ -159,16 +173,7 @@ public class InputController : MonoBehaviour
     {
         soulQueueInputEvent.Invoke((int) ctx.ReadValue<float>());
     }
-    public void OnReapEvent()
-    {
-        StartCoroutine(ReapTimerCo());
-    }
 
-    private IEnumerator ReapTimerCo()
-    {
-        ToggleActionMap();
-        yield return new WaitForSeconds(reapTimer);
-        ToggleActionMap();
-    }
+
     
 }

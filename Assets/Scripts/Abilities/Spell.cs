@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -12,6 +14,8 @@ public class Spell : MonoBehaviour
     [SerializeField] private float lifetime = 10.0f;
     [SerializeField] private Rigidbody rb;
     [SerializeField] private GameObject _particleSystem;
+    [SerializeField] private CinemachineImpulseSource _impulseSource;
+    [SerializeField] private AudioSource _audioSource;
 
     private float _spawnTime;
 
@@ -39,6 +43,8 @@ public class Spell : MonoBehaviour
             // Debug.Log("Enemy hit");
             other.GetComponentInParent<Enemy>().TakeDamage(damage);
             other.GetComponentInParent<EnemyVFX>().SetEnemyHealthState();
+            _impulseSource.GenerateImpulse();
+            _audioSource.Play();
             var particles = Instantiate(_particleSystem, other.transform);
             Destroy(particles,1);
             Destroy(gameObject);
@@ -54,6 +60,7 @@ public class Spell : MonoBehaviour
 
         if (gameObject && !other.CompareTag("Player") && !other.CompareTag("Ground"))
         {
+            Debug.Log(other.name);
             Destroy(gameObject);
         }
     }

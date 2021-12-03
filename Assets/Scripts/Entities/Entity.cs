@@ -8,9 +8,9 @@ public abstract class Entity : MonoBehaviour
 {
     // Reference to EntityStats 
     public EntityStats entityStats;
-    /* For Enemy, EntityStats come in 3 forms: ATTACK Enemy - Higher attack but lower defense from Base
+    /* For Enemy, EntityStats come in 3 forms: ATTACK Enemy - Higher attackDamage but lower defense from Base
      *                                            DEFENSE Enemy - Higher defense but lower speed from Base
-     *                                            SPEED Enemy - Higher speed but lower attack from Base
+     *                                            SPEED Enemy - Higher speed but lower attackDamage from Base
     */
 
 
@@ -22,24 +22,37 @@ public abstract class Entity : MonoBehaviour
     private float _currentSpeed;
     private float _currentDefense;
     private bool _isInvincible;
+    private float _currentAttackSpeed;
 
     public bool IsInvincible => _isInvincible;
 
     // Get Base Health and MP of Character
     protected virtual void Awake()
     {
-        _maxHealth = entityStats.health;
+        _maxHealth = entityStats.maxHealth;
         _currentHealth = _maxHealth;
         // _currentSouls = entityStats.mp;     // TODO: Change mp to souls
-        _currentAttack = entityStats.attack;
+        _currentAttack = entityStats.attackDamage;
         _currentSpeed = entityStats.speed;
         _currentDefense = entityStats.defense;
+        _currentAttackSpeed = entityStats.rangedAttackSpeed;
     }
 
+    public float HealthPercent
+    {
+        // ReSharper disable once PossibleLossOfFraction
+        get => _currentHealth / _maxHealth;
+    }
     public int MaxHealth
     {
         get => _maxHealth;
         set => _maxHealth = value;
+    }
+
+    public float CurrentAttackSpeed
+    {
+        get => _currentAttackSpeed;
+        set => _currentAttackSpeed = value;
     }
 
     public int CurrentHealth
@@ -80,7 +93,7 @@ public abstract class Entity : MonoBehaviour
     
     public float PercentHealth
     {
-        get => _currentHealth / entityStats.health;
+        get => _currentHealth / entityStats.maxHealth;
     }
 
     // TakeDamage subtracts passed amount from _currentHealth
@@ -98,17 +111,17 @@ public abstract class Entity : MonoBehaviour
     public int CurrentHealthState()
     {
         // If current Health is greater than 50%, return 0
-        if(_currentHealth > entityStats.health / 2)
+        if(_currentHealth > entityStats.maxHealth / 2)
         {
             return 0;
         }
         // Else if current Health is less than 50% and greater than 25%, return 1
-        else if(_currentHealth <= entityStats.health / 2 && _currentHealth > entityStats.health / 4)
+        else if(_currentHealth <= entityStats.maxHealth / 2 && _currentHealth > entityStats.maxHealth / 4)
         {
             return 1;
         }
         // Else, current Health is less than 25% and greater than 0, return 2
-        else if(_currentHealth <= entityStats.health / 4 && _currentHealth > 0)
+        else if(_currentHealth <= entityStats.maxHealth / 4 && _currentHealth > 0)
         {
             return 2;
         }
@@ -119,7 +132,7 @@ public abstract class Entity : MonoBehaviour
         }
     }
 
-    protected virtual void Die()
+    public virtual void Die()
     {
         // unsubscribe from all events -> die
         Destroy(gameObject);
