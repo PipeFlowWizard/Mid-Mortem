@@ -77,6 +77,7 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnReapEvent()
     {
+        Debug.Log("HELLO HEALTH");
         StartCoroutine(ReapTimerCo());
         _player.CurrentHealth += healthRecoverAmount;
         if (_player.CurrentHealth >= _player.entityStats.maxHealth)
