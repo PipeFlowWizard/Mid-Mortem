@@ -62,12 +62,16 @@ public class GameManager : MonoBehaviour
                     rm.SpawnGrassInRoomRandom();
                     
                 }
-                var ran = Random.Range(1, 5);
+
+                if (!rm.bossRoomSelf)
+                {
+                    var ran = Random.Range(1, 5);
                     for (int i = 0; i < ran; i++)
                     {
                             rm.SpawnRocks();
-                        
-                    }
+                    }    
+                }
+                
                 
             }
         }

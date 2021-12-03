@@ -16,7 +16,10 @@ public class MeleeEnemyState : State
     {
         // Melee Attack is handled by EnemyHurtBox.cs
         Decision();
-        enemy.Movement.TurnEnemy(enemy.target.position);
+        if (enemy.target)
+        {
+            enemy.Movement.TurnEnemy(enemy.target.position);
+        }
         enemy.Combat.MeleeAttack();
     }
 

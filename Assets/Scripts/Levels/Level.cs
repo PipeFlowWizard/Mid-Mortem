@@ -230,6 +230,7 @@ public class Level : MonoBehaviour
 
         Enemy enemy = Spawn(position, boss).GetComponent<Enemy>();
         enemy.currentLevel = levelCounter;
+        enemy.CurrentRoom = currentroom;
 
 
 
