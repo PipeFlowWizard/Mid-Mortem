@@ -13,33 +13,41 @@ public class UI : MonoBehaviour
     public GameEvent togglePauseEvent;
 
     private bool _isPaused;
-    public Image soulFill;
 
-    private void Start()
-    {
-        playerStats = player.GetComponent<Entity>();
-        
-        InitializeStats();
-    }
-    
-    [SerializeField] private TextMeshProUGUI statTextHealth;
-    [SerializeField] private TextMeshProUGUI statTextSouls;
+    [Header("Pause Elements")]
+    [SerializeField] private TextMeshProUGUI statTextMaxHealth;
+    [SerializeField] private TextMeshProUGUI statTextCurrentHealth;
+    [SerializeField] private TextMeshProUGUI statTextMaxSouls;
+    [SerializeField] private TextMeshProUGUI statTextCurrentSouls;
     [SerializeField] private TextMeshProUGUI statTextAttack;
     [SerializeField] private TextMeshProUGUI statTextSpeed;
     [SerializeField] private TextMeshProUGUI statTextDefense;
 
-    [SerializeField] private GameObject playerDeathUI;
+    [Header("UI Elements")]
+    [SerializeField] private GameObject mainMenuUI;
+    [SerializeField] private GameObject pixelationUI;
+    [SerializeField] private GameObject hudUI;
+    [SerializeField] private GameObject pauseUI;
+    [SerializeField] private GameObject infoUI;
+    [SerializeField] private GameObject hurtUI;
     [SerializeField] private GameObject enemyReapedUI;
     [SerializeField] private GameObject BossReapedUI;
-    [SerializeField] private GameObject pauseUI;
-    [SerializeField] private GameObject optionsUI;
-    [SerializeField] private GameObject hurtUI;
+    [SerializeField] private GameObject playerDeathUI;
+
+    private void Start()
+    {
+        playerStats = player.GetComponent<Entity>();
+        Time.timeScale = 0;
+
+        InitializeStats();
+    }
 
     private void InitializeStats()
     {
-        statTextHealth.text = "Health: " + playerStats.CurrentHealth.ToString();
-        // statTextSouls.text = "Souls: " + playerStats.CurrentSouls.ToString();
-        statTextSouls.text = soulCounter.initialValue.ToString();
+        statTextMaxHealth.text = "Max Health: " + playerStats.MaxHealth.ToString();
+        statTextMaxHealth.text = "Current Health: " + playerStats.CurrentHealth.ToString();
+        statTextMaxSouls.text = "Max Souls: 100";
+        statTextCurrentSouls.text = "Current Souls: " + soulCounter.initialValue.ToString();
         statTextAttack.text = "Attack: " + playerStats.CurrentAttack.ToString();
         statTextSpeed.text = "Speed: " + playerStats.CurrentSpeed.ToString();
         statTextDefense.text = "Defense: " + playerStats.CurrentDefense.ToString();
@@ -49,15 +57,21 @@ public class UI : MonoBehaviour
     {
         switch (stat)
         {
-            case "Health":
-                statTextHealth.text = "Health: " + playerStats.CurrentHealth.ToString();
+            case "Max Health":
+                statTextMaxHealth.text = "Max Health: " + playerStats.MaxHealth.ToString();
+                GetComponentInChildren<HpBar>().UpdateHP();
+                break;
+
+            case "Current Health":
+                statTextCurrentHealth.text = "Current Health: " + playerStats.CurrentHealth.ToString();
                 GetComponentInChildren<HpBar>().UpdateHP();
                 hurtUI.SetActive(true);
                 break;
 
-            // case "Souls":
-            //     statTextSouls.text = "Souls: " + playerStats.CurrentSouls.ToString();
-            //     break;
+            case "Current Souls":
+                statTextCurrentSouls.text = "Current Souls: " + soulCounter.runTimeValue.ToString();
+                GetComponentInChildren<SoulBar>().UpdateSouls();
+                break;
 
             case "Attack":
                 statTextAttack.text = "Attack: " + playerStats.CurrentAttack.ToString();
@@ -73,23 +87,11 @@ public class UI : MonoBehaviour
         }
     }
 
-    // Souls are separate from Stats, for now they're represented by the skull in Pause Menu
-    public void OnSoulCountUpdate()
-    {
-        ////print("OnSoulCountUpdate()");
-        statTextSouls.text = soulCounter.runTimeValue.ToString();
-        float ratio = soulCounter.runTimeValue / 100f;
-        soulFill.fillAmount = ratio;
-    }
-
-    // TODO: FIX THIS
-    // For some reason, we have to toggle pause twice before the pauseUI gets active
     private void Resume()
     {
         _isPaused = false;
         pauseUI.GetComponent<PauseMenu>().resume();
-        optionsUI.GetComponent<Options>().resume();
-        //pauseUI.SetActive(false);
+        infoUI.GetComponent<Options>().resume();
         Time.timeScale = 1;
     }
     private void Pause()
@@ -116,13 +118,13 @@ public class UI : MonoBehaviour
     public void goToOptions()
     {
         pauseUI.SetActive(false);
-        optionsUI.SetActive(true);
+        infoUI.SetActive(true);
     }
 
     public void returnToPause()
     {
         pauseUI.SetActive(true);
-        optionsUI.SetActive(false);
+        infoUI.SetActive(false);
     }
 
     public void OnPlayerDeath()
@@ -151,5 +153,22 @@ public class UI : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         ui.SetActive(false);
+    }
+
+    public void Play()
+    {
+        pixelationUI.SetActive(true);
+        hudUI.SetActive(true);
+        mainMenuUI.SetActive(false);
+
+        Time.timeScale = 1;
+    }
+
+    public void Quit()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
+            Application.Quit();
     }
 }
