@@ -97,7 +97,7 @@ public class Level : MonoBehaviour
         {
             if (room.bossRoomSelf)
             {
-                room.tp.setDestination(startRoom);
+                room.tp.SetDestination(startRoom);
             }
         }
         

@@ -51,7 +51,7 @@ public class PatrolEnemyState : State
         if (patrolPointSet && !enemy.waitingForReap)
         {
             enemy.Movement.TurnEnemy(patrolPoint);
-            enemy.Movement._navMeshAgent.SetDestination(patrolPoint);
+            enemy.Movement.NavMeshAgent.SetDestination(patrolPoint);
         }
         // Get distance to patrolPoint
         Vector3 distanceToPatrolPoint = enemy.transform.position - patrolPoint;

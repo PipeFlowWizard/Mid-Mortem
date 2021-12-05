@@ -172,7 +172,7 @@ public class Enemy : Entity
         deathEvent.Raise();
         isDead = true;
         _rigidbody.constraints = RigidbodyConstraints.None;
-        Movement._navMeshAgent.enabled = false;
+        Movement.NavMeshAgent.enabled = false;
         _rigidbody.AddForce(-(pushBackForce) * .5f * transform.forward, ForceMode.Impulse);
         _rigidbody.velocity = Vector3.zero;
         if(CurrentRoom)
@@ -197,6 +197,6 @@ public class Enemy : Entity
         yield return new WaitForSeconds(entityStats.reapTime);
         canReap = false;
         waitingForReap = false;
-        Movement._navMeshAgent.enabled = true;
+        Movement.NavMeshAgent.enabled = true;
     }
 }

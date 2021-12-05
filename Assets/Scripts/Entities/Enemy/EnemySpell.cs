@@ -42,14 +42,9 @@ public class EnemySpell : MonoBehaviour
             Destroy(gameObject);
         }
         // Else, Start Coroutine to destroy EnemySpell after 15 seconds
-        else if (col.CompareTag("Enemy") || col.CompareTag("PlayerHurtBox"))
+        else if (!col.CompareTag("Enemy"))
         {
             // Debug.Log("enemy spell hit enemy");
-            return;
-        }
-        else
-        {
-            // Debug.Log(col.tag);
             Destroy(gameObject);
         }
     }

@@ -86,7 +86,6 @@ public class EnemyCombat : MonoBehaviour
     {
         // Set isInvincible to true
         isInvincible = true;
-        print("Invincible");
         // Make Enemy 1.5 times bigger
         transform.localScale = Vector3.one * invincibleSize;
         StartCoroutine(InvincibleTimer());
