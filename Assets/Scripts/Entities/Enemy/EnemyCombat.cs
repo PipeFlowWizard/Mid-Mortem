@@ -78,6 +78,7 @@ public class EnemyCombat : MonoBehaviour
         spell2.FireSpell(transform.forward,projectileSpeed, _enemy.entityStats.attackDamage);
         spell3.FireSpell(transform.forward, projectileSpeed, _enemy.entityStats.attackDamage);
         // Start Timer to wait for next Ranged Attack
+        _enemy.SpellEvent.Raise();
 
     }
 
@@ -98,6 +99,7 @@ public class EnemyCombat : MonoBehaviour
         MeteorFallAttack meteorAttack = meteor.GetComponent<MeteorFallAttack>();
         // Start Timer to wait for next Ranged Attack
         meteorAttack.MeteorCrash();
+        _enemy.AbilityEvent.Raise();
     }
 
     // HeatSeeker Instantiates a HeatSeeker object that chases after Player
@@ -105,6 +107,7 @@ public class EnemyCombat : MonoBehaviour
     {
         GameObject heatSeeker = Instantiate(heatSeekerObject, transform.position + (4 * transform.forward) + transform.up, Quaternion.identity);
         // Start Timer to wait for next Ranged Attack
+        _enemy.AbilityEvent.Raise();
     }
 
     // SuperRangedAttack is a special ranged attackDamage that fires multiple ranged spells in the form of an X
@@ -118,6 +121,7 @@ public class EnemyCombat : MonoBehaviour
         spell.FireSpell(transform.forward, projectileSpeed * 10, _enemy.entityStats.attackDamage);
         _enemy.SpellEvent.Raise();
         // Start Timer to wait for next Ranged Attack
+        _enemy.AbilityEvent.Raise();
     }
     
     public void MeleeAttack()

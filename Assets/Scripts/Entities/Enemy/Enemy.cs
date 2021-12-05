@@ -32,6 +32,7 @@ public class Enemy : Entity
     [SerializeField] private GameEvent deathEvent;
     [SerializeField] private GameEvent reapedEvent;
     [SerializeField] private GameEvent spellEvent;
+    [SerializeField] private GameEvent abilityEvent;
     [SerializeField] private GameEvent hurtEvent;
     
     [SerializeField] private float pushBackForce = 15.0f;
@@ -41,6 +42,7 @@ public class Enemy : Entity
     public GameEvent DeathEvent => deathEvent;
     public GameEvent ReapedEvent => reapedEvent;
     public GameEvent SpellEvent => spellEvent;
+    public GameEvent AbilityEvent => abilityEvent;
     public GameEvent HurtEvent => hurtEvent;
     public EnemyMovement Movement => _movement;
     public EnemyCombat Combat => _combat;
@@ -170,16 +172,16 @@ public class Enemy : Entity
     public override void Die()
     {
         deathEvent.Raise();
-        isDead = true;
         _rigidbody.constraints = RigidbodyConstraints.None;
         Movement.NavMeshAgent.enabled = false;
         _rigidbody.AddForce(-(pushBackForce) * .5f * transform.forward, ForceMode.Impulse);
         _rigidbody.velocity = Vector3.zero;
-        if(CurrentRoom)
+        if(CurrentRoom && !isDead)
         {
             /*if (!isDead) */
             CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
         }
+        isDead = true;
         Destroy(gameObject,3);
     }
     
