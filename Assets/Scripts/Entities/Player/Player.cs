@@ -34,6 +34,8 @@ public class Player : Entity
     public GameEvent dashGotEvent;
     public GameEvent firstAbilityGotEvent;
     public GameEvent secondAbilityGotEvent;
+    
+    public GameEvent gameOverEvent;
 
     
     //VFX
@@ -161,6 +163,10 @@ public class Player : Entity
                 _hasSecondAbility = true;
                 secondAbilityGotEvent.Raise();
                 break;
+            case 4:
+                gameOverEvent.Raise();
+                break;
+                
         }
 
 

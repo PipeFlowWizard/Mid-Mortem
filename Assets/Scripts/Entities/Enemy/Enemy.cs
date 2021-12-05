@@ -84,7 +84,7 @@ public class Enemy : Entity
     {
         _stateMachine.Tick();
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = Color.green;
@@ -92,6 +92,7 @@ public class Enemy : Entity
         Handles.color = Color.red;
         Handles.DrawWireDisc(transform.position,Vector3.up, entityStats.detectionRange);
     }
+#endif
 
 
     public void GetPlayer()

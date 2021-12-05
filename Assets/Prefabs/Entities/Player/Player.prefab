@@ -5279,7 +5279,7 @@ TrailRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5980914422241849038}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 0
@@ -5310,7 +5310,7 @@ TrailRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Time: 1
   m_Parameters:
     serializedVersion: 3
@@ -5338,7 +5338,7 @@ TrailRenderer:
         outWeight: 0.33333334
       - serializedVersion: 3
         time: 1
-        value: 0
+        value: 0.0001
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -5382,7 +5382,7 @@ TrailRenderer:
     alignment: 1
     textureMode: 0
     shadowBias: 0.5
-    generateLightingData: 0
+    generateLightingData: 1
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
@@ -5453,6 +5453,7 @@ MonoBehaviour:
   playerHurtEvent: {fileID: 11400000, guid: f3eae8b796cbe314b9774d95d6d949e7, type: 2}
   playerSpellEvent: {fileID: 11400000, guid: 92dae2af2d4635a46b488c85fbcdca4f, type: 2}
   playerAttackEvent: {fileID: 11400000, guid: 5662b06511fd7a946a187864dea12298, type: 2}
+  iFramesDuration: 2
 --- !u!114 &5980914422587083454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6086,6 +6087,38 @@ PrefabInstance:
     - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].value
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[0].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].inWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.maxCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[0].outWeight
+      value: 0.33333334
+      objectReference: {fileID: 0}
+    - target: {fileID: 8763891801672452016, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minCurve.m_Curve.Array.data[1].outWeight
+      value: 0.33333334
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d155baebdec0f47469dd3c22d6d63ad7, type: 3}

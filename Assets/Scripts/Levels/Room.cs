@@ -102,7 +102,7 @@ public class Room : MonoBehaviour
         startSelf = type==4;
         enemySelf = bossRoomSelf==startSelf;
       
-
+        
 
         if (enemySelf)
         {
