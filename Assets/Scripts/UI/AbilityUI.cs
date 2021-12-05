@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SoulQueue : MonoBehaviour
+public class AbilityUI : MonoBehaviour
 {
     [SerializeField] private GameObject dashAbility;
     [SerializeField] private GameObject firstAbility;
