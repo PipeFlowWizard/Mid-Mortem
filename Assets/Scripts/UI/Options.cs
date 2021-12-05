@@ -6,52 +6,42 @@ using TMPro;
 
 public class Options : MonoBehaviour
 {
-    public Toggle tog;
-    private AudioSource[] gameMusic;
-    public TextMeshProUGUI label;
+    [SerializeField] private Toggle fullscreenToggle;
+    public TextMeshProUGUI fullscreenLabel;
 
-    //===========================================
-    // Basic Menu
-    //===========================================
+    [SerializeField] private Slider volumeSlider;
+    private AudioSource[] gameMusic;
+
     private void Awake()
     {
-        //gameObject.SetActive(false);
-        tog = GetComponentInChildren<Toggle>();
-        Time.timeScale = 0;
+        SetFullScreen();
     }
 
-    private void Update()
-    {
-        if (tog.isOn)
-        {
-            label.text = "On";
-            label.color = new Color(109f / 255f, 254f / 255f, 136f / 255f);
-        }
-        else
-        {
-            label.text = "Off";
-            label.color = new Color(254f / 255f, 97f / 255f, 97f / 255f);
-        }
-    }
-
-    public void SetVolume(float vol)
+    public void SetVolume()
     {
         gameMusic = FindObjectsOfType<AudioSource>();
         foreach (AudioSource sound in gameMusic)
-        {
-            sound.volume = vol;
-        }
-
+            sound.volume = volumeSlider.value;
     }
+
+    public void SetFullScreen()
+    {
+        Screen.fullScreen = fullscreenToggle.isOn;
+
+        if (fullscreenToggle.isOn)
+        {
+            fullscreenLabel.text = "On";
+            fullscreenLabel.color = new Color(109f / 255f, 254f / 255f, 136f / 255f);
+        }
+        else
+        {
+            fullscreenLabel.text = "Off";
+            fullscreenLabel.color = new Color(254f / 255f, 97f / 255f, 97f / 255f);
+        }
+    }
+
     public void resume()
     {
         gameObject.SetActive(false);
-        Time.timeScale = 1;
-    }
-
-
-    public void SetFullScreen(bool isFull)
-    {
-        Screen.fullScreen = isFull;
     }
 }

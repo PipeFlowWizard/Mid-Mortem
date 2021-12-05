@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 
@@ -45,7 +46,7 @@ public class UI : MonoBehaviour
     private void InitializeStats()
     {
         statTextMaxHealth.text = "Max Health: " + playerStats.MaxHealth.ToString();
-        statTextMaxHealth.text = "Current Health: " + playerStats.CurrentHealth.ToString();
+        statTextCurrentHealth.text = "Current Health: " + playerStats.CurrentHealth.ToString();
         statTextMaxSouls.text = "Max Souls: 100";
         statTextCurrentSouls.text = "Current Souls: " + soulCounter.initialValue.ToString();
         statTextAttack.text = "Attack: " + playerStats.CurrentAttack.ToString();
@@ -91,7 +92,7 @@ public class UI : MonoBehaviour
     {
         _isPaused = false;
         pauseUI.GetComponent<PauseMenu>().resume();
-        infoUI.GetComponent<Options>().resume();
+        infoUI.SetActive(false);
         Time.timeScale = 1;
     }
     private void Pause()
@@ -104,14 +105,13 @@ public class UI : MonoBehaviour
 
     public void OnPauseInput()
     {
-        togglePauseEvent.Raise();
-        if (_isPaused)
+        if (!mainMenuUI.activeSelf)
         {
-            Resume();
-        }
-        else
-        {
-            Pause();
+            togglePauseEvent.Raise();
+            if (_isPaused)
+                Resume();
+            else
+                Pause();
         }
     }
 
@@ -157,11 +157,20 @@ public class UI : MonoBehaviour
 
     public void Play()
     {
-        pixelationUI.SetActive(true);
-        hudUI.SetActive(true);
         mainMenuUI.SetActive(false);
 
         Time.timeScale = 1;
+    }
+
+    public void Repaly()
+    {
+        StartCoroutine(WaitToReload());
+    }
+
+    private IEnumerator WaitToReload()
+    {
+        yield return new WaitForSeconds(GameObject.Find("GameManager").GetComponent<GameManager>().SceneResetTime);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     public void Quit()

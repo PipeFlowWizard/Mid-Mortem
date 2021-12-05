@@ -27,6 +27,7 @@ public class Burning : MonoBehaviour
             {
                 fade = 1f;
                 isDissolving = false;
+                transform.Find("Buttons").gameObject.SetActive(true);
             }
         }
 

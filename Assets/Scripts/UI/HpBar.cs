@@ -3,12 +3,13 @@ using UnityEngine.UI;
 
 public class HpBar : MonoBehaviour
 {
-    private Entity playerStats;
+    private static Entity playerStats;
     [SerializeField] private Image hpFill;
 
     private void Start()
     {
-        playerStats = GetComponentInParent<UI>().player.GetComponent<Entity>();
+        if (playerStats == null)
+            playerStats = GetComponentInParent<UI>().player.GetComponent<Entity>();
     }
 
     public void UpdateHP()

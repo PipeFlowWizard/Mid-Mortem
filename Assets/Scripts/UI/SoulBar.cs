@@ -5,12 +5,13 @@ using UnityEngine.UI;
 
 public class SoulBar : MonoBehaviour
 {
-    private FloatValue soulCounter;
+    private static FloatValue soulCounter;
     [SerializeField] private Image soulFill;
 
     private void Start()
     {
-        soulCounter = GetComponentInParent<UI>().soulCounter;
+        if (soulCounter == null)
+            soulCounter = GetComponentInParent<UI>().soulCounter;
     }
 
     public void UpdateSouls()

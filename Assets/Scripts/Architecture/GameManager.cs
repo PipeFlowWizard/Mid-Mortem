@@ -100,17 +100,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         
-    }private IEnumerator WaitToReload()
-    {
-        yield return new WaitForSeconds(SceneResetTime);
-        SceneManager.LoadScene(0);
     }
-
-    public void OnGameOver()
-    {
-        StartCoroutine(WaitToReload());
-    }
-    
     
     // Step 3
         // Spawn room enemies on room unlock

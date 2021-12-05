@@ -29,6 +29,11 @@ public class PauseMenu : MonoBehaviour
     public void showInfo(bool status)
     {
         soulInfo.SetActive(status);
+        if (status)
+        {
+            GetComponentInChildren<HpBar>().UpdateHP();
+            GetComponentInChildren<SoulBar>().UpdateSouls();
+        }
         actionsInfo.SetActive(status);
         playerStatsInfo.SetActive(status);
     }
