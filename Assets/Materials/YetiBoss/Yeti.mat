@@ -109,7 +109,7 @@ Material:
     m_Colors:
     - Color_01b87467e7bf47c2891c0b86a6e3029e: {r: 0.29124242, g: 0.76502514, b: 0.9528302, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0.05695975, g: 0.94874763, b: 0.81472874, a: 1}
+    - _Color: {r: 0.6077873, g: 0.29036552, b: 0.5527784, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightColor: {r: 1, g: 0, b: 0, a: 0.5}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
