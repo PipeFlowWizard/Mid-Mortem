@@ -161,6 +161,7 @@ MonoBehaviour:
   green: {fileID: 2100000, guid: 4d1b4315510f16a4dbf48ba2bb36b4ed, type: 2}
   pink: {fileID: 2100000, guid: a032406f8df1e894d8ef77a637593eb9, type: 2}
   stone: {fileID: 2100000, guid: 5bc655d999daffc4da52979fa782855c, type: 2}
+  snowFloor: {fileID: 2100000, guid: a4a3fcea066a5d741adae0587af7d5ed, type: 2}
   botDoor: 0
   topDoor: 0
   rightDoor: 0

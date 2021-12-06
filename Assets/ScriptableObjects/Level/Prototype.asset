@@ -34,6 +34,7 @@ MonoBehaviour:
   - {fileID: 7645970632642544842, guid: c91ee5ef43beead45a6fc98e7a7eef6e, type: 3}
   - {fileID: 7791995037404526990, guid: 14671e4b8b851b642a938661d8188d3b, type: 3}
   - {fileID: 5415695674401362930, guid: aab561fc21baa174b813d73f5399a94c, type: 3}
+  - {fileID: 6428308171319121742, guid: d12b0eabee97f3148a02a5b160a88898, type: 3}
   _sand:
   - {fileID: 4321497452016883601, guid: 723554a98bad05b40a0e01011bdaac0d, type: 3}
   - {fileID: 4777613152605211272, guid: 14e4a21b22d36a44b8f71c8bd1404f0c, type: 3}

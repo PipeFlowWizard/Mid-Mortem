@@ -61,7 +61,7 @@ public class GameManager : MonoBehaviour
                 for (int i = 0; i < 10; i++)
                 {
                     rm.SpawnGrassInRoomRandom();
-                    
+                    rm.makeFloorSnow();
                 }
 
                 if (!rm.bossRoomSelf)

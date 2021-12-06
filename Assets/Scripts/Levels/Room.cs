@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class Room : MonoBehaviour
 {
     [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref,teleporter,puzzle;
-    [SerializeField]  private Material blue, green, pink, stone;
+    [SerializeField]  private Material blue, green, pink, stone, snowFloor;
    
     
    
@@ -101,9 +101,7 @@ public class Room : MonoBehaviour
         bossRoomSelf = type==5;
         startSelf = type==4;
         enemySelf = bossRoomSelf==startSelf;
-      
         
-
         if (enemySelf)
         {
             floor.GetComponent<MeshRenderer>().material = stone;
@@ -126,6 +124,9 @@ public class Room : MonoBehaviour
             floor.GetComponent<MeshRenderer>().material = pink;
         }
 
+        
+        
+        
 
         return this.gameObject;
     }
@@ -141,7 +142,13 @@ public class Room : MonoBehaviour
         puzz.transform.position = floor.transform.position;
         puzz.transform.SetParent(transform);
     }
-  
+
+    public void makeFloorSnow()
+    {
+        if (_level.biome == GameManager.biomes.snow)
+            floor.GetComponent<MeshRenderer>().material = snowFloor;
+        
+    }
     
     public void SetLevel(Level level)
     {
@@ -199,9 +206,9 @@ public class Room : MonoBehaviour
         point = new Vector3(point.x, point.y-1.5f, point.z);
         _level.SpawnObstacle(point, this);
     }
+    
     public void SpawnGrassInRoomRandom()
     {
-
         if (_level.biome != GameManager.biomes.snow)
         {
             Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
