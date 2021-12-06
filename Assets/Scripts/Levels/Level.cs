@@ -97,18 +97,19 @@ public class Level : MonoBehaviour
         {
             if (room.bossRoomSelf)
             {
-                room.tp.setDestination(startRoom);
+                room.tp.SetDestination(startRoom);
             }
         }
         
     }
 
-    public void SpawnEnemy(Vector3 position, Room currentroom)
+    public Enemy SpawnEnemy(Vector3 position, Room currentroom)
     {
-        var rand = Random.Range(0, 2);
+        var rand = Random.Range(0, 3);
         Enemy enemy = Spawn(position, data.Spawnables[rand]).GetComponent<Enemy>();
         enemy.CurrentRoom = currentroom;
         enemy.currentLevel = levelCounter;
+        return enemy;
     }
     public void SpawnObstacle(Vector3 position, Room currentroom)
     {

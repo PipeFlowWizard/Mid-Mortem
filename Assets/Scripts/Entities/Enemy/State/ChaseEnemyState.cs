@@ -26,7 +26,10 @@ public class ChaseEnemyState : State
             }
             else
             {
-                enemy.Movement.MoveEnemy(enemy.target.position);
+                if (enemy.Movement.NavMeshAgent.isOnNavMesh)
+                {
+                    enemy.Movement.MoveEnemy(enemy.target.position);
+                }
             }
         }
     }

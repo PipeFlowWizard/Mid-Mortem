@@ -22,14 +22,14 @@ public class StunEnemyState : State
     {
         base.OnStateEnter();
         enterTime = Time.time;
-        enemy.Movement._navMeshAgent.enabled = false;
+        enemy.Movement.NavMeshAgent.enabled = false;
 
     }
 
     public override void OnStateExit()
     {
         base.OnStateExit();
-        enemy.Movement._navMeshAgent.enabled = true;
+        enemy.Movement.NavMeshAgent.enabled = true;
     }
 
     // If Enemy is in MELEE state, can change to IDLE if Player no longer in scene or outside detectionRange, or

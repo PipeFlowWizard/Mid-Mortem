@@ -17,6 +17,7 @@ public class DefenseAbility : Ability
 
             var entity = rb.GetComponentInParent<Entity>();
             
+            
             if (!entity) return;
             entity.ToggleInvincibility();
         }

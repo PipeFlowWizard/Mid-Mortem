@@ -32,6 +32,7 @@ public class Enemy : Entity
     [SerializeField] private GameEvent deathEvent;
     [SerializeField] private GameEvent reapedEvent;
     [SerializeField] private GameEvent spellEvent;
+    [SerializeField] private GameEvent abilityEvent;
     [SerializeField] private GameEvent hurtEvent;
     
     [SerializeField] private float pushBackForce = 15.0f;
@@ -41,6 +42,7 @@ public class Enemy : Entity
     public GameEvent DeathEvent => deathEvent;
     public GameEvent ReapedEvent => reapedEvent;
     public GameEvent SpellEvent => spellEvent;
+    public GameEvent AbilityEvent => abilityEvent;
     public GameEvent HurtEvent => hurtEvent;
     public EnemyMovement Movement => _movement;
     public EnemyCombat Combat => _combat;
@@ -82,7 +84,7 @@ public class Enemy : Entity
     {
         _stateMachine.Tick();
     }
-
+#if UNITY_EDITOR
     private void OnDrawGizmos()
     {
         Handles.color = Color.green;
@@ -90,6 +92,7 @@ public class Enemy : Entity
         Handles.color = Color.red;
         Handles.DrawWireDisc(transform.position,Vector3.up, entityStats.detectionRange);
     }
+#endif
 
 
     public void GetPlayer()
@@ -170,16 +173,16 @@ public class Enemy : Entity
     public override void Die()
     {
         deathEvent.Raise();
-        isDead = true;
         _rigidbody.constraints = RigidbodyConstraints.None;
-        Movement._navMeshAgent.enabled = false;
+        Movement.NavMeshAgent.enabled = false;
         _rigidbody.AddForce(-(pushBackForce) * .5f * transform.forward, ForceMode.Impulse);
         _rigidbody.velocity = Vector3.zero;
-        if(CurrentRoom)
+        if(CurrentRoom && !isDead)
         {
             /*if (!isDead) */
             CurrentRoom.CurrentEnemyCount = CurrentRoom.CurrentEnemyCount - 1;
         }
+        isDead = true;
         Destroy(gameObject,3);
     }
     
@@ -197,6 +200,6 @@ public class Enemy : Entity
         yield return new WaitForSeconds(entityStats.reapTime);
         canReap = false;
         waitingForReap = false;
-        Movement._navMeshAgent.enabled = true;
+        Movement.NavMeshAgent.enabled = true;
     }
 }

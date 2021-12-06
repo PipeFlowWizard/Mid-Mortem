@@ -73,8 +73,8 @@ public class EnemyStateMachine
     
     public void SetState(State state)
     {
-        if (!CurrentState.HasTimeSinceEnteredPassed(1))
-            return;
+        //if (!CurrentState.HasTimeSinceEnteredPassed(1))
+        //    return;
         
         //Debug.Log("Changing state");
         // If currentState is already assigned, then call OnStateExit for that State
@@ -82,7 +82,6 @@ public class EnemyStateMachine
         {
             _currentState.OnStateExit();
         }
-
         // Set currentState to new state
         _currentState = state;
         // If currentState is now not null, call OnStateEnter for that State

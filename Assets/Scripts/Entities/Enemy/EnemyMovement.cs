@@ -10,8 +10,8 @@ public class EnemyMovement : MonoBehaviour
 {
     // Enemy Movement
     private Rigidbody _rigidbody;                           // Reference to RigidBody of Enemy
-
-    public NavMeshAgent _navMeshAgent;                     // Reference to NavMeshAgent
+    private NavMeshAgent _navMeshAgent;                     // Reference to NavMeshAgent
+    
     public LayerMask groundLayer;                         // Reference to Ground LayerMask
     public bool suicide;                                    // If Enemy is going to perform a suicide run
     
@@ -23,6 +23,7 @@ public class EnemyMovement : MonoBehaviour
     public Vector3 desiredLocation;
 
     public Rigidbody Rigidbody => _rigidbody;
+    public NavMeshAgent NavMeshAgent => _navMeshAgent;
 
     public Animator anim;
 

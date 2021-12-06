@@ -22,7 +22,7 @@ public class RangedEnemyState : State
     // On Exiting this State, rangeAttack is set to false
     public override void OnStateExit()
     {
-        enemy.Movement._navMeshAgent.enabled = true;
+        enemy.Movement.NavMeshAgent.enabled = true;
     }
 
     // RangedEnemyState can perform different actions based on distance to Enemy and maxHealth
@@ -41,7 +41,7 @@ public class RangedEnemyState : State
         // If Enemy is normal enemy, it can use abilities
         else
         {
-            Debug.Log("Enemy Attack");
+            // Debug.Log("Enemy Attack");
             EnemyAttack();
         }
     }

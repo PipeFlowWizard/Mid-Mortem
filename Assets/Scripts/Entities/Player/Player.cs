@@ -34,6 +34,8 @@ public class Player : Entity
     public GameEvent dashGotEvent;
     public GameEvent firstAbilityGotEvent;
     public GameEvent secondAbilityGotEvent;
+    
+    public GameEvent gameOverEvent;
 
     
     //VFX
@@ -64,6 +66,8 @@ public class Player : Entity
 
     public Rigidbody Rigidbody => _rigidbody;
 
+    public float iFramesDuration = 2f;
+
 
     public void Start()
     {
@@ -80,21 +84,26 @@ public class Player : Entity
 
     public IEnumerator AbilityCo(float abilityDuration, Ability ability)
     {
-        // Change state
-        //...
         ability.SoulAbility(_rigidbody.position, playerMovement.mesh.transform.forward,
             Combat.anim, _rigidbody);
+        
         yield return new WaitForSeconds(abilityDuration);
-        // For invinsibility ability
+        // For invincibility ability
         if(IsInvincible) ToggleInvincibility();
-        // Change back state
-        // ...
+    }
+
+    private IEnumerator InvincibilityFramesCo()
+    {
+        yield return new WaitForSeconds(iFramesDuration);
+        if(IsInvincible) ToggleInvincibility();
     }
     
     public override void TakeDamage(int amount)
     {
         base.TakeDamage(amount);
         if (IsInvincible) return;
+        
+        ToggleInvincibility();
         playerHurtEvent.Raise();
 
         _impulseSource.GenerateImpulse();
@@ -112,6 +121,7 @@ public class Player : Entity
         }
         // Make sure reaper is back to origin color (just in case)
         reaperMaterial.color = Color.black;
+        StartCoroutine(InvincibilityFramesCo());
     }
     #region VFX
     private IEnumerator DamageFlash()
@@ -135,6 +145,12 @@ public class Player : Entity
     }
     public void OnLevelProgression()
     {
+        if (_abilityProgression.Count == 0)
+        {
+            gameOverEvent.Raise();
+            return;
+        }
+
         int n = Random.Range(0, _abilityProgression.Count);
         int pick = _abilityProgression[n];
         _abilityProgression.Remove(pick);
@@ -153,6 +169,7 @@ public class Player : Entity
                 _hasSecondAbility = true;
                 secondAbilityGotEvent.Raise();
                 break;
+                
         }
 
 

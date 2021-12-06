@@ -77,8 +77,9 @@ public class PlayerCombat : MonoBehaviour
 
     public void OnReapEvent()
     {
-        Debug.Log("HELLO HEALTH");
         StartCoroutine(ReapTimerCo());
+        print($"health before: {_player.CurrentHealth.ToString()}");
+        print($"souls before: {_player.soulCount.runTimeValue.ToString()}");
         _player.CurrentHealth += healthRecoverAmount;
         if (_player.CurrentHealth >= _player.entityStats.maxHealth)
         {
@@ -90,6 +91,8 @@ public class PlayerCombat : MonoBehaviour
         {
             _player.soulCount.runTimeValue = _player.soulCount.initialValue;
         }
+        print($"health after: {_player.CurrentHealth.ToString()}");
+        print($"souls after: {_player.soulCount.runTimeValue.ToString()}");
     }
     
     private IEnumerator ReapTimerCo()

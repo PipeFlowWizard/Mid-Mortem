@@ -85,7 +85,7 @@ public abstract class Entity : MonoBehaviour
         set => _currentDefense = value;
     }
 
-    public void ToggleInvincibility()
+    public virtual void ToggleInvincibility()
     {
         _isInvincible = !_isInvincible;
         Debug.Log(_isInvincible ? "Invincibility Active" : "Invincibility Off");

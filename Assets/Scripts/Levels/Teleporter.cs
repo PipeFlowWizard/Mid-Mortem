@@ -11,11 +11,8 @@ public class Teleporter : MonoBehaviour
     public GameEvent levelProgressEvent;
     [SerializeField]
     private Room destination;
-    private void Start()
-    {
-        
-    }
-    public void teleportPlayer(GameObject g, Room room)
+
+    public void TeleportPlayer(GameObject g, Room room)
     {
         Debug.Log("Hit confirmed");
 
@@ -26,18 +23,27 @@ public class Teleporter : MonoBehaviour
 
         room.SpawnEnemyInRoomRandom();
     }
-        void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
 
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
-            Debug.Log(other.gameObject.name);
-            teleportPlayer(other.gameObject, destination);
+            var player = other.GetComponentInParent<Player>();
+            if (destination)
+            {
+                TeleportPlayer(player.gameObject, destination);
+            }
+            else
+            {
+                // finished game
+                levelProgressEvent.Raise();
+            }
+            
         }
         
     }
 
-    internal void setDestination(Room startRoom)
+    internal void SetDestination(Room startRoom)
     {
         destination = startRoom;
     }

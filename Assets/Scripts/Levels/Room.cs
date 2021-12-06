@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class Room : MonoBehaviour
 {
     [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref,teleporter,puzzle;
-    [SerializeField]  private Material blue, green, pink, stone;
+    [SerializeField]  private Material blue, green, pink, stone, snowFloor, sandFloor;
    
     
    
@@ -101,9 +101,7 @@ public class Room : MonoBehaviour
         bossRoomSelf = type==5;
         startSelf = type==4;
         enemySelf = bossRoomSelf==startSelf;
-      
-
-
+        
         if (enemySelf)
         {
             floor.GetComponent<MeshRenderer>().material = stone;
@@ -115,7 +113,7 @@ public class Room : MonoBehaviour
         }
         else if (bossRoomSelf)
         {
-            floor.GetComponent<MeshRenderer>().material = blue;
+            floor.GetComponent<MeshRenderer>().material = stone;
 
             tp = InstantiateTp(teleporter);
             tp.gameObject.SetActive(false);
@@ -123,9 +121,8 @@ public class Room : MonoBehaviour
         }
         if (keyRoomSelf)
         {
-            floor.GetComponent<MeshRenderer>().material = pink;
+            floor.GetComponent<MeshRenderer>().material = stone;
         }
-
 
         return this.gameObject;
     }
@@ -133,7 +130,7 @@ public class Room : MonoBehaviour
    
 
     public void spawnKey() {
-        floor.GetComponent<MeshRenderer>().material = pink;
+        floor.GetComponent<MeshRenderer>().material = stone;
         keyRoomSelf = true;
         
         GameObject puzz = Instantiate<GameObject>(puzzle);
@@ -141,7 +138,15 @@ public class Room : MonoBehaviour
         puzz.transform.position = floor.transform.position;
         puzz.transform.SetParent(transform);
     }
-  
+
+    public void makeFloorSnowOrSand()
+    {
+        if (_level.biome == GameManager.biomes.snow)
+            floor.GetComponent<MeshRenderer>().material = snowFloor;
+        if (_level.biome == GameManager.biomes.desert)
+            floor.GetComponent<MeshRenderer>().material = sandFloor;
+
+    }
     
     public void SetLevel(Level level)
     {
@@ -186,10 +191,17 @@ public class Room : MonoBehaviour
     /// </summary>
     public void SpawnEnemyInRoomRandom()
     {
-        //TODO: Make this spawn enemies and items instead of a generic gameobject
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
-        _level.SpawnEnemy(point,this);
-        currentEnemyCount++;
+        var enemy =_level.SpawnEnemy(point,this);
+        if (enemy)
+        {
+            CurrentEnemyCount += 1;
+        }
+        // in case enemy fails to spawn for some reason, trigger door opening
+        else
+        {
+            CurrentEnemyCount += 0;
+        }
     }
     public void SpawnObstacleInRoomRandom()
     {
@@ -199,9 +211,9 @@ public class Room : MonoBehaviour
         point = new Vector3(point.x, point.y-1.5f, point.z);
         _level.SpawnObstacle(point, this);
     }
+    
     public void SpawnGrassInRoomRandom()
     {
-
         if (_level.biome != GameManager.biomes.snow)
         {
             Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
