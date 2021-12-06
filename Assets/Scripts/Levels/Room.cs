@@ -7,7 +7,7 @@ using Random = UnityEngine.Random;
 public class Room : MonoBehaviour
 {
     [SerializeField]  private GameObject botWallPref, topWallPref, rightWallPref, leftWallPref,floor,topDoorPref,rightDoorPref,teleporter,puzzle;
-    [SerializeField]  private Material blue, green, pink, stone, snowFloor;
+    [SerializeField]  private Material blue, green, pink, stone, snowFloor, sandFloor;
    
     
    
@@ -124,10 +124,6 @@ public class Room : MonoBehaviour
             floor.GetComponent<MeshRenderer>().material = pink;
         }
 
-        
-        
-        
-
         return this.gameObject;
     }
 
@@ -143,10 +139,15 @@ public class Room : MonoBehaviour
         puzz.transform.SetParent(transform);
     }
 
-    public void makeFloorSnow()
+    public void makeFloorSnowOrSand()
     {
         if (_level.biome == GameManager.biomes.snow)
             floor.GetComponent<MeshRenderer>().material = snowFloor;
+        if (_level.biome == GameManager.biomes.desert)
+            floor.GetComponent<MeshRenderer>().material = sandFloor;
+        else
+            floor.GetComponent<MeshRenderer>().material = stone;
+
         
     }
     
