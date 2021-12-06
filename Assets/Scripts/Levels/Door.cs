@@ -36,7 +36,8 @@ public class Door : MonoBehaviour
 
                 if (!adjacent1.isCleared)
                 {
-                    for (int i = 0; i < 2; i++)
+                    int temp = Random.Range(2, 5);
+                    for (int i = 0; i < temp; i++)
                     {
                         adjacent1.SpawnEnemyInRoomRandom();
                         
@@ -51,7 +52,8 @@ public class Door : MonoBehaviour
                 //init room adjacent2
                 else if (!adjacent2.isCleared)
                 {
-                    for (int i = 0; i < 2; i++) { 
+                    int temp = Random.Range(2, 5);
+                    for (int i = 0; i < temp; i++) { 
                         adjacent2.SpawnEnemyInRoomRandom();
                         
                     }

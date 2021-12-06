@@ -193,10 +193,17 @@ public class Room : MonoBehaviour
     /// </summary>
     public void SpawnEnemyInRoomRandom()
     {
-        //TODO: Make this spawn enemies and items instead of a generic gameobject
         Vector3 point = Level.SamplePoint(transform.position, SpawnArea);
-        _level.SpawnEnemy(point,this);
-        currentEnemyCount++;
+        var enemy =_level.SpawnEnemy(point,this);
+        if (enemy)
+        {
+            CurrentEnemyCount += 1;
+        }
+        // in case enemy fails to spawn for some reason, trigger door opening
+        else
+        {
+            CurrentEnemyCount += 0;
+        }
     }
     public void SpawnObstacleInRoomRandom()
     {

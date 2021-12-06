@@ -145,6 +145,12 @@ public class Player : Entity
     }
     public void OnLevelProgression()
     {
+        if (_abilityProgression.Count == 0)
+        {
+            gameOverEvent.Raise();
+            return;
+        }
+
         int n = Random.Range(0, _abilityProgression.Count);
         int pick = _abilityProgression[n];
         _abilityProgression.Remove(pick);
@@ -162,9 +168,6 @@ public class Player : Entity
             case 3:
                 _hasSecondAbility = true;
                 secondAbilityGotEvent.Raise();
-                break;
-            case 4:
-                gameOverEvent.Raise();
                 break;
                 
         }

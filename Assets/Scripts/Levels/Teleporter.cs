@@ -29,7 +29,16 @@ public class Teleporter : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             var player = other.GetComponentInParent<Player>();
-            TeleportPlayer(player.gameObject, destination);
+            if (destination)
+            {
+                TeleportPlayer(player.gameObject, destination);
+            }
+            else
+            {
+                // finished game
+                levelProgressEvent.Raise();
+            }
+            
         }
         
     }
