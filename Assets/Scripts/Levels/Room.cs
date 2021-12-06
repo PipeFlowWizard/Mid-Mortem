@@ -113,7 +113,7 @@ public class Room : MonoBehaviour
         }
         else if (bossRoomSelf)
         {
-            floor.GetComponent<MeshRenderer>().material = blue;
+            floor.GetComponent<MeshRenderer>().material = stone;
 
             tp = InstantiateTp(teleporter);
             tp.gameObject.SetActive(false);
@@ -121,7 +121,7 @@ public class Room : MonoBehaviour
         }
         if (keyRoomSelf)
         {
-            floor.GetComponent<MeshRenderer>().material = pink;
+            floor.GetComponent<MeshRenderer>().material = stone;
         }
 
         return this.gameObject;
@@ -130,7 +130,7 @@ public class Room : MonoBehaviour
    
 
     public void spawnKey() {
-        floor.GetComponent<MeshRenderer>().material = pink;
+        floor.GetComponent<MeshRenderer>().material = stone;
         keyRoomSelf = true;
         
         GameObject puzz = Instantiate<GameObject>(puzzle);
@@ -145,10 +145,7 @@ public class Room : MonoBehaviour
             floor.GetComponent<MeshRenderer>().material = snowFloor;
         if (_level.biome == GameManager.biomes.desert)
             floor.GetComponent<MeshRenderer>().material = sandFloor;
-        else
-            floor.GetComponent<MeshRenderer>().material = stone;
 
-        
     }
     
     public void SetLevel(Level level)
